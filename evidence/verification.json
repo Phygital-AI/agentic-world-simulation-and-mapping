@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "common_timestamp_identity": true,
+  "per_method_rows": 4254,
+  "orb_independent_metric_reproduction": true,
+  "frozen_before_gt": true,
+  "figures": {
+    "figure14a_camera_trajectories.png": {
+      "width": 1900,
+      "height": 1600,
+      "sha256": "5803a569c2c2a8502b7976b282eadb0c4a2c5aa68fcda07047989cbb006c53b7"
+    },
+    "trajectory_comparison.png": {
+      "width": 2880,
+      "height": 1980,
+      "sha256": "1c6fd54bc82300772cb1d5de56631afe76ae067d4dec8e9a335e9b5442a8eb65"
+    }
+  },
+  "metrics_sha256": "6e33fcadb93045723df4d3ce8c0f51debfd4c44db9d7d4df5617e6ef21b14fc3",
+  "per_frame_errors_sha256": "756ab7529b160fe9879c04f62f230e890a83e162b39b80bebe851d2bd125c394",
+  "report_sha256": "4df63588c5d2320a4a591264afee153d7a67425a73760d2cb766eb5f519cddc3",
+  "html_sha256": "10c769dc046b0a14a74b2ea2e881323a40438f247c307172d2c25ea7bd6d2131",
+  "canvas_sha256": "8963884eb2861cabc759427e68fcfc81738fab3bafcc94796d03bdffa1506679",
+  "archived_canvas_sha256": {
+    "world-lobby-four-trajectory.canvas.tsx": "8963884eb2861cabc759427e68fcfc81738fab3bafcc94796d03bdffa1506679",
+    "orb-slam3-old-vs-new-motion.canvas.tsx": "69f65cb6cadb492c5099c6482da94538aeb3ceafdd80465018ede0d0120558ea"
+  },
+  "code_sha256": {
+    "build_depth_packets.py": "1f07a32c7b8b9442b996b199c493dd865f3154682e20f70fbb7e61fa5490fc01",
+    "build_hf_release.py": "3b134dcd4d9525884c772dc6de15d3377390ff98244ab657b068471a3477f702",
+    "depth_pipeline.py": "1dfc9aa6d8439a9ac7ca37fe5652c63a89947c3f8cf97c58e9486fca99794d42",
+    "evaluate_and_plot.py": "c11ca4700357850b4c447be99bb0496c35576a3ff55d95ad2a895c635ea30d97",
+    "evaluate_da3_depth.py": "b3c3780f046ab885d4a744e78397661e8479c87c25a01665ced0dddfc02f840f",
+    "freeze_contract.py": "504d8acd5c2b54325327fcda1806c02d31e215a7e986cd80416ba4da96e4bd1a",
+    "freeze_openvins.py": "c5592860019e3d5ddbef7c710ac386858bcfdc06f0a28076ebf4265f0523ccf2",
+    "freeze_vipe.py": "333a423958e7e426beb36394bdb888b59596bd0ad4a8d7dff29cbb95fb76ff24",
+    "generate_canvas.py": "6ff8eae0d045f4c80930f4bf1183d03ebc4fd557a9a46836d428503b063ce81b",
+    "generate_gt_depth_blender.py": "84907b87b1d098be672e14571613e14fbab2daa853f91caa186cb19e9a47977b",
+    "prepare_depth_samples.py": "b2fdb3b450258ecc00bcca549a05fa3df27c9d4c6c4987c742e32977b1f3f428",
+    "run_da3_depth.py": "81d76c39be91ca9c712077b257c6fb2ead4b4bf967ec60acb77f5bdf1572e24c",
+    "test_depth_pipeline.py": "633fd8832ec7e72390f241212901487e683c850427cd5164bd7e780feb2c9ae7",
+    "verify_depth_pipeline.py": "0f955aa04776e235f3f5b33310637cbe943a97949c23db0565fc2fa04fcbe6e2",
+    "verify_results.py": "103ec18a18097fa67a99d912178e940a613bf0d1696c85bf1f5fdb267aae0f23"
+  }
+}

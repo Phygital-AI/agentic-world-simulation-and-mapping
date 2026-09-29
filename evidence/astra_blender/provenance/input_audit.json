@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-09-29T20:25:49Z",
+  "status": "PASS",
+  "rgb_hashes_verified": 680,
+  "splits_disjoint": true,
+  "methods": {
+    "M1": {
+      "packet_sha256": "9fb1ba47f7022ce29fbcd6e4ef1e59879aec99446d1fbf5b466deb67f4e6227f",
+      "geometry_hashes_verified": 0,
+      "numeric_checks": "PASS",
+      "maximum_roundtrip_px": null
+    },
+    "M2": {
+      "packet_sha256": "fb05e8f7bb3a63f4f129ca0199552414893ad581157b57b0c240a4ba7d2e332e",
+      "geometry_hashes_verified": 180,
+      "numeric_checks": "PASS",
+      "maximum_roundtrip_px": 8.623904156479512e-05
+    },
+    "M3": {
+      "packet_sha256": "76552b8511ebc6433922bb552e5870a92757707f3378b487c80f795986e964e2",
+      "geometry_hashes_verified": 180,
+      "numeric_checks": "PASS",
+      "maximum_roundtrip_px": 5.670860161899327e-06
+    },
+    "M4": {
+      "packet_sha256": "50d193301bcabd376728069a2314e8b69e1a462323063ef42b2febaae3620af3",
+      "geometry_hashes_verified": 180,
+      "numeric_checks": "PASS",
+      "maximum_roundtrip_px": 5.670860218742746e-06
+    }
+  },
+  "isolation": "physical copies and method-specific fresh context; no OS enforced read sandbox"
+}

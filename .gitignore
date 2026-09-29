@@ -1,0 +1,4 @@
+__pycache__/
+qa/
+.venv/
+.publication.json

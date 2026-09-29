@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>When a map becomes a program — Agentic World</title><meta name="description" content="Four camera trajectories, one depth model, and a measurable path toward editable worlds. A new World Lobby experiment."><meta name="theme-color" content="#f5f3ed">
+<meta property="og:title" content="When a map becomes a program · Better poses are only the beginning."><meta property="og:description" content="Four camera trajectories, one depth model, and a measurable path toward editable worlds. A new World Lobby experiment."><meta property="og:type" content="article"><meta property="og:image" content="https://wentingw.github.io/agentic-world-blog/assets/hero.webp">
+<link rel="canonical" href="https://wentingw.github.io/agentic-world-blog/en.html"><link rel="alternate" hreflang="zh" href="index.html"><link rel="alternate" hreflang="en" href="en.html">
+<link rel="stylesheet" href="style.css"><script src="app.js" defer></script></head><body data-lang="en">
+<a class="skip" href="#article">Skip to article</a><div class="progress" aria-hidden="true"></div>
+<nav class="topbar"><a class="brand" href="index.html"><span class="brand-mark">a/w</span> AGENTIC WORLD</a><div class="nav-right"><a href="index.html" >中文</a><a href="en.html" aria-current="page">EN</a><a href="https://github.com/wentingw/agentic-world-blog">GitHub ↗</a></div></nav>
+<header class="hero-heading"><p class="eyebrow">RESEARCH JOURNAL &nbsp; / &nbsp; 30 SEPTEMBER 2026 &nbsp; / &nbsp; 01</p><h1>When a map becomes a program</h1><p class="hero-subtitle">Better poses are only the beginning.</p><p class="lead">Four camera trajectories, one depth model, and a measurable path toward editable worlds. A new World Lobby experiment.</p><div class="tags"><span>WORLD LOBBY</span><span>POSE → DEPTH → PROGRAM</span><span>Pose & depth results</span></div></header>
+<figure class="hero-figure"><img src="assets/hero.webp" width="1600" height="680" alt="Four actual RGB frames from the new World Lobby capture"><figcaption><span>01 / OBSERVATION</span> Input RGB, modelling samples 0, 45, 90 and 135. All figures in this article use the new session.</figcaption></figure>
+<div class="article-layout"><aside class="toc"><p>IN THIS NOTE</p><a href="#question">Question</a><a href="#protocol">Protocol</a><a href="#trajectory">Trajectory</a><a href="#depth">Depth</a><a href="#agentic">Agentic world</a><a href="#evidence">Evidence</a><a class="download" href="article.en.md">Markdown ↓</a></aside><main id="article"><div class="opening"><span class="section-kicker">THE FINDING</span><p>Do more accurate camera poses necessarily produce more accurate depth? This experiment says: <strong>there is another step to verify.</strong> Camera motion, metric depth and editable scene programs each need their own measurements.</p></div>
+
+<div class="number-strip"><div><strong>0.1205<span> m</span></strong><p>ORB-SLAM3 · lowest trajectory ATE</p></div><div><strong>21.62<span>%</span></strong><p>ViPE + DA3 · 500-frame AbsRel</p></div><div><strong>180 + 500</strong><p>Modelling inputs / separate depth evaluation</p></div></div>
+
+<h2 id="question">What should a map be able to do?</h2>
+<p>A surface map describes where geometry lies. A scene program can also describe a table, its top and legs, and the space around it. Objects, relationships, materials and collision representations can support editing, rendering, queries and execution.</p>
+<p>Our <a href="https://wentingw.github.io/astra-world-model-blog/en.html">previous Astra × Blender experiment</a> explored an agent writing Blender programs from visual and geometric observations. This new run revisits the foundations: <strong>Are the cameras accurate? Does depth retain metric scale? Are the observations reliable enough to support a scene program?</strong></p>
+<p>This article uses the new capture from 29 September 2026 and the depth results completed on 30 September. Trajectory evaluation, DA3 depth evaluation and modelling input audits are complete. The four Astra / Blender scenes remain in progress, with no complete frozen scene set or independent model scores in this snapshot. The previous article's models, TSDF results, appearance scores and robot success rates are not results of this run.</p>
+<h2 id="protocol">Start from the same observations</h2>
+<p>The new simulated lobby capture spans approximately <strong>179.92 seconds</strong>, with <strong>4,499 RGB images</strong> and <strong>44,999 IMU samples</strong>, at 25 / 250 Hz. Images are 1280 × 960 with shared pinhole intrinsics <code>fx = fy = 762.8, cx = 640, cy = 480</code>. This is one synthetic scene and session; it does not establish real-world or cross-scene performance.</p>
+<p>We compare GT, ORB-SLAM3, ViPE default and OpenVINS trajectories. The three estimators are scored at <strong>4,254 exact common native timestamps</strong>, source frames 245–4498. Missing poses are neither interpolated nor extrapolated. Each estimated trajectory receives one global SE(3) alignment, with scale fixed to 1.</p>
+<div class="pipeline" role="img" aria-label="RGB and IMU capture to trajectories and DA3 depth, then audited inputs for ongoing Astra Blender modelling and future frozen model evaluation"><div><small>01 · CAPTURE</small><b>RGB + IMU</b><span>4,499 native images</span></div><i>→</i><div><small>02 · MEASURE</small><b>Pose → DA3</b><span>Separate 180 / 500 splits</span></div><i>→</i><div><small>03 · BUILD</small><b>Astra → Blender</b><span>Audited inputs ready</span></div><i>→</i><div class="pending"><small>04 · VERIFY</small><b>Frozen model → GT</b><span>Pending completed models</span></div></div>
+
+<h3 id="four-trajectories-and-four-modelling-routes-are-different-sets">Four trajectories and four modelling routes are different sets</h3>
+<p><strong>OpenVINS participates only in trajectory diagnostics. M1 is the RGB-only route.</strong> The historical M3, OpenVINS + MapAnything, is replaced by ORB-SLAM3 + DA3. Modelling depth for M2–M4 now uses the same DA3-GIANT model.</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Observations provided to Astra</th>
+<th>Scale and current status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M1 · RGB-only + Astra</td>
+<td>Same 180 RGB frames, frame identity and shared intrinsics</td>
+<td>No external poses or depth; assumed scale; inputs audited</td>
+</tr>
+<tr>
+<td>M2 · ViPE + DA3 + Astra</td>
+<td>180 RGB, native ViPE poses and corresponding DA3 depth</td>
+<td>Native metric scale; depth and input packet complete</td>
+</tr>
+<tr>
+<td>M3 · ORB-SLAM3 + DA3 + Astra</td>
+<td>180 RGB, native ORB-SLAM3 poses and corresponding DA3 depth</td>
+<td>Native metric scale; depth and input packet complete</td>
+</tr>
+<tr>
+<td>M4 · GT pose + DA3 + Astra</td>
+<td>180 RGB, permitted GT camera poses and corresponding DA3 depth</td>
+<td>GT cameras only, no GT depth or scene geometry; packet complete</td>
+</tr>
+</tbody>
+</table>
+<p>The 180 modelling frames are sampled uniformly from the common interval. Another 500 frames are selected deterministically from the remaining frames, with zero overlap. Inference windows are built separately. <strong>DA3 observes the RGB images of the 500 evaluation frames themselves.</strong> These results measure depth estimation on non-modelling frames, not novel-view rendering by a frozen Blender scene or generalization to a new scene.</p>
+<h2 id="trajectory">Trajectory: ORB-SLAM3 leads, with scale still visible</h2>
+<p class="table-caption">TABLE 1 · Errors on the same 4,254 timestamps; coverage uses all 4,499 frames</p>
+
+<div class="table-scroll"><table><thead><tr><th scope="col">Estimator</th><th scope="col">Coverage / 4,499</th><th scope="col">SE(3) ATE ↓ (m)</th><th scope="col">Rotation RMSE ↓ (°)</th><th scope="col">Sim(3) scale</th><th scope="col">Sim(3) ATE (m)</th></tr></thead><tbody><tr><th scope="row">ORB-SLAM3</th><td>94.55%</td><td>0.1205</td><td>0.1943</td><td>0.977680</td><td>0.0259</td></tr><tr><th scope="row">ViPE default</th><td>100.00%</td><td>0.1668</td><td>0.3065</td><td>1.032927</td><td>0.0283</td></tr><tr><th scope="row">OpenVINS</th><td>98.73%</td><td>0.6721</td><td>0.7699</td><td>0.885078</td><td>0.0580</td></tr></tbody></table></div>
+
+<p>ORB-SLAM3 has the lowest primary ATE RMSE at <strong>0.1205 m</strong>, compared with <strong>0.1668 m</strong> for ViPE and <strong>0.6721 m</strong> for OpenVINS. Coverage answers a separate question: ORB-SLAM3 misses the first 245 frames, while ViPE covers the full sequence. Accuracy is compared on the common timestamps; coverage preserves full-session completeness.</p>
+<figure class="wide"><img src="assets/trajectory_comparison.png" width="2880" height="1980" loading="lazy" alt="Four trajectories with per-frame translation and rotation errors for the new session"><figcaption><span>02 / TRAJECTORY</span> Trajectories and errors after one global rigid alignment per estimator. GT is the reference.</figcaption></figure>
+
+<div class="interactive-panel" id="trajectory-explorer"><div class="panel-heading"><div><span class="section-kicker">EXPLORE THE PATH</span><h3>Inspect another projection</h3></div><label>Coordinate plane <select id="projection"><option value="0,1">X / Y</option><option value="0,2">X / Z</option><option value="1,2">Y / Z</option></select></label></div><div class="legend"><span style="--swatch:#253a45">GT</span><span style="--swatch:#d37646">ORB-SLAM3</span><span style="--swatch:#247978">ViPE</span><span style="--swatch:#8174ad">OpenVINS</span></div><svg id="trajectory-svg" viewBox="0 0 760 360" role="img" aria-label="Trajectory projection in metres"></svg><p class="fine">Display samples every eighth frame and retains the final frame. Shared coordinates and equal axis scales; all 4,254 frames remain in the evaluation.</p><noscript>Enable JavaScript to switch projections; the static figure above retains the results.</noscript></div>
+
+<p>SE(3) changes rotation and translation, but not scale. Sim(3) additionally allows a uniform scale. Under that diagnostic, ATE drops to <strong>0.0259 / 0.0283 / 0.0580 m</strong>, respectively. A global scale component therefore explains a substantial part of the position error, but GT-fitted Sim(3) is not native metric accuracy. OpenVINS has the largest scale departure here, at 0.885078.</p>
+<p>The capture, trajectories and sampling protocol differ from the previous experiment. Historical OpenVINS failure values do not describe this run, and differences across sessions cannot isolate the causal effect of a single change.</p>
+<h2 id="depth">Depth: better poses do not automatically win</h2>
+<p>All three depth routes use <strong>DA3-GIANT, four-view windows, two-frame overlap and processing resolution 392</strong>, with <code>align_to_input_ext_scale=True</code>. M2 / M3 receive their native trajectories without GT alignment; M4 receives GT camera poses. Overlapping predictions are selected by maximum window centrality, breaking ties in favour of the earlier window.</p>
+<p>Blender BVH ray casting against the GT scene provides <strong>camera optical-Z</strong>, the depth along the camera's forward axis, rather than Euclidean distance along a ray. Every frame uses a fixed 160 × 120 grid, or 19,200 rays. Predictions are mapped through their processed intrinsics and bilinearly sampled at the corresponding original-image rays.</p>
+<div class="interactive-panel" id="depth-explorer"><div class="panel-heading"><div><span class="section-kicker">READ THE MEASUREMENTS</span><h3>Switch the split and metric</h3></div></div><div class="controls"><div class="segmented" role="group" aria-label="Depth evaluation split"><button type="button" data-split="modeling_180" aria-pressed="false">180 modelling</button><button type="button" data-split="eval_500" aria-pressed="true">500 evaluation</button></div><label>Metric <select id="depth-metric"><option value="absrel">AbsRel ↓</option><option value="rmse_m">RMSE (m) ↓</option><option value="missing_penalty_mae_m">Penalized MAE (m) ↓</option><option value="valid_coverage">Coverage ↑</option><option value="delta1">δ1 ↑</option></select></label></div><div id="depth-bars" aria-live="polite"></div><p class="fine" id="depth-chart-note">Primary results use no GT scale fitting.</p><noscript>Complete values remain available in the static tables below.</noscript></div>
+
+<p class="table-caption">TABLE 2 · Native DA3 depth on 180 modelling frames; no GT scale fitting</p>
+
+<div class="table-scroll"><table><thead><tr><th scope="col">Method</th><th scope="col">MAE ↓ (m)</th><th scope="col">RMSE ↓ (m)</th><th scope="col">AbsRel ↓</th><th scope="col">δ1 ↑</th><th scope="col">Coverage ↑</th><th scope="col">Penalized MAE ↓ (m)</th></tr></thead><tbody><tr><th scope="row">M2</th><td>1.2576</td><td>2.7339</td><td>19.06%</td><td>82.89%</td><td>99.56%</td><td>1.3850</td></tr><tr><th scope="row">M3</th><td>1.3701</td><td>2.7905</td><td>20.38%</td><td>80.02%</td><td>99.74%</td><td>1.4432</td></tr><tr><th scope="row">M4</th><td>1.2520</td><td>2.8187</td><td>18.87%</td><td>84.36%</td><td>98.11%</td><td>1.7958</td></tr></tbody></table></div>
+
+<p class="table-caption">TABLE 3 · Native DA3 depth on 500 non-modelling frames; no GT scale fitting</p>
+
+<div class="table-scroll"><table><thead><tr><th scope="col">Method</th><th scope="col">MAE ↓ (m)</th><th scope="col">RMSE ↓ (m)</th><th scope="col">AbsRel ↓</th><th scope="col">δ1 ↑</th><th scope="col">Coverage ↑</th><th scope="col">Penalized MAE ↓ (m)</th></tr></thead><tbody><tr><th scope="row">M2</th><td>1.4596</td><td>2.8562</td><td>21.62%</td><td>75.05%</td><td>99.59%</td><td>1.5762</td></tr><tr><th scope="row">M3</th><td>1.7093</td><td>3.2678</td><td>25.82%</td><td>73.75%</td><td>99.30%</td><td>1.9066</td></tr><tr><th scope="row">M4</th><td>1.4741</td><td>2.9699</td><td>21.95%</td><td>76.65%</td><td>98.19%</td><td>1.9895</td></tr></tbody></table></div>
+
+<p>On 500 frames, RMSE / AbsRel are <strong>2.8562 m / 21.62%</strong> for M2, <strong>3.2678 m / 25.82%</strong> for M3, and <strong>2.9699 m / 21.95%</strong> for M4. M4 has the highest δ1 but the lowest coverage; M2 has the lowest penalized MAE. <strong>A ranking needs its metric and validity domain.</strong> M1 has no native depth, so it is absent from these tables.</p>
+<h3 id="read-coverage-with-error">Read coverage with error</h3>
+<p>The fixed GT domain includes finite optical-Z in <code>[0.1, 30] m</code>. The implementation also requires predictions to be finite, inside <code>[0.1, 30] m</code> and supported by valid sampling; predictions outside this range count as missing. MAE, RMSE, AbsRel and δ scores use the jointly valid intersection. Coverage retains the full GT denominator: 3,456,000 / 9,600,000 positions for the 180 / 500 splits.</p>
+<p>Penalized MAE uses the fixed GT domain: absolute error for valid predictions, 30 m for missing predictions. AbsRel is <code>mean(|ẑ − z| / z)</code>; δ1 is the fraction with <code>max(ẑ/z, z/ẑ) &lt; 1.25</code>. Tables pool all valid pixels; <strong>pooled RMSE is not the mean of per-frame RMSEs</strong>. Coverage measures available output, not correct geometry.</p>
+<figure><img src="assets/depth_distribution.svg" width="1200" height="400" loading="lazy" alt="Per-frame AbsRel and cumulative distributions across 500 frames, showing local failures"><figcaption><span>03 / DISTRIBUTION</span> Per-frame errors retain local failures. The cumulative distribution uses all 500 frames as its denominator. M4 samples 37 and 38 have no valid predictions and are not plotted as zero error.</figcaption></figure>
+
+<p>The reports include paired frame bootstrap diagnostics: 2,000 repeats, seed 20260930. For 500-frame per-frame AbsRel, the mean M2−M3 difference is −4.58 percentage points, with a 95% interval [−6.28, −2.97]. M2−M4 uses 498 mutually comparable frames and gives −2.09 points, [−3.83, −0.72]. These average <strong>frame-level differences</strong>, unlike the pooled pixel scores in Table 3. Video frames are correlated; the intervals describe variation within this session, not independent experiment repetitions or cross-scene confidence.</p>
+<h2 id="scale">Scale diagnostics: similar shape is not reliable metric depth</h2>
+<p>If each frame receives a GT-assisted median scale correction, 500-frame RMSE falls to approximately 0.54 m and AbsRel to approximately 3%. The three routes become very close in this diagnostic.</p>
+<p class="table-caption">TABLE 4 · GT-assisted per-frame scale diagnostic on 500 frames; excluded from primary ranking</p>
+
+<div class="table-scroll"><table><thead><tr><th scope="col">Method</th><th scope="col">Native RMSE (m)</th><th scope="col">GT-scaled RMSE (m)</th><th scope="col">GT-scaled AbsRel</th><th scope="col">Scale P05–P95</th><th scope="col">Coverage</th></tr></thead><tbody><tr><th scope="row">M2</th><td>2.8562</td><td>0.5413</td><td>2.99%</td><td>0.650 – 8.387</td><td>100.00%</td></tr><tr><th scope="row">M3</th><td>3.2678</td><td>0.5420</td><td>2.99%</td><td>0.522 – 10.397</td><td>100.00%</td></tr><tr><th scope="row">M4</th><td>2.9699</td><td>0.5403</td><td>2.98%</td><td>0.611 – 8.948</td><td>99.60%</td></tr></tbody></table></div>
+
+<p>This is evidence consistent with unstable local scale, but the correction uses GT and the P05–P95 scale ranges are wide. The evaluator also reapplies the <code>[0.1, 30] m</code> prediction validity rule after scaling, changing coverage. <strong>The improvement combines scale correction and a changed valid intersection; it cannot attribute every error to one mechanism.</strong></p>
+<p>GT poses supply camera geometry, not true depth. Predicted shape, local baseline, scale alignment and validity filtering still affect the output. ViPE trajectory errors could partly compensate for depth scale bias, but this causal explanation has not been independently established; the results do not make estimated poses more correct than GT.</p>
+<p>A concrete boundary case occurs in M4's final two nominal windows, whose camera centres are stationary. Windows 247 and 248 replace one view with anchor sample 276 from the same evaluation split, introducing approximately <strong>14.54 m</strong> of baseline. The fallback reads no GT depth, but changes the view composition and must be disclosed. This event is distinct from the invalid predictions at samples 37 and 38.</p>
+<h2 id="agentic">Bring measurements into the scene program</h2>
+<p>The next question is whether an agent can turn imperfect observations into inspectable objects. The modelling contract calls for inspecting inputs, measuring and decomposing objects, writing <code>bpy</code> from an empty scene, rendering fixed input views, independent review, revision and freezing, followed by GT evaluation.</p>
+<blockquote><p>A named chair can be edited. Its position, dimensions, support and surrounding free space also need measurements before it can serve as a reliable task environment.</p></blockquote>
+
+<p>Four method-specific input packages have been prepared and audited: <strong>680 RGB hashes and 540 modelling geometry files</strong> passed checks, and the 180 / 500 splits are disjoint. Isolation uses physical copies and method-specific contexts. The audit explicitly records that there is no operating-system-enforced read sandbox; access rules alone are not proof of complete isolation.</p>
+<p>The shared budget allows at most five complete scene versions and 60 visual check renders, using fixed sample indices 0, 45, 90, 135 and 179. M2–M4 allow up to three full input-depth checks. Initial and final independent reviews are required, alongside scene, object, collider, camera, measurement and access records. <strong>These are contract limits, not completed output counts.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Evidence at this publication snapshot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frozen trajectories and common evaluation</td>
+<td>Complete; 3 estimators, 4,254 common timestamps</td>
+</tr>
+<tr>
+<td>DA3 depth and independent GT ray evaluation</td>
+<td>Complete; 3 routes × (180 + 500) frames</td>
+</tr>
+<tr>
+<td>Astra input package audit</td>
+<td>Complete; 4 method-specific packages</td>
+</tr>
+<tr>
+<td>M1–M4 semantic scenes, final review and freeze</td>
+<td>In progress; no complete frozen scene set found</td>
+</tr>
+<tr>
+<td>Model depth, appearance and downstream tasks</td>
+<td>No completed results for this run</td>
+</tr>
+</tbody>
+</table>
+<p>Future evaluation will keep three quantities separate: <strong>native DA3 depth versus GT, frozen model depth versus GT, and model consistency with its own input depth</strong>. Matching DA3 is not proof of matching the true scene; naming objects is not a semantic correspondence score.</p>
+<p>The planned M2 / M3 model evaluation permits one global rigid alignment at scale 1. M4 retains its GT camera coordinate relationship. M1 has no external metric scale; if its frozen cameras support registration, it will be reported separately as a “GT-camera-assisted Sim(3) shape diagnostic.” Future model evaluation on 500 frames will still be a same-scene test.</p>
+<h2 id="discussion">What does this run teach us?</h2>
+<p><strong>Pose, depth, scenes and tasks form an engineering chain, but accuracy does not transfer automatically.</strong> ORB-SLAM3 leads the trajectory table without leading pose-conditioned depth. GT cameras do not bypass depth scale and missing-output problems.</p>
+<p><strong>Editability is a representation capability; reliability needs measurements at every stage.</strong> A scene program makes objects and revisions inspectable. The next experiment should preserve scale uncertainty, low-baseline windows and missing regions, then test whether modelling resolves those problems or covers them with plausible geometry.</p>
+<p>This is evidence from one scene and one capture. It does not yet establish completed modelling, robot task success or reduced human effort for the new run. Those remain concrete questions for the next stage.</p>
+<h2 id="evidence">Evidence, versions and reproduction</h2>
+<p>Tables are generated from frozen JSON, and figures use this run's data. The previous blog supplies the research context and editorial reference. Selected original evidence is copied byte for byte with SHA256 hashes. The site does not bundle the full video, all depth arrays or unfinished models.</p>
+<div class="evidence-grid"><a href="data/summary.json"><b>Unified data</b><span>Charts and summary JSON ↗</span></a><a href="evidence/evaluation/metrics.json"><b>Trajectory report</b><span>Alignment, coverage and metrics ↗</span></a><a href="evidence/evaluation/depth/metrics/modeling_180/metrics.json"><b>180-frame depth</b><span>Native, per-frame and diagnostic results ↗</span></a><a href="evidence/evaluation/depth/metrics/eval_500/metrics.json"><b>500-frame depth</b><span>Metrics and paired differences ↗</span></a><a href="evidence/astra_blender/provenance/input_audit.json"><b>Input audit</b><span>Hashes, splits and isolation limits ↗</span></a><a href="data/source_manifest.json"><b>Source manifest</b><span>Paths, sizes and SHA256 hashes ↗</span></a></div>
+
+<p><a href="evidence/evaluation/per_frame_errors.csv">Trajectory per-frame CSV</a> · <a href="evidence/evaluation/depth/metrics/eval_500/per_frame_metrics.csv">Depth per-frame CSV</a> · <a href="evidence/code/evaluate_da3_depth.py">Evaluator</a> · <a href="evidence/code/depth_pipeline.py">Depth validity and formulas</a> · <a href="evidence/astra_blender/configs/run_contract.json">Modelling contract</a> · <a href="evidence/plan_astra_blender.md">Modelling plan</a> · <a href="README.md">Build and publication instructions</a></p>
+<p>Method references: <a href="https://github.com/nv-tlabs/vipe">ViPE</a> · <a href="https://github.com/UZ-SLAMLab/ORB_SLAM3">ORB-SLAM3</a> · <a href="https://docs.openvins.com/">OpenVINS</a> · <a href="https://github.com/ByteDance-Seed/Depth-Anything-3">Depth Anything 3</a> · <a href="https://docs.blender.org/api/current/">Blender Python API</a></p></main></div>
+<footer><div class="brand">AGENTIC WORLD</div><p>An engineering experiment, with its measurements and limits intact.</p><div><a href="https://wentingw.github.io/astra-world-model-blog/">Previous experiment ↗</a><a href="data/summary.json">JSON ↗</a><a href="evidence/SHA256SUMS">SHA256 ↗</a><a href="README.md">Reproduce ↗</a></div></footer></body></html>
