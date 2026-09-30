@@ -2,9 +2,11 @@
 
 From real spaces to worlds phygital agents can use.
 
-AWSM is pronounced “awesome”. Phygital means physical + digital.
+AWSM is pronounced “awesome”; phygital means physical + digital.
 
 The bilingual masthead and Figure 1 share a responsive, left-aligned content width. Its one-time entrance animation respects reduced-motion preferences. Citation text and the downloadable `data/awsm.bib` are generated from the same BibTeX source in `scripts/editorial.py`.
+
+The generated pages version `editorial.css` by its content hash so returning visitors request the updated styling after a deployment.
 
 Bilingual research article by Phygital AI: geometry-grounded agentic scene reconstruction, map-based embodied execution, and a research agenda for persistent spatial memory, interaction, and simulation.
 

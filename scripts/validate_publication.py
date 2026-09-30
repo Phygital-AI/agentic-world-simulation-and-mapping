@@ -256,13 +256,21 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn(f'<p class="lead">{subtitle}</p>', header)
             self.assertIn(f'<meta name="description" content="{subtitle}">', markup)
             self.assertNotIn('class="brand-tagline"', header)
-            self.assertIn('AWSM 读作 “awesome”。' if chinese else 'AWSM is pronounced “awesome”.', header)
-            self.assertIn('Phygital = physical（物理）+ digital（数字），即虚实融合。' if chinese else 'Phygital means physical + digital.', header)
+            brand_note = 'AWSM 读作“awesome”；Phygital = physical（物理）+ digital（数字），即虚实融合。' if chinese else 'AWSM is pronounced “awesome”; phygital means physical + digital.'
+            self.assertIn(f'<p class="pronunciation"><small>{brand_note}</small></p>', header)
+            self.assertNotIn(')Phygital', header)
             self.assertNotIn('class="eyebrow"', header)
             self.assertNotIn('class="meta"', header)
             self.assertIn('@misc{awsm_2026,', markup)
             self.assertIn('title        = {{AWSM}: Agentic World Simulation and Mapping}', markup)
             self.assertNotIn('@misc{agentic_world_2026,', markup)
+
+    def test_editorial_stylesheet_cache_version(self) -> None:
+        expected = f'editorial.css?v={sha256(ROOT / "editorial.css")[:12]}'
+        for name in PAGES:
+            markup = (ROOT / name).read_text(encoding="utf-8")
+            self.assertIn(f'<link rel="stylesheet" href="{expected}">', markup)
+            self.assertNotIn('href="editorial.css"', markup)
 
     def test_downloadable_citation(self) -> None:
         citation = (ROOT / "data/awsm.bib").read_text(encoding="utf-8")

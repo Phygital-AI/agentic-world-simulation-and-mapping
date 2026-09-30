@@ -48,6 +48,9 @@ with sync_playwright() as pw:
             assert abs(heading_box["x"]-figure_box["x"])<1
             assert abs(heading_box["width"]-figure_box["width"])<1
             assert figure_box["width"]<=1000
+            assert page.locator("header h1").evaluate("element => getComputedStyle(element).display")=="grid"
+            assert "editorial.css?v=" in page.locator('link[rel="stylesheet"][href^="editorial.css"]').get_attribute("href")
+            assert page.locator("header .pronunciation").text_content()==('AWSM 读作“awesome”；Phygital = physical（物理）+ digital（数字），即虚实融合。' if lang=="zh" else 'AWSM is pronounced “awesome”; phygital means physical + digital.')
             assert page.locator(".citation-download").get_attribute("href")=="data/awsm.bib"
             assert page.locator('nav a[aria-current="page"]').get_attribute("href")==path
             assert page.locator('nav').get_by_role("link",name="中文",exact=True).get_attribute("href")=="zh.html"
