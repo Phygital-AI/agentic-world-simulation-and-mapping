@@ -19,8 +19,8 @@
     },
     {
       "path": "assets/figure14_abc.png",
-      "sha256": "6acd231b397099510ce2a6a5de0c2a7e7a5e959a4631446132a9c2e0bfdf092b",
-      "bytes": 323992
+      "sha256": "6ce74542f6ce9d45a985e1916a42ef2e1205b29bbcb03959e4b1ea08380dfa39",
+      "bytes": 344653
     },
     {
       "path": "assets/fixed_five_view_comparison_m1_m4.jpg",
@@ -174,7 +174,7 @@
     },
     {
       "path": "data/source_contract.json",
-      "sha256": "ad17d7a2f2e5506d2cfe352f8cd7c5dae09b66695952d0df099aeade871cd180",
+      "sha256": "00525f47c2b666175ffb9d7dd9a995cfdac9f39e8485f8d6e88a19aa4cd00e61",
       "bytes": 13993
     },
     {
