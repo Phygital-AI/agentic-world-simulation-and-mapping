@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from site_builder_interactive import academic_page
+from editorial import BIBTEX
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +43,12 @@ def main():
                 raise SystemExit(f"Stale generated page: {name}")
         else:
             target.write_text(content, encoding="utf-8")
+    citation_path = ROOT / "data/awsm.bib"
+    if args.check:
+        if citation_path.read_text(encoding="utf-8") != BIBTEX:
+            raise SystemExit("Stale downloadable citation")
+    else:
+        citation_path.write_text(BIBTEX, encoding="utf-8")
     records = publication_records()
     manifest = json.dumps({"schema_version": 2, "source_contract": "data/source_contract.json", "files": records}, ensure_ascii=False, indent=2) + "\n"
     manifest_path = ROOT / GENERATED_MANIFESTS[0]

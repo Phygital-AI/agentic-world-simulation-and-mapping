@@ -173,6 +173,11 @@
       "bytes": 4000665
     },
     {
+      "path": "data/awsm.bib",
+      "sha256": "89ef6c3e8ad37bb83e9ed34be4a5348fea7d03f4f36c7019d4ab65ca2726b578",
+      "bytes": 386
+    },
+    {
       "path": "data/embodied_demo.json",
       "sha256": "db010c9f4d99723be701b0e1758fac1f6b8540c540939b5407701db29297f774",
       "bytes": 2192
@@ -199,13 +204,13 @@
     },
     {
       "path": "editorial.css",
-      "sha256": "159fd0e925d78557e80756762c582abe4a1f6e0134f54e5503d48139eb5ed31b",
-      "bytes": 2523
+      "sha256": "3cd2bb609bce3d77be2489810123e0fbcffc79961d40b1ebc1ca98382540be2a",
+      "bytes": 6179
     },
     {
       "path": "en.html",
-      "sha256": "090be17f8846b2da6685b67f01bc902ca98c9f32392e54af4cc80cb03df60279",
-      "bytes": 32834
+      "sha256": "916ce7c7e7bfdc58674fc33d0edfd0d0be4370325d349680f8e73ca2b54d74a3",
+      "bytes": 33134
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -239,8 +244,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "090be17f8846b2da6685b67f01bc902ca98c9f32392e54af4cc80cb03df60279",
-      "bytes": 32834
+      "sha256": "916ce7c7e7bfdc58674fc33d0edfd0d0be4370325d349680f8e73ca2b54d74a3",
+      "bytes": 33134
     },
     {
       "path": "models/M1/scene.blend",
@@ -324,8 +329,8 @@
     },
     {
       "path": "zh.html",
-      "sha256": "0de6e535d8ece08a86a666f2f6b6cd80f3597a03aa70dc5a4c733342fd7eac65",
-      "bytes": 30993
+      "sha256": "bc5c46136538645df6267152ee9afe6395f9b32ee02b1d4e104aab351d7ee5ab",
+      "bytes": 31299
     }
   ]
 }

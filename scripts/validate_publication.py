@@ -9,6 +9,7 @@ import re
 import unittest
 from collections import Counter
 from html.parser import HTMLParser
+from html import unescape
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -248,7 +249,9 @@ class PublicationValidation(unittest.TestCase):
             markup = (ROOT / name).read_text(encoding="utf-8")
             header = markup.split('<header>', 1)[1].split('</header>', 1)[0]
             chinese = name == "zh.html"
-            self.assertIn('<h1>AWSM：智能体世界仿真与建图</h1>' if chinese else '<h1>AWSM: Agentic World Simulation and Mapping</h1>', header)
+            heading = re.search(r'<h1>(.*?)</h1>', header).group(1)
+            heading_text = re.sub(r'<[^>]+>', '', heading)
+            self.assertEqual(heading_text, 'AWSM： 智能体世界仿真与建图' if chinese else 'AWSM: Agentic World Simulation and Mapping')
             subtitle = '把真实空间，变成虚实融合智能体可以使用的世界。' if chinese else 'From real spaces to worlds phygital agents can use.'
             self.assertIn(f'<p class="lead">{subtitle}</p>', header)
             self.assertIn(f'<meta name="description" content="{subtitle}">', markup)
@@ -259,6 +262,16 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn('@misc{awsm_2026,', markup)
             self.assertIn('title        = {{AWSM}: Agentic World Simulation and Mapping}', markup)
             self.assertNotIn('@misc{agentic_world_2026,', markup)
+
+    def test_downloadable_citation(self) -> None:
+        citation = (ROOT / "data/awsm.bib").read_text(encoding="utf-8")
+        self.assertIn('author       = {{Phygital AI}}', citation)
+        self.assertIn(f'url          = {{{CANONICAL_ROOT}}}', citation)
+        for name in PAGES:
+            markup = (ROOT / name).read_text(encoding="utf-8")
+            rendered = re.search(r'<pre class="citation-block"><code>(.*?)</code></pre>', markup, re.S).group(1)
+            self.assertEqual(unescape(rendered), citation.rstrip())
+            self.assertIn('href="data/awsm.bib" download="awsm.bib"', markup)
 
 
 if __name__ == "__main__":

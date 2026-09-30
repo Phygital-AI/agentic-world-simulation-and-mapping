@@ -2,6 +2,15 @@
 
 SITE_TITLE = "AWSM: Agentic World Simulation and Mapping"
 BASE_URL = "https://phygital-ai.github.io/agentic-world-simulation-and-mapping/"
+BIBTEX = r"""@misc{awsm_2026,
+  title        = {{AWSM}: Agentic World Simulation and Mapping},
+  author       = {{Phygital AI}},
+  year         = {2026},
+  howpublished = {Interactive research article},
+  url          = {https://phygital-ai.github.io/agentic-world-simulation-and-mapping/},
+  note         = {Reconstruction benchmarks, editable scene assets, and map-based embodied demonstration}
+}
+"""
 
 REFERENCES = [
     ("Qin et al. VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator. TRO, 2018.", "https://arxiv.org/abs/1708.03852"),
@@ -134,8 +143,12 @@ def editorial_page(page, en):
     pronunciation = 'AWSM is pronounced “awesome”.' if en else 'AWSM 读作 “awesome”。'
     before_header, header_start, remainder = page.partition('<header>')
     old_header, header_end, after_header = remainder.partition('</header>')
-    heading = old_header.split('<h1>', 1)[1].split('</h1>', 1)[0]
-    page = before_header + header_start + f'<h1>{heading}</h1><p class="lead">{subtitle}</p><p class="pronunciation"><small>({pronunciation})</small></p>' + header_end + after_header
+    title_name = "Agentic World Simulation and Mapping" if en else "智能体世界仿真与建图"
+    separator = ":" if en else "："
+    heading = f'<h1><span class="title-mark">AWSM<span class="title-separator">{separator}</span></span> <span class="title-name">{title_name}</span></h1>'
+    page = before_header + header_start + heading + f'<p class="lead">{subtitle}</p><p class="pronunciation"><small>({pronunciation})</small></p>' + header_end + after_header
+    download_label = "Download BibTeX" if en else "下载 BibTeX 引用"
+    page = page.replace('</code></pre></section>', f'</code></pre><a class="citation-download" href="data/awsm.bib" download="awsm.bib">{download_label} <span aria-hidden="true">↓</span></a></section>', 1)
     page = page.replace('<section id="motivation">', demo_section(en) + '\n<section id="motivation">', 1)
     page = page.replace('</section>\n<section id="workflow">', grounding_section(en) + '</section>\n<section id="workflow">', 1)
     page = page.replace('</section>\n<section id="limitations">', outlook_section(en) + '</section>\n<section id="limitations">', 1)

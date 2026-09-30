@@ -41,7 +41,14 @@ with sync_playwright() as pw:
                 failed.append(f"{request.url}: {request.failure}")
             page.on("requestfailed",record_failure)
             page.goto(a.url.rstrip("/")+"/"+path,wait_until="networkidle",timeout=120_000)
-            assert page.locator("h1").inner_text()==("智能体世界仿真与建图" if lang=="zh" else "Agentic World Simulation and Mapping")
+            assert " ".join(page.locator("h1").text_content().split())==("AWSM： 智能体世界仿真与建图" if lang=="zh" else "AWSM: Agentic World Simulation and Mapping")
+            page.locator("header h1").evaluate("async element => { await Promise.all(element.getAnimations({subtree:true}).map(animation => animation.finished)); }")
+            heading_box=page.locator("header h1").bounding_box()
+            figure_box=page.locator("#figure-1 > img").bounding_box()
+            assert abs(heading_box["x"]-figure_box["x"])<1
+            assert abs(heading_box["width"]-figure_box["width"])<1
+            assert figure_box["width"]<=1000
+            assert page.locator(".citation-download").get_attribute("href")=="data/awsm.bib"
             assert page.locator('nav a[aria-current="page"]').get_attribute("href")==path
             assert page.locator('nav').get_by_role("link",name="中文",exact=True).get_attribute("href")=="zh.html"
             assert page.locator('nav').get_by_role("link",name="EN",exact=True).get_attribute("href")=="index.html"

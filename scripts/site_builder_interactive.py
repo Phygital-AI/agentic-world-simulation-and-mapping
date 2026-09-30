@@ -3,7 +3,7 @@
 from pathlib import Path
 from urllib.request import Request, urlopen
 import argparse, hashlib, html, json, shutil, tempfile
-from editorial import BASE_URL, SITE_TITLE, REFERENCES, narrative_copy, editorial_page
+from editorial import BASE_URL, BIBTEX, SITE_TITLE, REFERENCES, narrative_copy, editorial_page
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT.parent / "world_lobby_four_trajectory_20260929"
@@ -280,13 +280,7 @@ def academic_page(en=False):
         '<a href="https://kevinxu02.github.io/real2sim-indoor-site/" target="_blank" rel="noopener">AHa-3D</a>'
         '</span>'
     )
-    citation = html.escape("""@misc{awsm_2026,
-  title        = {{AWSM}: Agentic World Simulation and Mapping},
-  author       = {Phygital AI},
-  year         = {2026},
-  howpublished = {\\url{https://phygital-ai.github.io/agentic-world-simulation-and-mapping/}},
-  note         = {Interactive research article and frozen evaluation assets}
-}""")
+    citation = html.escape(BIBTEX.rstrip())
     references = [
         ('AHa-3D: Agentic Tool Use for Real2Sim with GPT-6 Astra.',
          'https://kevinxu02.github.io/real2sim-indoor-site/'),
