@@ -50,7 +50,7 @@ for name,doc in docs.items():
     assert all(f"Figure {i}." in html for i in range(1,7))
     assert html.index('id="table-2"') < html.index('id="figure-2"')
     assert html.index('id="figure-4"') < html.index('id="figure-5"')
-    assert 'assets/fixed_views/GT/000.png' in html and 'assets/fixed_views/M4/000.png' in html
+    assert 'assets/fixed_views/GT/000.png' in html and 'assets/fixed_views/M1/000.png' in html
     assert 'src="https://office-cafe-vipe.hiwtishere.chatgpt.site/"' in html
     assert 'href="https://office-cafe-vipe.hiwtishere.chatgpt.site/shake.html"' in html
     assert 'type="importmap"' in html and 'scene-compare.js' in html
@@ -66,7 +66,7 @@ assert "display copies and runtime registrations do not alter the frozen models"
 contract=json.loads((ROOT/"data/source_contract.json").read_text())
 assert contract["presentation"]["table3_hidden_columns"]==["model_sha256","alignment"]
 assert contract["presentation"]["table2_hidden_columns"]==["alignment"]
-assert contract["presentation"]["figure1_layout"]=="always horizontal side-by-side"
+assert contract["presentation"]["figure1_layout"]=="single supplied teaser image"
 assert contract["external_embed"]["office_cafe"]["retained_features"]==[
     "model","scan_to_model","source_video_to_model","source_camera_trajectory_playback",
     "shake_control","shake_gentle","shake_strong"]
@@ -128,9 +128,9 @@ app=(ROOT/"app.js").read_text()
 assert '2:new Set(["alignment"])' in app
 assert '3:new Set(["model_sha256","alignment"])' in app
 assert 'document.createElement("strong")' in app
-style=(ROOT/"style.css").read_text()
-assert ".hero-pair-grid{display:grid;grid-template-columns:1fr 1fr" in style
-assert ".hero-pair-grid{grid-template-columns:1fr}" not in style
+for name in ("index.html","en.html"):
+    html=(ROOT/name).read_text()
+    assert '<figure class="hero" id="figure-1"><img src="assets/teaser_originals.png"' in html
 
 manifest=json.loads((ROOT/"evidence/publication_manifest.json").read_text())
 for row in manifest["files"]: assert sha(ROOT/row["path"])==row["sha256"],row["path"]

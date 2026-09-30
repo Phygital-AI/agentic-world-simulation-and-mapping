@@ -35,8 +35,8 @@ with sync_playwright() as pw:
             assert page.locator("#table-2").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-2')) & Node.DOCUMENT_POSITION_FOLLOWING")
             for table_index in range(2,8):
                 assert page.locator(f"#table-{table_index} tbody strong").count()>0
-            assert page.locator("#figure-1 .hero-pair-grid img").count()==2
-            assert page.locator("#figure-1 .hero-pair-grid").evaluate("(x)=>getComputedStyle(x).gridTemplateColumns.split(' ').length===2")
+            assert page.locator("#figure-1 > img").count()==1
+            assert page.locator("#figure-1 > img").get_attribute("src")=="assets/teaser_originals.png"
             assert page.locator("#figure-4").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-5')) & Node.DOCUMENT_POSITION_FOLLOWING")
             figure3=page.locator("#figure-3"); figure3.scroll_into_view_if_needed()
             page.wait_for_function("document.querySelector('#figure-3').dataset.state === 'ready'",timeout=120_000)

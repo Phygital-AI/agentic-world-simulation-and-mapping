@@ -25,6 +25,12 @@
       "published": "assets/model_depth_error_five_views_m1_m4.png",
       "sha256": "a38b146beb0a02d17016ebad7eccd375957a7da76146fa1ccf0ac120baa0cc2a",
       "bytes": 463378
+    },
+    "assets/teaser_originals.png": {
+      "source": "teaser_originals.png",
+      "published": "assets/teaser_originals.png",
+      "sha256": "6099f12bdaea83fb2ce4f8e1ed282ac864d6f4ffb96911efb5a9101845656dae",
+      "bytes": 4000665
     }
   },
   "models": {
@@ -288,7 +294,7 @@
       "model_sha256",
       "alignment"
     ],
-    "figure1_layout": "always horizontal side-by-side",
+    "figure1_layout": "single supplied teaser image",
     "metric_best_values": "bold, raw-value comparison"
   },
   "protocols": {

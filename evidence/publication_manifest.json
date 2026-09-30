@@ -158,6 +158,11 @@
       "bytes": 463378
     },
     {
+      "path": "assets/teaser_originals.png",
+      "sha256": "6099f12bdaea83fb2ce4f8e1ed282ac864d6f4ffb96911efb5a9101845656dae",
+      "bytes": 4000665
+    },
+    {
       "path": "data/fixed_views.json",
       "sha256": "67611f8ecc63b44187d494984c9fea6cfe6ab1fb2e99cbe9196ec9ba1e3fb911",
       "bytes": 8773
@@ -169,8 +174,8 @@
     },
     {
       "path": "data/source_contract.json",
-      "sha256": "8def6ad41cfefe106ad4ff5553a198c569a546df08a96650b1d46eecadf80ceb",
-      "bytes": 13754
+      "sha256": "90b36a9ad484e07cf6bbc7f02a088d1c43e4ecee7fa5ac8cabcccd0eeb84db6a",
+      "bytes": 13993
     },
     {
       "path": "data/tables_1_7.json",
@@ -179,8 +184,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "610f3bfc5cede10433dcb66c2ced48e3dcbc2279b22512eb01bbcecd8b2aeab4",
-      "bytes": 12597
+      "sha256": "ec839b796c3a8afeffe696774db635e4b29f28595d567eef8a881a602f92c4c6",
+      "bytes": 12376
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -204,8 +209,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "3ec55133d632f942401a50102b4172ca54bf01c4f658bd13996514f1b77bbed9",
-      "bytes": 12496
+      "sha256": "79bea39c7b77fc6eae2a74a3aa899fa04e42996f761336b87b3eaaa0a05d64ad",
+      "bytes": 12270
     },
     {
       "path": "models/M1/scene.blend",
