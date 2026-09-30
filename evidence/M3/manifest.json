@@ -35,7 +35,8 @@
       "model_to_gt_mean_m": 0.06935983382743138,
       "observed_gt_to_model_mean_m": 0.09502824761255278,
       "model_sha256": "00cd43eef3b4a6b2b2b169e8a7eda787dc57222dc501a3a9be09f39af5f46a9b",
-      "alignment": "one SE3 from 180 input camera correspondences; no scale fit"
+      "alignment": "one SE3 from 180 input camera correspondences; no scale fit",
+      "bidirectional_mean_m": 0.08219404071999209
     },
     "table4": {
       "method": "M3",
@@ -45,10 +46,23 @@
     },
     "table5": {
       "method": "M3",
-      "absrel": 0.08214297890663147,
-      "rmse_m": 1.1082061529159546,
-      "coverage": 0.99924,
-      "penalized_mae_m": 0.49467605352401733
+      "psnr_db": 12.252687193116532,
+      "ssim": 0.3972503730654717,
+      "lpips_alex_v01": 0.5683315402269363
+    },
+    "table6": {
+      "method": "M3",
+      "absrel": 0.09866034984588623,
+      "rmse_m": 1.1816775798797607,
+      "coverage": 0.9984166666666666,
+      "penalized_mae_m": 0.5551674365997314
+    },
+    "table7": {
+      "method": "M3",
+      "absrel": 0.08247262239456177,
+      "rmse_m": 1.0896246433258057,
+      "coverage": 0.9991479166666667,
+      "penalized_mae_m": 0.4945947229862213
     }
   }
 }

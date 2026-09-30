@@ -1,0 +1,508 @@
+{
+  "schema_version": 2,
+  "status": "COMPLETE",
+  "scope": "Only frozen models under astra_blender/models/M1..M4",
+  "reference": "https://wentingw.github.io/astra-world-model-blog/#_5",
+  "m1_notice": "M1 model-space metrics use one frozen GT-assisted Sim(3) from five manual camera associations. They are diagnostic and do not represent native metric recovery.",
+  "protocols": {
+    "table2": "180 fixed views × 19,200 pixels; optical-Z; GT-valid domain; no per-view fitting",
+    "table3": {
+      "model_surface_samples": 100000,
+      "model_surface_seed": 20260923,
+      "observed_gt_samples": 100000,
+      "observed_gt_seed": 20260925,
+      "distance": "exact nearest triangle",
+      "bidirectional_mean": "arithmetic mean of model→GT and observed GT→model mean distances"
+    },
+    "table4": {
+      "views": [
+        0,
+        36,
+        72,
+        108,
+        144
+      ],
+      "resolution": [
+        640,
+        480
+      ],
+      "gt_resize": "Lanczos 1280x960 to 640x480",
+      "metrics": "full-image PSNR, SSIM, LPIPS AlexNet v0.1; no crop/mask/fitting"
+    },
+    "table5": {
+      "scope": "100 seeded views drawn without replacement from the 175 modeling frames remaining after excluding fixed views; these are not unseen modeling inputs",
+      "seed": 20260930,
+      "excluded_fixed_views": [
+        0,
+        36,
+        72,
+        108,
+        144
+      ],
+      "selected_indices": [
+        1,
+        2,
+        3,
+        5,
+        9,
+        12,
+        13,
+        14,
+        16,
+        18,
+        19,
+        21,
+        22,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        38,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        50,
+        52,
+        55,
+        56,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        67,
+        70,
+        71,
+        73,
+        75,
+        76,
+        78,
+        79,
+        81,
+        83,
+        84,
+        85,
+        87,
+        89,
+        93,
+        94,
+        96,
+        98,
+        99,
+        101,
+        102,
+        103,
+        104,
+        106,
+        107,
+        109,
+        112,
+        113,
+        117,
+        118,
+        119,
+        120,
+        122,
+        123,
+        124,
+        127,
+        133,
+        135,
+        136,
+        137,
+        138,
+        142,
+        146,
+        148,
+        149,
+        151,
+        152,
+        155,
+        157,
+        160,
+        164,
+        166,
+        167,
+        168,
+        169,
+        170,
+        172,
+        177,
+        179
+      ],
+      "resolution": [
+        640,
+        480
+      ],
+      "preprocessing": "GT RGB Lanczos 1280x960 to 640x480; RGB float32 [0,1]; no crop, mask, or color/exposure fitting",
+      "metrics": "full-image PSNR, SSIM, LPIPS AlexNet v0.1",
+      "aggregation": "arithmetic mean over the same frozen 100 views"
+    },
+    "table6": {
+      "views": [
+        0,
+        36,
+        72,
+        108,
+        144
+      ],
+      "depth": {
+        "depth": "optical Z in metres",
+        "domain": "GT valid_domain and finite GT in [0.1, 30] m",
+        "prediction_valid": "finite prediction in [0.1, 30] m",
+        "aggregation": "pixel-weighted over all selected frames",
+        "missing_penalty": "30 m absolute error for each missing prediction"
+      }
+    },
+    "table7": {
+      "scope": "the exact same 100 modeling-frame indices as Table 5; held out only from the fixed-five check",
+      "seed": 20260930,
+      "selected_indices": [
+        1,
+        2,
+        3,
+        5,
+        9,
+        12,
+        13,
+        14,
+        16,
+        18,
+        19,
+        21,
+        22,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        38,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        50,
+        52,
+        55,
+        56,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        67,
+        70,
+        71,
+        73,
+        75,
+        76,
+        78,
+        79,
+        81,
+        83,
+        84,
+        85,
+        87,
+        89,
+        93,
+        94,
+        96,
+        98,
+        99,
+        101,
+        102,
+        103,
+        104,
+        106,
+        107,
+        109,
+        112,
+        113,
+        117,
+        118,
+        119,
+        120,
+        122,
+        123,
+        124,
+        127,
+        133,
+        135,
+        136,
+        137,
+        138,
+        142,
+        146,
+        148,
+        149,
+        151,
+        152,
+        155,
+        157,
+        160,
+        164,
+        166,
+        167,
+        168,
+        169,
+        170,
+        172,
+        177,
+        179
+      ],
+      "depth": {
+        "depth": "optical Z in metres",
+        "domain": "GT valid_domain and finite GT in [0.1, 30] m",
+        "prediction_valid": "finite prediction in [0.1, 30] m",
+        "aggregation": "pixel-weighted over all selected frames",
+        "missing_penalty": "30 m absolute error for each missing prediction"
+      }
+    }
+  },
+  "tables": {
+    "table1": [
+      {
+        "method": "M1",
+        "allowed_inputs": "180 张采样 RGB",
+        "geometry_source": "视觉推断，无测量尺度",
+        "modeling_role": "推断布局，编写对象与材质"
+      },
+      {
+        "method": "M2",
+        "allowed_inputs": "完整 RGB 视频；选取 180 帧建模",
+        "geometry_source": "ViPE RGB-only 位姿 → pose-conditioned DA3 深度",
+        "modeling_role": "将位姿与深度测量组织为对象化场景"
+      },
+      {
+        "method": "M3",
+        "allowed_inputs": "视频、IMU、相机–IMU 标定",
+        "geometry_source": "ORB-SLAM3 单目惯性位姿 → pose-conditioned DA3 深度",
+        "modeling_role": "结合图像、位姿、深度建模"
+      },
+      {
+        "method": "M4",
+        "allowed_inputs": "视频及 GT camera pose",
+        "geometry_source": "GT 位姿 → pose-conditioned DA3 深度",
+        "modeling_role": "与 M3 相同类型的建模流程"
+      }
+    ],
+    "table2": [
+      {
+        "method": "M1",
+        "ate_m": null,
+        "rotation_deg": null,
+        "native_depth_absrel": null,
+        "model_depth_absrel": 0.16439823806285858,
+        "alignment": "GT-assisted Sim(3), diagnostic only"
+      },
+      {
+        "method": "M2",
+        "ate_m": 0.1668,
+        "rotation_deg": 0.3065,
+        "native_depth_absrel": 0.19056472003176061,
+        "model_depth_absrel": 0.09286404401063919,
+        "alignment": "one global SE(3), scale=1"
+      },
+      {
+        "method": "M3",
+        "ate_m": 0.1205,
+        "rotation_deg": 0.1943,
+        "native_depth_absrel": 0.20379653842953233,
+        "model_depth_absrel": 0.08371810615062714,
+        "alignment": "one global SE(3), scale=1"
+      },
+      {
+        "method": "M4",
+        "ate_m": "GT input",
+        "rotation_deg": "GT input",
+        "native_depth_absrel": 0.1886706026379072,
+        "model_depth_absrel": 0.07600006461143494,
+        "alignment": "GT coordinates"
+      }
+    ],
+    "table3": [
+      {
+        "method": "M1",
+        "model_to_gt_mean_m": 0.34486243741226075,
+        "observed_gt_to_model_mean_m": 0.40664686199496186,
+        "model_sha256": "80f985ad09591bdb227e99e71f6bacaa0b9e8c8b565c27da64ad4ac4ceb8910e",
+        "alignment": "GT-assisted Sim3 from frozen manual-view camera associations; shape/display diagnostic only; not metric recovery; no mesh ICP",
+        "bidirectional_mean_m": 0.3757546497036113
+      },
+      {
+        "method": "M2",
+        "model_to_gt_mean_m": 0.13236121125603983,
+        "observed_gt_to_model_mean_m": 0.10298419313248852,
+        "model_sha256": "c19f33ec434bbcf89137e67d81c283b9adfd48f42e993d8b29d63e08318f79a6",
+        "alignment": "one SE3 from 180 input camera correspondences; no scale fit",
+        "bidirectional_mean_m": 0.11767270219426418
+      },
+      {
+        "method": "M3",
+        "model_to_gt_mean_m": 0.06935983382743138,
+        "observed_gt_to_model_mean_m": 0.09502824761255278,
+        "model_sha256": "00cd43eef3b4a6b2b2b169e8a7eda787dc57222dc501a3a9be09f39af5f46a9b",
+        "alignment": "one SE3 from 180 input camera correspondences; no scale fit",
+        "bidirectional_mean_m": 0.08219404071999209
+      },
+      {
+        "method": "M4",
+        "model_to_gt_mean_m": 0.06866006729939131,
+        "observed_gt_to_model_mean_m": 0.07449522976921306,
+        "model_sha256": "cc6cb605246a255d94e36b9dc3f8b91d5a292b047470bc0ff75b8a5c404b0cfe",
+        "alignment": "permitted GT input coordinate frame; astra_blender/models/M4 T_input_model is identity",
+        "bidirectional_mean_m": 0.07157764853430218
+      }
+    ],
+    "table4": [
+      {
+        "method": "M1",
+        "psnr_db": 10.260909193969148,
+        "ssim": 0.3091735512018204,
+        "lpips_alex_v01": 0.6575803160667419
+      },
+      {
+        "method": "M2",
+        "psnr_db": 12.95293150317823,
+        "ssim": 0.3896766543388367,
+        "lpips_alex_v01": 0.5310081720352173
+      },
+      {
+        "method": "M3",
+        "psnr_db": 12.052547333787004,
+        "ssim": 0.3958937466144562,
+        "lpips_alex_v01": 0.5791207671165466
+      },
+      {
+        "method": "M4",
+        "psnr_db": 12.294263798590851,
+        "ssim": 0.34136943221092225,
+        "lpips_alex_v01": 0.531274390220642
+      }
+    ],
+    "table5": [
+      {
+        "method": "M1",
+        "psnr_db": 11.691789500467046,
+        "ssim": 0.31951158225536347,
+        "lpips_alex_v01": 0.6073989069461823
+      },
+      {
+        "method": "M2",
+        "psnr_db": 13.207560508419194,
+        "ssim": 0.3776748192310333,
+        "lpips_alex_v01": 0.5329300162196159
+      },
+      {
+        "method": "M3",
+        "psnr_db": 12.252687193116532,
+        "ssim": 0.3972503730654717,
+        "lpips_alex_v01": 0.5683315402269363
+      },
+      {
+        "method": "M4",
+        "psnr_db": 12.513978931521383,
+        "ssim": 0.33674563601613045,
+        "lpips_alex_v01": 0.5237806642055511
+      }
+    ],
+    "table6": [
+      {
+        "method": "M1",
+        "absrel": 0.2901068925857544,
+        "rmse_m": 3.049535036087036,
+        "coverage": 0.9996145833333333,
+        "penalized_mae_m": 1.88661527633667
+      },
+      {
+        "method": "M2",
+        "absrel": 0.09218113869428635,
+        "rmse_m": 1.116154432296753,
+        "coverage": 0.9978125,
+        "penalized_mae_m": 0.577746570110321
+      },
+      {
+        "method": "M3",
+        "absrel": 0.09866034984588623,
+        "rmse_m": 1.1816775798797607,
+        "coverage": 0.9984166666666666,
+        "penalized_mae_m": 0.5551674365997314
+      },
+      {
+        "method": "M4",
+        "absrel": 0.08832013607025146,
+        "rmse_m": 1.1883933544158936,
+        "coverage": 0.9985833333333334,
+        "penalized_mae_m": 0.5010335445404053
+      }
+    ],
+    "table7": [
+      {
+        "method": "M1",
+        "absrel": 0.164479598402977,
+        "rmse_m": 1.7184345722198486,
+        "coverage": 0.9924354166666667,
+        "penalized_mae_m": 1.2859067916870117
+      },
+      {
+        "method": "M2",
+        "absrel": 0.09284797310829163,
+        "rmse_m": 1.1448776721954346,
+        "coverage": 0.9977067708333334,
+        "penalized_mae_m": 0.6155765056610107
+      },
+      {
+        "method": "M3",
+        "absrel": 0.08247262239456177,
+        "rmse_m": 1.0896246433258057,
+        "coverage": 0.9991479166666667,
+        "penalized_mae_m": 0.4945947229862213
+      },
+      {
+        "method": "M4",
+        "absrel": 0.07466284930706024,
+        "rmse_m": 1.1474982500076294,
+        "coverage": 0.998678125,
+        "penalized_mae_m": 0.47199496626853943
+      }
+    ]
+  },
+  "source_files": {
+    "base_tables_1_5": {
+      "path": "astra_blender2/report/space/results/blog_tables_1_5/tables_1_5.json",
+      "sha256": "35379c83f758cacad2b9a07c1d1159f332bf109e94cf3cddd7e6ccde0d0b8270"
+    },
+    "view_subset_manifest": {
+      "path": "astra_blender2/evaluation/blog_extended_100_20260930/view_subset_manifest.json",
+      "sha256": "f03f7561b01fe1132dcbc16890e9abb10af73b5c4589f75b38aa698a3819feca"
+    },
+    "appearance_metrics": {
+      "path": "astra_blender2/evaluation/blog_extended_100_20260930/appearance_metrics.json",
+      "sha256": "bd8a3e4cd06ef42030a1e49008b321b4ee51f134059c681d2a709bf5e39874fd"
+    },
+    "depth_metrics": {
+      "path": "astra_blender2/evaluation/blog_extended_100_20260930/depth_metrics.json",
+      "sha256": "709809701db36c49ab848d665da330a7cb213cf26675212dbcf214d7e4cd5b24"
+    }
+  }
+}

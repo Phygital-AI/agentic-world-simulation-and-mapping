@@ -27,9 +27,14 @@ with sync_playwright() as pw:
                 failed.append(f"{request.url}: {request.failure}")
             page.on("requestfailed",record_failure)
             page.goto(a.url.rstrip("/")+"/"+path,wait_until="networkidle",timeout=120_000)
-            page.wait_for_selector("#table-5 table"); assert page.locator(".table-figure table").count()==5
+            page.wait_for_selector("#table-7 table"); assert page.locator(".table-figure table").count()==7
+            table2_headers=page.locator("#table-2 thead th").all_text_contents()
+            assert len(table2_headers)==5 and all("配准" not in x and "Alignment" not in x for x in table2_headers)
             table3_headers=page.locator("#table-3 thead th").all_text_contents()
-            assert len(table3_headers)==3 and all("SHA256" not in x and "配准" not in x and "Alignment" not in x for x in table3_headers)
+            assert len(table3_headers)==4 and all("SHA256" not in x and "配准" not in x and "Alignment" not in x for x in table3_headers)
+            assert page.locator("#table-2").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-2')) & Node.DOCUMENT_POSITION_FOLLOWING")
+            for table_index in range(2,8):
+                assert page.locator(f"#table-{table_index} tbody strong").count()>0
             assert page.locator("#figure-1 .hero-pair-grid img").count()==2
             assert page.locator("#figure-1 .hero-pair-grid").evaluate("(x)=>getComputedStyle(x).gridTemplateColumns.split(' ').length===2")
             assert page.locator("#figure-4").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-5')) & Node.DOCUMENT_POSITION_FOLLOWING")
@@ -55,8 +60,13 @@ with sync_playwright() as pw:
             iframe=page.locator("#office-cafe iframe")
             assert iframe.get_attribute("src")=="https://office-cafe-vipe.hiwtishere.chatgpt.site/"
             iframe.scroll_into_view_if_needed()
-            page.wait_for_timeout(1000)
-            office=next((f for f in page.frames if f.url.startswith("https://office-cafe-vipe.hiwtishere.chatgpt.site/")),None)
+            office=None
+            for _ in range(30):
+                page.wait_for_timeout(1000)
+                candidate=next((f for f in page.frames if f.url.startswith("https://office-cafe-vipe.hiwtishere.chatgpt.site/")),None)
+                if candidate is not None:
+                    office=candidate
+                    break
             assert office is not None
             office.wait_for_selector("#compare-mode",timeout=120_000)
             if viewport=="desktop" and lang=="zh":

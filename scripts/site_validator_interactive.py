@@ -26,13 +26,13 @@ class Doc(HTMLParser):
         if tag=="meta" and a.get("property","").startswith("og:"): self.meta.append(a["property"])
         if tag=="link" and a.get("rel")=="canonical": self.canon.append(a.get("href"))
 
-tables=json.loads((ROOT/"data/tables_1_5.json").read_text())
-assert list(tables["tables"])==[f"table{i}" for i in range(1,6)]
+tables=json.loads((ROOT/"data/tables_1_7.json").read_text())
+assert list(tables["tables"])==[f"table{i}" for i in range(1,8)]
 for key,rows in tables["tables"].items(): assert [r["method"] for r in rows]==list(METHODS),key
 docs={name:Doc(ROOT/name) for name in ("index.html","en.html")}
 required={"question","pose-depth","editable","geometry","appearance","novel-depth","limitations","office-cafe",
           "model-select","scene-mode","scene-reset","scene-split","scene-retry","compare-method","compare-frame",
-          *{f"table-{i}" for i in range(1,6)},*{f"figure-{i}" for i in range(1,7)}}
+          *{f"table-{i}" for i in range(1,8)},*{f"figure-{i}" for i in range(1,7)}}
 for name,doc in docs.items():
     assert required<=doc.ids,f"{name}: missing {required-doc.ids}"
     assert "model-viewer" not in doc.tags and "model-viewer" not in (ROOT/name).read_text().lower()
@@ -48,6 +48,7 @@ for name,doc in docs.items():
             assert unquote(u.fragment) in target_doc.ids,f"broken anchor {link}"
     html=(ROOT/name).read_text()
     assert all(f"Figure {i}." in html for i in range(1,7))
+    assert html.index('id="table-2"') < html.index('id="figure-2"')
     assert html.index('id="figure-4"') < html.index('id="figure-5"')
     assert 'assets/fixed_views/GT/000.png' in html and 'assets/fixed_views/M4/000.png' in html
     assert 'src="https://office-cafe-vipe.hiwtishere.chatgpt.site/"' in html
@@ -64,12 +65,13 @@ assert "display copies and runtime registrations do not alter the frozen models"
 
 contract=json.loads((ROOT/"data/source_contract.json").read_text())
 assert contract["presentation"]["table3_hidden_columns"]==["model_sha256","alignment"]
+assert contract["presentation"]["table2_hidden_columns"]==["alignment"]
 assert contract["presentation"]["figure1_layout"]=="always horizontal side-by-side"
 assert contract["external_embed"]["office_cafe"]["retained_features"]==[
     "model","scan_to_model","source_video_to_model","source_camera_trajectory_playback",
     "shake_control","shake_gentle","shake_strong"]
 src_table=SOURCE/contract["table_source"]["path"]
-assert sha(src_table)==contract["table_source"]["sha256"]==sha(ROOT/"data/tables_1_5.json")
+assert sha(src_table)==contract["table_source"]["sha256"]==sha(ROOT/"data/tables_1_7.json")
 for published,item in contract["figures"].items():
     assert sha(ROOT/published)==item["sha256"]==sha(SOURCE/item["source"])
 for method,files in contract["models"].items():
@@ -123,7 +125,9 @@ assert "setScissor(" in js and "singleCamera:true" in js and "singleViewport:tru
 assert "runtime_matrix_gltf_y_up" in js and "applyMatrix4" in js
 assert "hiddenCutaway" in js and "ceiling|roof|wall|facade" in js
 app=(ROOT/"app.js").read_text()
-assert 'i!==3||!["model_sha256","alignment"].includes(k)' in app
+assert '2:new Set(["alignment"])' in app
+assert '3:new Set(["model_sha256","alignment"])' in app
+assert 'document.createElement("strong")' in app
 style=(ROOT/"style.css").read_text()
 assert ".hero-pair-grid{display:grid;grid-template-columns:1fr 1fr" in style
 assert ".hero-pair-grid{grid-template-columns:1fr}" not in style
@@ -132,5 +136,5 @@ manifest=json.loads((ROOT/"evidence/publication_manifest.json").read_text())
 for row in manifest["files"]: assert sha(ROOT/row["path"])==row["sha256"],row["path"]
 for line in (ROOT/"evidence/SHA256SUMS").read_text().splitlines():
     expected_sha,rel=line.split("  ",1); assert sha(ROOT/rel)==expected_sha,rel
-print(json.dumps({"status":"PASS","tables":5,"models":4,"fixed_views":25,"figures":6,
+print(json.dumps({"status":"PASS","tables":7,"models":4,"fixed_views":25,"figures":6,
                   "checks":["links/anchors","GT SHA256","fixed-view SHA256","registration provenance","original GLB identity","no model-viewer"]},ensure_ascii=False))
