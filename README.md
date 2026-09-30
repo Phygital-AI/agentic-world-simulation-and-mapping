@@ -1,8 +1,11 @@
-# Agentic World Simulation and Mapping
+# AWSM: Agentic World Simulation and Mapping
+
+Geometry-Grounded Agentic Reconstruction, Mapping, and Simulation.
+From real spaces to worlds phygital agents can use. AWSM is pronounced “awesome”.
 
 Bilingual research article by Phygital AI: geometry-grounded agentic scene reconstruction, map-based embodied execution, and a research agenda for persistent spatial memory, interaction, and simulation.
 
-The homepage (`index.html`) defaults to English. Chinese is at `zh.html`, titled **智能体世界仿真与建图**. The existing `en.html` URL remains an English alias with the homepage as its canonical URL.
+The homepage (`index.html`) defaults to English. Chinese is at `zh.html`, titled **AWSM：智能体世界仿真与建图**. The existing `en.html` URL remains an English alias with the homepage as its canonical URL.
 
 The original structure, seven experiment tables, six figures, frozen `scene.glb`/`scene.blend` pairs, and interactive comparisons are preserved from `wentingw/agentic-world-blog` at `3c5f27c`. Figure 3 shares a camera and viewport with GT; Figure 4 uses 25 hash-verified source images. All viewer dependencies are local.
 

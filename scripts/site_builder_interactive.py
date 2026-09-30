@@ -116,7 +116,7 @@ def academic_page(en=False):
     current, other = ("index.html", "zh.html") if en else ("zh.html", "index.html")
     if en:
         title = SITE_TITLE
-        desc = "From geometry-grounded reconstruction to map-based embodied action—and toward persistent spatial memory, interaction, and simulation."
+        desc = "Geometry-Grounded Agentic Reconstruction, Mapping, and Simulation. From real spaces to worlds phygital agents can use."
         sections = [
             ("results", "Results"),
             ("motivation", "Motivation"),
@@ -190,8 +190,8 @@ def academic_page(en=False):
             "open_shake": "Open shake experiment",
         }
     else:
-        title = "智能体世界仿真与建图"
-        desc = "从几何锚定的场景重建，到基于地图的具身行动；走向连接空间记忆、交互与仿真的持久空间表示。"
+        title = "AWSM：智能体世界仿真与建图"
+        desc = "几何锚定的智能体重建、建图与仿真。把真实空间，变成虚实融合智能体可以使用的世界。"
         sections = [
             ("results", "结果"),
             ("motivation", "研究动机"),
@@ -280,8 +280,8 @@ def academic_page(en=False):
         '<a href="https://kevinxu02.github.io/real2sim-indoor-site/" target="_blank" rel="noopener">AHa-3D</a>'
         '</span>'
     )
-    citation = html.escape("""@misc{agentic_world_2026,
-  title        = {Agentic World Simulation and Mapping: Geometry-Grounded Agentic Scene Reconstruction},
+    citation = html.escape("""@misc{awsm_2026,
+  title        = {{AWSM}: Agentic World Simulation and Mapping},
   author       = {Phygital AI},
   year         = {2026},
   howpublished = {\\url{https://phygital-ai.github.io/agentic-world-simulation-and-mapping/}},

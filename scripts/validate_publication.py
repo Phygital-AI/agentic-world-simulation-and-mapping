@@ -15,7 +15,7 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = ("index.html", "en.html", "zh.html")
-TITLE = "Agentic World Simulation and Mapping — Phygital AI"
+TITLE = "AWSM: Agentic World Simulation and Mapping — Phygital AI"
 CANONICAL_ROOT = "https://phygital-ai.github.io/agentic-world-simulation-and-mapping/"
 VIDEO = "assets/embodied-demo/world-lobby-four-robots.mp4"
 POSTER = "assets/embodied-demo/poster.jpg"
@@ -232,7 +232,7 @@ class PublicationValidation(unittest.TestCase):
             "zh.html": CANONICAL_ROOT + "zh.html",
         }
         for name, document in self.documents.items():
-            self.assertEqual(document.title, "智能体世界仿真与建图 — Phygital AI" if name == "zh.html" else TITLE)
+            self.assertEqual(document.title, "AWSM：智能体世界仿真与建图 — Phygital AI" if name == "zh.html" else TITLE)
             self.assertEqual(document.canonicals, [expected[name]])
             markup = (ROOT / name).read_text(encoding="utf-8")
             self.assertIn('<html lang="zh-CN">' if name == "zh.html" else '<html lang="en">', markup)
@@ -242,6 +242,21 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn('<a href="zh.html"', markup)
             self.assertIn('<a href="index.html"', markup)
         self.assertEqual((ROOT / "index.html").read_bytes(), (ROOT / "en.html").read_bytes())
+
+    def test_awsm_header(self) -> None:
+        for name in PAGES:
+            markup = (ROOT / name).read_text(encoding="utf-8")
+            header = markup.split('<header>', 1)[1].split('</header>', 1)[0]
+            chinese = name == "zh.html"
+            self.assertIn('<h1>AWSM：智能体世界仿真与建图</h1>' if chinese else '<h1>AWSM: Agentic World Simulation and Mapping</h1>', header)
+            self.assertIn('几何锚定的智能体重建、建图与仿真' if chinese else 'Geometry-Grounded Agentic Reconstruction, Mapping, and Simulation', header)
+            self.assertIn('把真实空间，变成虚实融合智能体可以使用的世界。' if chinese else 'From real spaces to worlds phygital agents can use.', header)
+            self.assertIn('AWSM 读作 “awesome”。' if chinese else 'AWSM is pronounced “awesome”.', header)
+            self.assertNotIn('class="eyebrow"', header)
+            self.assertNotIn('class="meta"', header)
+            self.assertIn('@misc{awsm_2026,', markup)
+            self.assertIn('title        = {{AWSM}: Agentic World Simulation and Mapping}', markup)
+            self.assertNotIn('@misc{agentic_world_2026,', markup)
 
 
 if __name__ == "__main__":

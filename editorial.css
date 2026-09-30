@@ -1,5 +1,7 @@
 header h1{max-width:1080px;font-size:clamp(38px,5.5vw,72px);text-wrap:balance}
-header .eyebrow{max-width:760px;line-height:1.7}
+header .lead{max-width:900px;margin-bottom:12px}
+header .brand-tagline{max-width:900px;margin:0;color:var(--muted);font-size:clamp(17px,2vw,20px)}
+header .pronunciation{margin:14px 0 0;color:var(--muted);font-size:14px}
 .embodied-demo{scroll-margin-top:30px}
 .mission-command{margin:28px 0 20px;padding:22px 26px;border-left:3px solid var(--green);background:#edf1e9;font-size:clamp(20px,2.4vw,27px);line-height:1.6}
 .mission-command>span{display:block;margin-bottom:8px;font:700 11px/1.5 system-ui,sans-serif;letter-spacing:.12em;color:var(--green)}

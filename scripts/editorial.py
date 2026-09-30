@@ -1,6 +1,6 @@
 """Bilingual narrative and demo additions around the frozen research article."""
 
-SITE_TITLE = "Agentic World Simulation and Mapping"
+SITE_TITLE = "AWSM: Agentic World Simulation and Mapping"
 BASE_URL = "https://phygital-ai.github.io/agentic-world-simulation-and-mapping/"
 
 REFERENCES = [
@@ -129,12 +129,18 @@ def editorial_page(page, en):
     page = page.replace('</head>', f'<link rel="alternate" hreflang="x-default" href="{BASE_URL}"></head>')
     page = page.replace('<a href="index.html" ', '<a href="zh.html" ', 1)
     page = page.replace('<a href="en.html" ', '<a href="index.html" ', 1)
-    page = page.replace('<a class="brand" href="index.html">ASTRA / WORLD MODELS</a>', '<a class="brand" href="index.html">PHYGITAL AI / AGENTIC WORLD</a>')
-    page = page.replace('RESEARCH ESSAY · EDITABLE WORLD MODELS', 'GEOMETRY-GROUNDED AGENTIC SCENE RECONSTRUCTION AND MAPPING' if en else '几何锚定的智能体场景重建与建图')
+    page = page.replace('<a class="brand" href="index.html">ASTRA / WORLD MODELS</a>', '<a class="brand" href="index.html">PHYGITAL AI / AWSM</a>')
+    subtitle = "Geometry-Grounded Agentic Reconstruction, Mapping, and Simulation" if en else "几何锚定的智能体重建、建图与仿真"
+    tagline = "From real spaces to worlds phygital agents can use." if en else "把真实空间，变成虚实融合智能体可以使用的世界。"
+    pronunciation = 'AWSM is pronounced “awesome”.' if en else 'AWSM 读作 “awesome”。'
+    before_header, header_start, remainder = page.partition('<header>')
+    old_header, header_end, after_header = remainder.partition('</header>')
+    heading = old_header.split('<h1>', 1)[1].split('</h1>', 1)[0]
+    page = before_header + header_start + f'<h1>{heading}</h1><p class="lead">{subtitle}</p><p class="brand-tagline">{tagline}</p><p class="pronunciation"><small>({pronunciation})</small></p>' + header_end + after_header
     page = page.replace('<section id="motivation">', demo_section(en) + '\n<section id="motivation">', 1)
     page = page.replace('</section>\n<section id="workflow">', grounding_section(en) + '</section>\n<section id="workflow">', 1)
     page = page.replace('</section>\n<section id="limitations">', outlook_section(en) + '</section>\n<section id="limitations">', 1)
     page = page.replace('href="#motivation">', 'href="#embodied-demo">' + ('Embodied demo' if en else '具身演示') + '</a><a href="#motivation">', 1)
     evidence_link = '<p><a href="evidence/provenance-note.md">' + ('Version and provenance note' if en else '版本与资产来源说明') + ' ↗</a></p>'
     page = page.replace('</section>\n<section id="citation">', evidence_link + '</section>\n<section id="citation">', 1)
-    return page.replace('Agentic World · frozen evidence, editable outputs', 'Phygital AI · Agentic World · frozen evidence, editable outputs')
+    return page.replace('Agentic World · frozen evidence, editable outputs', 'Phygital AI · AWSM · frozen evidence, editable outputs')
