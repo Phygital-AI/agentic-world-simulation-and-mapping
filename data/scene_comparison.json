@@ -1,0 +1,475 @@
+{
+  "schema_version": 2,
+  "models": {
+    "GT": {
+      "url": "assets/comparison/GT.glb",
+      "sha256": "6c28ab067c63c5b1fce19c6a972f3d66c7ac4d9bd9ce3b5a57e2e18f5641fe8f",
+      "bytes": 24816108,
+      "registration": "identity"
+    },
+    "M1": {
+      "url": "models/M1/scene.glb",
+      "sha256": "21a605be65d58dbe01606b8326bfe6f07fa418c67e133c9b2181729b68bc2832",
+      "bytes": 15104860,
+      "runtime_matrix_gltf_y_up": [
+        [
+          -0.034082710190599566,
+          -0.017474675835450443,
+          -1.003087981240217,
+          6.886067611483274
+        ],
+        [
+          -0.07852778991034609,
+          1.0006337553304165,
+          -0.014763720507024342,
+          -0.11837912846914733
+        ],
+        [
+          1.000162111167947,
+          0.07796933330392732,
+          -0.03534159003611681,
+          -25.800695086947528
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_registration": "astra_blender2/evaluation/reference_style_figures/registration_M1.json"
+    },
+    "M2": {
+      "url": "models/M2/scene.glb",
+      "sha256": "0ee9123f38099d1df63ab593dd7082d5f1cf1b136e63833ec5afa0e072cf4c2e",
+      "bytes": 14523124,
+      "runtime_matrix_gltf_y_up": [
+        [
+          -0.002921335722089408,
+          -0.00012677219434212295,
+          -0.9999957248540663,
+          10.642407320031518
+        ],
+        [
+          0.0030202640740619557,
+          0.9999954297989613,
+          -0.00013559539998786452,
+          0.08437265493567603
+        ],
+        [
+          0.9999911718622922,
+          -0.0030206472816780125,
+          -0.002920939485494111,
+          -21.687447573786944
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_registration": "astra_blender2/evaluation/reference_style_figures/registration_M2.json"
+    },
+    "M3": {
+      "url": "models/M3/scene.glb",
+      "sha256": "22699f8225a5f90166cdea2e6e2bdad7977fda4a1fe1086da209f0c9afe97a6c",
+      "bytes": 7701488,
+      "runtime_matrix_gltf_y_up": [
+        [
+          0.9999929680848632,
+          0.0025089340052771025,
+          0.002787298151085771,
+          7.830309933606095
+        ],
+        [
+          -0.002507975856466338,
+          0.9999967947503668,
+          -0.0003471974908570291,
+          -0.005554550842903794
+        ],
+        [
+          -0.0027881603126906785,
+          0.0003402045729258979,
+          0.9999960552036794,
+          -17.966462178842214
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_registration": "astra_blender2/evaluation/reference_style_figures/registration_M3.json"
+    },
+    "M4": {
+      "url": "models/M4/scene.glb",
+      "sha256": "716e4b89b7b11ad8a0cb0e238b366b4f5dc80e3a2c3cddb5eedc469ef4e63774",
+      "bytes": 17202608,
+      "runtime_matrix_gltf_y_up": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "source_registration": null
+    }
+  },
+  "camera": {
+    "target": [
+      18,
+      1.2,
+      -21
+    ],
+    "position": [
+      18,
+      10,
+      -3
+    ],
+    "fov": 42,
+    "near": 0.05,
+    "far": 500
+  },
+  "coordinate_conversion": {
+    "reason": "glTF is Y-up while registration is Blender Z-up",
+    "C_mapping": "[x,y,z] -> [x,z,-y]",
+    "C": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        -1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "C_inverse": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        -1,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "runtime_formula": "C * T * C^-1"
+  },
+  "registrations": {
+    "M1": {
+      "source": {
+        "path": "astra_blender2/evaluation/reference_style_figures/registration_M1.json",
+        "sha256": "db6b936e5d04b1be27048790ab354f481f89d20f4d46739340ea6f6fc1048d1e",
+        "transform_direction": "GT_from_model",
+        "status": "COMPLETE_DIAGNOSTIC",
+        "scope": "GT-assisted Sim3 from frozen manual-view camera associations; shape/display diagnostic only; not metric recovery; no mesh ICP",
+        "limitations": "All M1 authored cameras remain invalid for native trajectory evaluation; this GT-assisted registration is diagnostic only."
+      },
+      "GT_from_model_blender_z_up": [
+        [
+          -0.034082710190599566,
+          1.003087981240217,
+          -0.017474675835450443,
+          6.886067611483274
+        ],
+        [
+          -1.000162111167947,
+          -0.03534159003611681,
+          -0.07796933330392732,
+          25.800695086947528
+        ],
+        [
+          -0.07852778991034609,
+          0.014763720507024342,
+          1.0006337553304165,
+          -0.11837912846914733
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "runtime_matrix_gltf_y_up": [
+        [
+          -0.034082710190599566,
+          -0.017474675835450443,
+          -1.003087981240217,
+          6.886067611483274
+        ],
+        [
+          -0.07852778991034609,
+          1.0006337553304165,
+          -0.014763720507024342,
+          -0.11837912846914733
+        ],
+        [
+          1.000162111167947,
+          0.07796933330392732,
+          -0.03534159003611681,
+          -25.800695086947528
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "formula": "C * GT_from_model * C^-1",
+      "diagnostic_caveat": "M1 only: GT-assisted Sim(3) from five manual camera associations; diagnostic only; not native metric recovery."
+    },
+    "M2": {
+      "source": {
+        "path": "astra_blender2/evaluation/reference_style_figures/registration_M2.json",
+        "sha256": "456f1bed62a2ece0601e05d3f6044545f6835999d2bd98394d9ae278f44022b6",
+        "transform_direction": "GT_from_model",
+        "status": "COMPLETE",
+        "scope": "one SE3 from 180 input camera correspondences; no scale fit",
+        "limitations": null
+      },
+      "GT_from_model_blender_z_up": [
+        [
+          -0.002921335722089408,
+          0.9999957248540663,
+          -0.00012677219434212295,
+          10.642407320031518
+        ],
+        [
+          -0.9999911718622922,
+          -0.002920939485494111,
+          0.0030206472816780125,
+          21.687447573786944
+        ],
+        [
+          0.0030202640740619557,
+          0.00013559539998786452,
+          0.9999954297989613,
+          0.08437265493567603
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "runtime_matrix_gltf_y_up": [
+        [
+          -0.002921335722089408,
+          -0.00012677219434212295,
+          -0.9999957248540663,
+          10.642407320031518
+        ],
+        [
+          0.0030202640740619557,
+          0.9999954297989613,
+          -0.00013559539998786452,
+          0.08437265493567603
+        ],
+        [
+          0.9999911718622922,
+          -0.0030206472816780125,
+          -0.002920939485494111,
+          -21.687447573786944
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "formula": "C * GT_from_model * C^-1",
+      "diagnostic_caveat": null
+    },
+    "M3": {
+      "source": {
+        "path": "astra_blender2/evaluation/reference_style_figures/registration_M3.json",
+        "sha256": "30454936b3a9a2a8163ce8ae4851979ce4df71826028ed15967f6a7e882dce49",
+        "transform_direction": "GT_from_model",
+        "status": "COMPLETE",
+        "scope": "one SE3 from 180 input camera correspondences; no scale fit",
+        "limitations": null
+      },
+      "GT_from_model_blender_z_up": [
+        [
+          0.9999929680848632,
+          -0.002787298151085771,
+          0.0025089340052771025,
+          7.830309933606095
+        ],
+        [
+          0.0027881603126906785,
+          0.9999960552036794,
+          -0.0003402045729258979,
+          17.966462178842214
+        ],
+        [
+          -0.002507975856466338,
+          0.0003471974908570291,
+          0.9999967947503668,
+          -0.005554550842903794
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "runtime_matrix_gltf_y_up": [
+        [
+          0.9999929680848632,
+          0.0025089340052771025,
+          0.002787298151085771,
+          7.830309933606095
+        ],
+        [
+          -0.002507975856466338,
+          0.9999967947503668,
+          -0.0003471974908570291,
+          -0.005554550842903794
+        ],
+        [
+          -0.0027881603126906785,
+          0.0003402045729258979,
+          0.9999960552036794,
+          -17.966462178842214
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "formula": "C * GT_from_model * C^-1",
+      "diagnostic_caveat": null
+    },
+    "M4": {
+      "source": {
+        "path": null,
+        "sha256": null,
+        "transform_direction": "GT_from_model",
+        "rule": "identity"
+      },
+      "GT_from_model_blender_z_up": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "runtime_matrix_gltf_y_up": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "formula": "C * GT_from_model * C^-1",
+      "diagnostic_caveat": null
+    }
+  },
+  "immutability": "Display copies and runtime registration do not alter frozen source GLB bytes.",
+  "m1_diagnostic_caveat": "M1 registration is diagnostic only and is not native metric recovery.",
+  "gt_asset": {
+    "source_url": "https://wentingw.github.io/astra-world-model-blog/assets/comparison/GT.glb",
+    "published": "assets/comparison/GT.glb",
+    "sha256": "6c28ab067c63c5b1fce19c6a972f3d66c7ac4d9bd9ce3b5a57e2e18f5641fe8f",
+    "bytes": 24816108
+  }
+}

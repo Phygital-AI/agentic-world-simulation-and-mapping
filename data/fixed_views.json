@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "source_manifest": "astra_blender2/report/space/results/blog_tables_1_5/reference_style_figures.json",
+  "source_manifest_sha256": "be3fb4153dbba73c6eeb2f4ba0070cf68539f848e6829c5da87c2b3398907b07",
+  "frames": [
+    0,
+    36,
+    72,
+    108,
+    144
+  ],
+  "methods": [
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "GT"
+  ],
+  "images": [
+    {
+      "method": "M1",
+      "frame": 0,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M1/000.png",
+      "published": "assets/fixed_views/M1/000.png",
+      "sha256": "33b9f0d09f34871564d86bde23d61d82d48133b3f9ac2f6c251b8435f4bce5c4",
+      "bytes": 460982
+    },
+    {
+      "method": "M2",
+      "frame": 0,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M2/000.png",
+      "published": "assets/fixed_views/M2/000.png",
+      "sha256": "dff45b5cd9bc4c5d757f36c8b8eaff015684c6681b40ad0d6b936940e7c9f316",
+      "bytes": 465709
+    },
+    {
+      "method": "M3",
+      "frame": 0,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M3/000.png",
+      "published": "assets/fixed_views/M3/000.png",
+      "sha256": "a2ca215a65c82b7361c072694c6a1201464bc2ad80c18ba7c59a963927d89b44",
+      "bytes": 418136
+    },
+    {
+      "method": "M4",
+      "frame": 0,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/blog_tables_1_6_current_m4/renders/M4/000.png",
+      "published": "assets/fixed_views/M4/000.png",
+      "sha256": "a4e82854e7ce3e3870959f008a6d590f9c65925e4b33ca0e96f6cf7ffdd6ab43",
+      "bytes": 536558
+    },
+    {
+      "method": "GT",
+      "frame": 0,
+      "source": "vio-reconstruction/sessions/lobby_orb_success_20260929T123153/inputs/cam0/data/249080011831.png",
+      "published": "assets/fixed_views/GT/000.png",
+      "sha256": "0c95e2288b7d864133952d0ce6f552abea743a7d4ea4622103047bd794a07d04",
+      "bytes": 3688630
+    },
+    {
+      "method": "M1",
+      "frame": 36,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M1/036.png",
+      "published": "assets/fixed_views/M1/036.png",
+      "sha256": "d1ccc4bf1da6c2b9e90bfc38bd37d8598a0a0068b374d05a4138bac2b37a904c",
+      "bytes": 490712
+    },
+    {
+      "method": "M2",
+      "frame": 36,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M2/036.png",
+      "published": "assets/fixed_views/M2/036.png",
+      "sha256": "2f8cb5397a7800f0229867ba94b0ee8e8c453600176531da65f27f96e7f4f147",
+      "bytes": 478265
+    },
+    {
+      "method": "M3",
+      "frame": 36,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M3/036.png",
+      "published": "assets/fixed_views/M3/036.png",
+      "sha256": "6c117fef7d146ae81baab7453cb88a2df7f75b080d8e9c672e2163a9fbf00f79",
+      "bytes": 433089
+    },
+    {
+      "method": "M4",
+      "frame": 36,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/blog_tables_1_6_current_m4/renders/M4/036.png",
+      "published": "assets/fixed_views/M4/036.png",
+      "sha256": "a0a7a8afcd3ebc4e56c79a45aa41740f28ca08186b00a67af19161f23f773c2d",
+      "bytes": 547041
+    },
+    {
+      "method": "GT",
+      "frame": 36,
+      "source": "vio-reconstruction/sessions/lobby_orb_success_20260929T123153/inputs/cam0/data/283280013455.png",
+      "published": "assets/fixed_views/GT/036.png",
+      "sha256": "449c88399a68cd88397306fbe42c5293e6684d9a9cfb749ea9e3f5ff78eef04d",
+      "bytes": 3688630
+    },
+    {
+      "method": "M1",
+      "frame": 72,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M1/072.png",
+      "published": "assets/fixed_views/M1/072.png",
+      "sha256": "30b78883e701ef411d4cc04a44dffaba6df13631f6ab4c643edc42e2aa4b2415",
+      "bytes": 431098
+    },
+    {
+      "method": "M2",
+      "frame": 72,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M2/072.png",
+      "published": "assets/fixed_views/M2/072.png",
+      "sha256": "899b65b8c0487f9987f38d09b246c9f97b0b94217d11ebbe29b990f48f19b003",
+      "bytes": 424182
+    },
+    {
+      "method": "M3",
+      "frame": 72,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M3/072.png",
+      "published": "assets/fixed_views/M3/072.png",
+      "sha256": "7d40497cf6c2c3c20403a4c3e1f9b0abe478fbb8602e1f259e51c48dd535d4f3",
+      "bytes": 390554
+    },
+    {
+      "method": "M4",
+      "frame": 72,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/blog_tables_1_6_current_m4/renders/M4/072.png",
+      "published": "assets/fixed_views/M4/072.png",
+      "sha256": "a934d91a6f6b9e130322f526e212dc9f279e1c787398e0181da3e9dd4f60127c",
+      "bytes": 491159
+    },
+    {
+      "method": "GT",
+      "frame": 72,
+      "source": "vio-reconstruction/sessions/lobby_orb_success_20260929T123153/inputs/cam0/data/317520015081.png",
+      "published": "assets/fixed_views/GT/072.png",
+      "sha256": "222246adc897e2c42232a2b10231c614601dcd71580186647522ff1881a9b71f",
+      "bytes": 3688630
+    },
+    {
+      "method": "M1",
+      "frame": 108,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M1/108.png",
+      "published": "assets/fixed_views/M1/108.png",
+      "sha256": "9c98270c0e013225d168ee7714afbd2a80f5dfa764c0b158437d1985c26f4745",
+      "bytes": 309546
+    },
+    {
+      "method": "M2",
+      "frame": 108,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M2/108.png",
+      "published": "assets/fixed_views/M2/108.png",
+      "sha256": "291733823717146fa1e474187aafdca49d6e06b8900985dde6c48fef55684926",
+      "bytes": 464925
+    },
+    {
+      "method": "M3",
+      "frame": 108,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M3/108.png",
+      "published": "assets/fixed_views/M3/108.png",
+      "sha256": "12b289c7af68a32b1a00817685ed79ede039b3624af9896a57e90b1d5b99d864",
+      "bytes": 433108
+    },
+    {
+      "method": "M4",
+      "frame": 108,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/blog_tables_1_6_current_m4/renders/M4/108.png",
+      "published": "assets/fixed_views/M4/108.png",
+      "sha256": "4046e5e362ab8a81404aabd59da159a192f206bf7a80b694aca130c698fe2c7e",
+      "bytes": 531759
+    },
+    {
+      "method": "GT",
+      "frame": 108,
+      "source": "vio-reconstruction/sessions/lobby_orb_success_20260929T123153/inputs/cam0/data/351720016706.png",
+      "published": "assets/fixed_views/GT/108.png",
+      "sha256": "5e5d07ef9ee0c166c24160b228dfc802ab244ac6002e8cfa76e450ee4a385565",
+      "bytes": 3688630
+    },
+    {
+      "method": "M1",
+      "frame": 144,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M1/144.png",
+      "published": "assets/fixed_views/M1/144.png",
+      "sha256": "cf7e5355a33a83fd148daf6a648936757e8be6d09639ace537cdb2ed37a8ed98",
+      "bytes": 486611
+    },
+    {
+      "method": "M2",
+      "frame": 144,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M2/144.png",
+      "published": "assets/fixed_views/M2/144.png",
+      "sha256": "6c4f51435f109f71a35a09c0757e8995dd4de3ebec16c43ee32c25c94303e165",
+      "bytes": 481190
+    },
+    {
+      "method": "M3",
+      "frame": 144,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/reference_style_figures/renders/M3/144.png",
+      "published": "assets/fixed_views/M3/144.png",
+      "sha256": "cc546f9d355fd3d8ac4f48a08b4e4a1158c112585922bb34e8715229482a3542",
+      "bytes": 474768
+    },
+    {
+      "method": "M4",
+      "frame": 144,
+      "source": "world_lobby_four_trajectory_20260929/astra_blender2/evaluation/blog_tables_1_6_current_m4/renders/M4/144.png",
+      "published": "assets/fixed_views/M4/144.png",
+      "sha256": "1d6080b2ce9f2ae95c6a6d9fc47a620365a4439df89267ab166122287d8b61be",
+      "bytes": 529379
+    },
+    {
+      "method": "GT",
+      "frame": 144,
+      "source": "vio-reconstruction/sessions/lobby_orb_success_20260929T123153/inputs/cam0/data/385920018330.png",
+      "published": "assets/fixed_views/GT/144.png",
+      "sha256": "cb8c1a4ade400f935ef4e1e3bfe93245fe77d8beb239040bf43baea840996444",
+      "bytes": 3688630
+    }
+  ]
+}
