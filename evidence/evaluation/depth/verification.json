@@ -1,9 +1,0 @@
-{
-  "status": "PASS",
-  "require_results": true,
-  "checks": [
-    "180/500 schedules are disjoint and RGB hashes match",
-    "available DA3 windows, consolidated outputs, and packets pass audit",
-    "available GT caches and 180/500 metric reports pass audit"
-  ]
-}

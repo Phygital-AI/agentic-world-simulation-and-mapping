@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "method": "M3",
+  "files": {
+    "glb": {
+      "source": "astra_blender/models/M3/scene.glb",
+      "published": "models/M3/scene.glb",
+      "sha256": "22699f8225a5f90166cdea2e6e2bdad7977fda4a1fe1086da209f0c9afe97a6c",
+      "bytes": 7701488
+    },
+    "blend": {
+      "source": "astra_blender/models/M3/scene.blend",
+      "published": "models/M3/scene.blend",
+      "sha256": "00cd43eef3b4a6b2b2b169e8a7eda787dc57222dc501a3a9be09f39af5f46a9b",
+      "bytes": 2319452
+    }
+  },
+  "table_rows": {
+    "table1": {
+      "method": "M3",
+      "allowed_inputs": "视频、IMU、相机–IMU 标定",
+      "geometry_source": "ORB-SLAM3 单目惯性位姿 → pose-conditioned DA3 深度",
+      "modeling_role": "结合图像、位姿、深度建模"
+    },
+    "table2": {
+      "method": "M3",
+      "ate_m": 0.1205,
+      "rotation_deg": 0.1943,
+      "native_depth_absrel": 0.20379653842953233,
+      "model_depth_absrel": 0.08371810615062714,
+      "alignment": "one global SE(3), scale=1"
+    },
+    "table3": {
+      "method": "M3",
+      "model_to_gt_mean_m": 0.06935983382743138,
+      "observed_gt_to_model_mean_m": 0.09502824761255278,
+      "model_sha256": "00cd43eef3b4a6b2b2b169e8a7eda787dc57222dc501a3a9be09f39af5f46a9b",
+      "alignment": "one SE3 from 180 input camera correspondences; no scale fit"
+    },
+    "table4": {
+      "method": "M3",
+      "psnr_db": 12.052547333787004,
+      "ssim": 0.3958937466144562,
+      "lpips_alex_v01": 0.5791207671165466
+    },
+    "table5": {
+      "method": "M3",
+      "absrel": 0.08214297890663147,
+      "rmse_m": 1.1082061529159546,
+      "coverage": 0.99924,
+      "penalized_mae_m": 0.49467605352401733
+    }
+  }
+}
