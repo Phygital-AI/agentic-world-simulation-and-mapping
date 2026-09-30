@@ -72,6 +72,17 @@ assert "100 视角检查衡量一致性，而不是未见视角泛化" in zh
 assert "the 100-view check measures consistency, not unseen-view generalization" in en.lower()
 assert "一个场景可以看起来合理，却在空间上是错的" in zh
 assert "a scene can look plausible and still be spatially wrong" in en.lower()
+for html in (zh,en):
+    assert 'class="tldr"' in html
+    assert 'class="contributions"' in html
+    assert html.count('class="workflow-strip"')==1
+    assert all(url in html for url in (
+        "https://research.nvidia.com/labs/toronto-ai/vipe/",
+        "https://arxiv.org/abs/2007.11898",
+        "https://arxiv.org/abs/2511.10647",
+        "https://kevinxu02.github.io/real2sim-indoor-site/"))
+assert all(stage in zh for stage in ("观察","建模","验证","冻结","评测"))
+assert all(stage in en for stage in ("Observe","Build","Verify","Freeze","Evaluate"))
 
 contract=json.loads((ROOT/"data/source_contract.json").read_text())
 assert contract["presentation"]["table3_hidden_columns"]==["model_sha256","alignment"]
