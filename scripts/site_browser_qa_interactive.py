@@ -30,13 +30,15 @@ with sync_playwright() as pw:
             page.on("requestfailed",record_failure)
             page.goto(a.url.rstrip("/")+"/"+path,wait_until="networkidle",timeout=120_000)
             assert page.locator("h1").inner_text()==("合理，不等于忠实" if lang=="zh" else "Plausible Is Not Faithful")
-            for section_id in ("introduction","motivation","method","results","interactive","discussion","limitations","office-cafe"):
+            for section_id in ("results","motivation","workflow","more-results","related-work","limitations","citation","references"):
                 assert page.locator(f"#{section_id}").count()==1
-            assert page.locator("#introduction .insight-strip > div").count()==3
-            assert page.locator("#introduction .tldr").count()==1
-            assert page.locator("#introduction .contributions > li").count()==3
-            assert page.locator("#method .workflow-strip > div").count()==5
-            assert page.locator("#motivation .inline-sources > a").count()==4
+            assert page.locator("#results .insight-strip > div").count()==3
+            assert page.locator("#results .tldr").count()==1
+            assert page.locator("#motivation .contributions > li").count()==3
+            assert page.locator("#workflow .workflow-strip > div").count()==5
+            assert page.locator("#related-work .inline-sources > a").count()==4
+            assert page.locator("#citation .citation-block").count()==1
+            assert page.locator("#references .references-list > li").count()==7
             assert page.locator('meta[name="twitter:card"]').get_attribute("content")=="summary_large_image"
             page.wait_for_selector("#table-7 table"); assert page.locator(".table-figure table").count()==7
             table2_headers=page.locator("#table-2 thead th").all_text_contents()

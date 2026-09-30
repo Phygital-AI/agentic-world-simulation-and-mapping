@@ -32,7 +32,7 @@ for key,rows in tables["tables"].items(): assert [r["method"] for r in rows]==li
 m4_table2=next(row for row in tables["tables"]["table2"] if row["method"]=="M4")
 assert m4_table2["ate_m"]=="-" and m4_table2["rotation_deg"]=="-"
 docs={name:Doc(ROOT/name) for name in ("index.html","en.html")}
-required={"introduction","motivation","method","results","interactive","discussion","limitations","office-cafe",
+required={"results","motivation","workflow","more-results","related-work","limitations","citation","references","office-cafe",
           "model-select","scene-mode","scene-reset","scene-split","scene-retry","compare-method","compare-frame",
           *{f"table-{i}" for i in range(1,8)},*{f"figure-{i}" for i in range(1,7)}}
 for name,doc in docs.items():
@@ -58,6 +58,10 @@ for name,doc in docs.items():
     assert 'type="importmap"' in html and 'scene-compare.js' in html
     assert 'name="twitter:card" content="summary_large_image"' in html
     assert 'name="twitter:image" content="https://wentingw.github.io/agentic-world-blog/assets/teaser_originals.png"' in html
+    section_order=[html.index(f'<section id="{section}"') for section in (
+        "results","motivation","workflow","more-results","related-work","limitations","citation","references")]
+    assert section_order==sorted(section_order)
+    assert 'class="citation-block"' in html and 'class="references-list"' in html
 
 assert not (ROOT/"vendor/model-viewer-4.1.0.min.js").exists()
 published_runtime="\n".join((ROOT/name).read_text(errors="ignore")
@@ -76,6 +80,7 @@ for html in (zh,en):
     assert 'class="tldr"' in html
     assert 'class="contributions"' in html
     assert html.count('class="workflow-strip"')==1
+    assert html.count('<li><a href=')>=7
     assert all(url in html for url in (
         "https://research.nvidia.com/labs/toronto-ai/vipe/",
         "https://arxiv.org/abs/2007.11898",

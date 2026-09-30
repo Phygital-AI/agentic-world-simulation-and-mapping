@@ -184,8 +184,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "903804858ba821c23dedaae696f071cf668a5b281ae2018882a35b852295cbaf",
-      "bytes": 21465
+      "sha256": "630654ec03134930d5a2a6c0bfe5dc0c2bdd146cad97b18a3637017f81a74d63",
+      "bytes": 23720
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -209,8 +209,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "780827603ede7030ab7ca2c79a728408fcd912cdc998ff3d98c40e08e5d2f579",
-      "bytes": 20448
+      "sha256": "c503f5f2b07f32d18e3d467e959e50ddb33c73a25b9fc95bca1dfc8a23a7a976",
+      "bytes": 22642
     },
     {
       "path": "models/M1/scene.blend",
@@ -259,8 +259,8 @@
     },
     {
       "path": "style.css",
-      "sha256": "e9bb8353c9c2bba7be19d7493f975ce1043fb5bc64e054c75d1943ae345d0431",
-      "bytes": 8429
+      "sha256": "df78a8886276f40bfb1a0ad04caaea576a0fa888056a61789497be3275f4015d",
+      "bytes": 8962
     },
     {
       "path": "vendor/three/controls/OrbitControls.js",
