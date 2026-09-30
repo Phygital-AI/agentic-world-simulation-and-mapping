@@ -204,8 +204,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "1aa46284b28db5af9314d56d3e4dc425fb67736cbbe3744535990d85106a4013",
-      "bytes": 33242
+      "sha256": "dc28f0fefb6924dd980ba9ac6f15f7bc1e78a0bb887ef02acb21f941c256b651",
+      "bytes": 33343
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -239,8 +239,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "9948d5354582bc271d86887c7475f933a24d020297273323fd9a68d2cd3cd022",
-      "bytes": 31321
+      "sha256": "dc28f0fefb6924dd980ba9ac6f15f7bc1e78a0bb887ef02acb21f941c256b651",
+      "bytes": 33343
     },
     {
       "path": "models/M1/scene.blend",
@@ -321,6 +321,11 @@
       "path": "vendor/three/utils/BufferGeometryUtils.js",
       "sha256": "fda7e946b8e0b5ab39b779206589e7a1079a22eb24efb89d7223e03fdfb1f751",
       "bytes": 35539
+    },
+    {
+      "path": "zh.html",
+      "sha256": "00e449aaba4a35513f1e2026c81b8b06f49cbadb997b180a4c74c8885c9b4fe0",
+      "bytes": 31399
     }
   ]
 }

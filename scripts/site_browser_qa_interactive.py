@@ -22,7 +22,7 @@ with sync_playwright() as pw:
     except Exception as e:
         print(json.dumps({"status":"SKIP","reason":f"Playwright browser unavailable: {e}"})); raise SystemExit(0)
     for viewport,size in (("desktop",{"width":1440,"height":1000}),("mobile",{"width":390,"height":844})):
-        for lang,path in (("zh","index.html"),("en","en.html")):
+        for lang,path in (("zh","zh.html"),("en","index.html")):
             page=browser.new_page(viewport=size); errors=[]; failed=[]
             page.route(office_origin+"/**",lambda route: route.fulfill(
                 status=200,
@@ -41,7 +41,10 @@ with sync_playwright() as pw:
                 failed.append(f"{request.url}: {request.failure}")
             page.on("requestfailed",record_failure)
             page.goto(a.url.rstrip("/")+"/"+path,wait_until="networkidle",timeout=120_000)
-            assert page.locator("h1").inner_text()=="Agentic World Simulation and Mapping"
+            assert page.locator("h1").inner_text()==("智能体世界仿真与建图" if lang=="zh" else "Agentic World Simulation and Mapping")
+            assert page.locator('nav a[aria-current="page"]').get_attribute("href")==path
+            assert page.locator('nav a',has_text="中文").get_attribute("href")=="zh.html"
+            assert page.locator('nav a',has_text="EN").get_attribute("href")=="index.html"
             for section_id in ("results","motivation","workflow","more-results","related-work","limitations","citation","references"):
                 assert page.locator(f"#{section_id}").count()==1
             assert page.locator("#results .insight-strip > div").count()==3

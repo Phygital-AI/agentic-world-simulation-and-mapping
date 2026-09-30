@@ -113,7 +113,7 @@ async function start(){if(started)return;started=true;try{setStatus(zh?'正在�
 select.addEventListener('change',()=>{updateMode();selectScene()});mode.addEventListener('change',updateMode);slider.addEventListener('input',()=>updateSplit(slider.value));panel.querySelector('#scene-reset').addEventListener('click',resetCamera);panel.querySelector('#scene-retry').addEventListener('click',()=>manifest&&renderer?selectScene():start());divider.addEventListener('pointerdown',e=>{e.preventDefault();active=true;divider.setPointerCapture(e.pointerId);if(controls)controls.enabled=false});divider.addEventListener('pointermove',e=>{if(!active)return;const b=stage.getBoundingClientRect();updateSplit((e.clientX-b.left)/b.width*100)});const stop=()=>{active=false;if(controls)controls.enabled=true};divider.addEventListener('pointerup',stop);divider.addEventListener('pointercancel',stop);divider.addEventListener('keydown',e=>{const d={ArrowLeft:-2,ArrowRight:2,PageDown:-10,PageUp:10};if(e.key in d){e.preventDefault();updateSplit(split*100+d[e.key])}});updateSplit(50);updateMode();const lazy=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){lazy.disconnect();start()}},{rootMargin:'300px'});lazy.observe(panel)}'''
 
 def academic_page(en=False):
-    current, other = ("en.html", "index.html") if en else ("index.html", "en.html")
+    current, other = ("index.html", "zh.html") if en else ("zh.html", "index.html")
     if en:
         title = SITE_TITLE
         desc = "From geometry-grounded reconstruction to map-based embodied action—and toward persistent spatial memory, interaction, and simulation."
@@ -190,7 +190,7 @@ def academic_page(en=False):
             "open_shake": "Open shake experiment",
         }
     else:
-        title = SITE_TITLE
+        title = "智能体世界仿真与建图"
         desc = "从几何锚定的场景重建，到基于地图的具身行动；走向连接空间记忆、交互与仿真的持久空间表示。"
         sections = [
             ("results", "结果"),

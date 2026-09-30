@@ -10,7 +10,7 @@ from site_builder_interactive import academic_page
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PUBLIC_ROOT_FILES = (".nojekyll", "index.html", "en.html", "style.css", "editorial.css", "app.js", "scene-compare.js")
+PUBLIC_ROOT_FILES = (".nojekyll", "index.html", "en.html", "zh.html", "style.css", "editorial.css", "app.js", "scene-compare.js")
 PUBLIC_DIRECTORIES = ("assets", "data", "evidence", "models", "vendor")
 GENERATED_MANIFESTS = ("evidence/publication_manifest.json", "evidence/SHA256SUMS")
 
@@ -34,7 +34,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="Verify generated pages and hashes without writing")
     args = parser.parse_args()
-    for name, english in (("index.html", False), ("en.html", True)):
+    for name, english in (("index.html", True), ("en.html", True), ("zh.html", False)):
         content = academic_page(english) + "\n"
         target = ROOT / name
         if args.check:
@@ -57,7 +57,7 @@ def main():
             raise SystemExit("Stale SHA256SUMS")
     else:
         (ROOT / GENERATED_MANIFESTS[1]).write_text(sums, encoding="utf-8")
-    print(json.dumps({"status": "CHECKED" if args.check else "RENDERED", "pages": 2, "published_files": len(records), "frozen_experiment_assets_rebuilt": False}))
+    print(json.dumps({"status": "CHECKED" if args.check else "RENDERED", "pages": 3, "published_files": len(records), "frozen_experiment_assets_rebuilt": False}))
 
 
 if __name__ == "__main__":

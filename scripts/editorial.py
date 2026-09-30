@@ -122,10 +122,15 @@ def outlook_section(en):
 
 def editorial_page(page, en):
     page = page.replace('<link rel="stylesheet" href="style.css">', '<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="editorial.css">')
-    if not en:
+    if en:
         page = page.replace(f'<link rel="canonical" href="{BASE_URL}index.html">', f'<link rel="canonical" href="{BASE_URL}">')
+    page = page.replace(f'hreflang="zh-CN" href="{BASE_URL}index.html"', f'hreflang="zh-CN" href="{BASE_URL}zh.html"')
+    page = page.replace(f'hreflang="en" href="{BASE_URL}en.html"', f'hreflang="en" href="{BASE_URL}"')
+    page = page.replace('</head>', f'<link rel="alternate" hreflang="x-default" href="{BASE_URL}"></head>')
+    page = page.replace('<a href="index.html" ', '<a href="zh.html" ', 1)
+    page = page.replace('<a href="en.html" ', '<a href="index.html" ', 1)
     page = page.replace('<a class="brand" href="index.html">ASTRA / WORLD MODELS</a>', '<a class="brand" href="index.html">PHYGITAL AI / AGENTIC WORLD</a>')
-    page = page.replace('RESEARCH ESSAY · EDITABLE WORLD MODELS', 'GEOMETRY-GROUNDED AGENTIC SCENE RECONSTRUCTION AND MAPPING')
+    page = page.replace('RESEARCH ESSAY · EDITABLE WORLD MODELS', 'GEOMETRY-GROUNDED AGENTIC SCENE RECONSTRUCTION AND MAPPING' if en else '几何锚定的智能体场景重建与建图')
     page = page.replace('<section id="motivation">', demo_section(en) + '\n<section id="motivation">', 1)
     page = page.replace('</section>\n<section id="workflow">', grounding_section(en) + '</section>\n<section id="workflow">', 1)
     page = page.replace('</section>\n<section id="limitations">', outlook_section(en) + '</section>\n<section id="limitations">', 1)

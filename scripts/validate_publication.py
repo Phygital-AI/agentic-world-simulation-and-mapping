@@ -14,7 +14,7 @@ from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ("index.html", "en.html")
+PAGES = ("index.html", "en.html", "zh.html")
 TITLE = "Agentic World Simulation and Mapping — Phygital AI"
 CANONICAL_ROOT = "https://phygital-ai.github.io/agentic-world-simulation-and-mapping/"
 VIDEO = "assets/embodied-demo/world-lobby-four-robots.mp4"
@@ -198,8 +198,9 @@ class PublicationValidation(unittest.TestCase):
 
     def test_embodied_demo_markup_and_bilingual_copy(self) -> None:
         navigation_terms = {
-            "index.html": ("导航", "仿真"),
+            "index.html": ("navigation", "simulation"),
             "en.html": ("navigation", "simulation"),
+            "zh.html": ("导航", "仿真"),
         }
         for name, document in self.documents.items():
             self.assertIn("embodied-demo", document.ids, f"{name}: missing embodied-demo section")
@@ -227,12 +228,20 @@ class PublicationValidation(unittest.TestCase):
     def test_title_and_language_specific_canonical(self) -> None:
         expected = {
             "index.html": CANONICAL_ROOT,
-            "en.html": CANONICAL_ROOT + "en.html",
+            "en.html": CANONICAL_ROOT,
+            "zh.html": CANONICAL_ROOT + "zh.html",
         }
         for name, document in self.documents.items():
-            self.assertEqual(document.title, TITLE)
+            self.assertEqual(document.title, "智能体世界仿真与建图 — Phygital AI" if name == "zh.html" else TITLE)
             self.assertEqual(document.canonicals, [expected[name]])
-        self.assertNotEqual(*[self.documents[name].canonicals[0] for name in PAGES])
+            markup = (ROOT / name).read_text(encoding="utf-8")
+            self.assertIn('<html lang="zh-CN">' if name == "zh.html" else '<html lang="en">', markup)
+            self.assertIn(f'hreflang="zh-CN" href="{CANONICAL_ROOT}zh.html"', markup)
+            self.assertIn(f'hreflang="en" href="{CANONICAL_ROOT}"', markup)
+            self.assertIn(f'hreflang="x-default" href="{CANONICAL_ROOT}"', markup)
+            self.assertIn('<a href="zh.html"', markup)
+            self.assertIn('<a href="index.html"', markup)
+        self.assertEqual((ROOT / "index.html").read_bytes(), (ROOT / "en.html").read_bytes())
 
 
 if __name__ == "__main__":
