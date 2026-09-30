@@ -53,6 +53,8 @@ with sync_playwright() as pw:
             assert page.locator("#figure-4").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-5')) & Node.DOCUMENT_POSITION_FOLLOWING")
             figure3=page.locator("#figure-3"); figure3.scroll_into_view_if_needed()
             page.wait_for_function("document.querySelector('#figure-3').dataset.state === 'ready'",timeout=120_000)
+            assert page.locator("#model-select").input_value()=="M4"
+            assert page.locator("#figure-3").get_attribute("data-loaded-model")=="M4"
             for method in ("M1","M2","M3","M4","GT"):
                 page.select_option("#model-select",method)
                 page.wait_for_function("(m)=>{const p=document.querySelector('#figure-3');const d=p.sceneDiagnostics?.();return p.dataset.state==='ready'&&p.dataset.loadedModel===m&&d?.loaded===m&&d.gtLoaded&&d.singleCamera&&d.singleViewport&&(m==='GT'||d.hiddenCutaway>0)}",arg=method,timeout=120_000)

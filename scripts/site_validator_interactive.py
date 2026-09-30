@@ -58,6 +58,7 @@ for name,doc in docs.items():
     assert 'type="importmap"' in html and 'scene-compare.js' in html
     assert 'name="twitter:card" content="summary_large_image"' in html
     assert 'name="twitter:image" content="https://wentingw.github.io/agentic-world-blog/assets/teaser_originals.png"' in html
+    assert '<option value="M4" selected>M4</option>' in html
     section_order=[html.index(f'<section id="{section}"') for section in (
         "results","motivation","workflow","more-results","related-work","limitations","citation","references")]
     assert section_order==sorted(section_order)

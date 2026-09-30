@@ -60,10 +60,10 @@ def overview_figure(en):
     return f'''<figure id="figure-5"><img loading="lazy" src="assets/fixed_five_view_comparison_m1_m4.jpg" alt="M1 to M4 and input GT across five fixed views"><figcaption><span>Figure 5.</span> {"M1–M4 and input GT across five fixed views." if en else "M1–M4 与输入 GT 在五个固定视角下的并排比较。"}</figcaption></figure>'''
 
 def scene_figure(en):
-    options="".join(f'<option value="{m}"{" selected" if m=="M3" else ""}>{m}</option>' for m in METHODS)+'<option value="GT">GT</option>'
+    options="".join(f'<option value="{m}"{" selected" if m=="M4" else ""}>{m}</option>' for m in METHODS)+'<option value="GT">GT</option>'
     return f'''<figure class="scene-comparison" id="figure-3" data-state="idle"><h3>{"Rotate, zoom, and inspect the frozen scenes" if en else "旋转、缩放，检查冻结场景"}</h3>
 <div class="scene-toolbar"><label class="method-control">{"Reconstruction / GT" if en else "重建方法 / GT"}<select id="model-select">{options}</select></label><label>{"Display" if en else "显示方式"}<select id="scene-mode"><option value="compare">{"Split comparison with GT" if en else "中轴线对比 GT"}</option><option value="single">{"View selected scene alone" if en else "单独查看所选场景"}</option></select></label><button id="scene-reset" type="button">{"Reset view" if en else "重置视角"}</button></div>
-<div class="scene-stage"><span class="scene-label scene-label-left">M3</span><span class="scene-label scene-label-right">GT</span><button class="scene-divider" type="button" role="slider" aria-label="Comparison divider" aria-valuemin="2" aria-valuemax="98" aria-valuenow="50"></button><input id="scene-split" class="scene-split" type="range" min="2" max="98" value="50" aria-label="Comparison split"><p class="scene-status">{"Scroll here to load the 3D comparison." if en else "滚动到此处加载三维对比。"}</p></div><button id="scene-retry" class="scene-retry" type="button">{"Retry" if en else "重试"}</button>
+<div class="scene-stage"><span class="scene-label scene-label-left">M4</span><span class="scene-label scene-label-right">GT</span><button class="scene-divider" type="button" role="slider" aria-label="Comparison divider" aria-valuemin="2" aria-valuemax="98" aria-valuenow="50"></button><input id="scene-split" class="scene-split" type="range" min="2" max="98" value="50" aria-label="Comparison split"><p class="scene-status">{"Scroll here to load the 3D comparison." if en else "滚动到此处加载三维对比。"}</p></div><button id="scene-retry" class="scene-retry" type="button">{"Retry" if en else "重试"}</button>
 <figcaption><span>Figure 3.</span> {"One camera and one full viewport compare the selected frozen model with GT. Ceilings and surrounding walls are hidden at runtime for the same cutaway-style inspection; source files remain unchanged." if en else "所选冻结模型与 GT 共用同一相机和完整 viewport；网页运行时隐藏顶棚与四周墙体，以相同剖视方式检查，源模型文件保持不变。"}</figcaption></figure>'''
 
 def fixed_figure(en):
@@ -397,7 +397,7 @@ def main():
     for p in sorted(ROOT.rglob("*")):
         if not p.is_file(): continue
         rel=p.relative_to(ROOT)
-        if rel.parts[0] in (".git","scripts") or rel.name in ("SHA256SUMS","publication_manifest.json","office-scan2model.mp4","office-video2model.mp4") or rel.as_posix() in ("README.md","requirements.txt",".gitignore"): continue
+        if rel.parts[0] in (".git","scripts") or rel.name in ("SHA256SUMS","publication_manifest.json") or (len(rel.parts)==1 and rel.name.startswith("office-") and rel.suffix==".mp4") or rel.as_posix() in ("README.md","requirements.txt",".gitignore"): continue
         files.append({"path":rel.as_posix(),"sha256":sha(p),"bytes":p.stat().st_size})
     dump(ROOT/"evidence/publication_manifest.json",{"schema_version":2,"source_contract":"data/source_contract.json","files":files})
     sums=[f'{sha(ROOT/r["path"])}  {r["path"]}' for r in files]; sums.append(f'{sha(ROOT/"evidence/publication_manifest.json")}  evidence/publication_manifest.json'); write(ROOT/"evidence/SHA256SUMS","\n".join(sums)+"\n")
