@@ -9,8 +9,8 @@
     },
     {
       "path": "app.js",
-      "sha256": "5f35ba7972bd1365ff857bb9150967106c472920fd446f788bdcf59ff1f10fc1",
-      "bytes": 4497
+      "sha256": "f88b8f48632d73c4d4d8168fda7b2a0cfbcdb160fbb6788685c509f4b895a527",
+      "bytes": 4322
     },
     {
       "path": "assets/comparison/GT.glb",
@@ -154,8 +154,8 @@
     },
     {
       "path": "assets/model_depth_error_five_views_m1_m4.png",
-      "sha256": "a38b146beb0a02d17016ebad7eccd375957a7da76146fa1ccf0ac120baa0cc2a",
-      "bytes": 463378
+      "sha256": "448bc111da467461ae84941bc6ea5f5601ca5f9746d292dc1b8b279bbfa153ce",
+      "bytes": 469515
     },
     {
       "path": "assets/teaser_originals.png",
@@ -174,18 +174,18 @@
     },
     {
       "path": "data/source_contract.json",
-      "sha256": "90b36a9ad484e07cf6bbc7f02a088d1c43e4ecee7fa5ac8cabcccd0eeb84db6a",
+      "sha256": "ad17d7a2f2e5506d2cfe352f8cd7c5dae09b66695952d0df099aeade871cd180",
       "bytes": 13993
     },
     {
       "path": "data/tables_1_7.json",
-      "sha256": "4fc3f787fad1677f1f7bf631935bd5ab61d2c8cb7df4971a18ece30b2965945a",
-      "bytes": 12706
+      "sha256": "01faed4be8948d16fbdc081bda859554f3bfc3f20c55746fba0ca70369179287",
+      "bytes": 12692
     },
     {
       "path": "en.html",
-      "sha256": "ec839b796c3a8afeffe696774db635e4b29f28595d567eef8a881a602f92c4c6",
-      "bytes": 12376
+      "sha256": "4950a5c30d5dd989bf7774952e74c9fda5c047d3181c7328ebd1aa6f3bf1d5c0",
+      "bytes": 12394
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -204,13 +204,13 @@
     },
     {
       "path": "evidence/M4/manifest.json",
-      "sha256": "87ea3d2387d262b7adf68cc9edc1a6400d1bb38930dc2941412ac6351a7cdbe1",
-      "bytes": 2115
+      "sha256": "9bbe33317f64a670eed12a689a0291a4cdda422719c3d62111c53a42d638347a",
+      "bytes": 2101
     },
     {
       "path": "index.html",
-      "sha256": "79bea39c7b77fc6eae2a74a3aa899fa04e42996f761336b87b3eaaa0a05d64ad",
-      "bytes": 12270
+      "sha256": "06586cad19d93071401051718f221c765c6c25b36078569284aea06575883c96",
+      "bytes": 12288
     },
     {
       "path": "models/M1/scene.blend",
@@ -259,8 +259,8 @@
     },
     {
       "path": "style.css",
-      "sha256": "3ae01a9c237fb82ea1ecdcd6688282c84c83878ef0b78967d405402da408e60e",
-      "bytes": 5963
+      "sha256": "a7ae39dba6348983ebc24a9e37dd5e9bcdd15deba715c3a35a4f95d5e67796b9",
+      "bytes": 6071
     },
     {
       "path": "vendor/three/controls/OrbitControls.js",

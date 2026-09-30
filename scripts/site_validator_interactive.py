@@ -29,6 +29,8 @@ class Doc(HTMLParser):
 tables=json.loads((ROOT/"data/tables_1_7.json").read_text())
 assert list(tables["tables"])==[f"table{i}" for i in range(1,8)]
 for key,rows in tables["tables"].items(): assert [r["method"] for r in rows]==list(METHODS),key
+m4_table2=next(row for row in tables["tables"]["table2"] if row["method"]=="M4")
+assert m4_table2["ate_m"]=="-" and m4_table2["rotation_deg"]=="-"
 docs={name:Doc(ROOT/name) for name in ("index.html","en.html")}
 required={"question","pose-depth","editable","geometry","appearance","novel-depth","limitations","office-cafe",
           "model-select","scene-mode","scene-reset","scene-split","scene-retry","compare-method","compare-frame",
@@ -128,6 +130,10 @@ app=(ROOT/"app.js").read_text()
 assert '2:new Set(["alignment"])' in app
 assert '3:new Set(["model_sha256","alignment"])' in app
 assert 'document.createElement("strong")' in app
+assert "fixedPreloads" not in app
+assert 'method.disabled=false;frame.disabled=false;' in app
+style=(ROOT/"style.css").read_text()
+assert "#figure-5,#figure-6{width:100%;margin:30px 0}" in style
 for name in ("index.html","en.html"):
     html=(ROOT/name).read_text()
     assert '<figure class="hero" id="figure-1"><img src="assets/teaser_originals.png"' in html

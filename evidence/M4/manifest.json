@@ -24,8 +24,8 @@
     },
     "table2": {
       "method": "M4",
-      "ate_m": "GT input",
-      "rotation_deg": "GT input",
+      "ate_m": "-",
+      "rotation_deg": "-",
       "native_depth_absrel": 0.1886706026379072,
       "model_depth_absrel": 0.07600006461143494,
       "alignment": "GT coordinates"

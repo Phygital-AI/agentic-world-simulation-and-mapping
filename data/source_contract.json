@@ -4,7 +4,7 @@
   "source_root_name": "world_lobby_four_trajectory_20260929",
   "table_source": {
     "path": "astra_blender2/evaluation/blog_extended_100_20260930/tables_1_7.json",
-    "sha256": "4fc3f787fad1677f1f7bf631935bd5ab61d2c8cb7df4971a18ece30b2965945a",
+    "sha256": "01faed4be8948d16fbdc081bda859554f3bfc3f20c55746fba0ca70369179287",
     "published_url": "data/tables_1_7.json"
   },
   "figures": {
@@ -23,8 +23,8 @@
     "assets/model_depth_error_five_views_m1_m4.png": {
       "source": "astra_blender2/report/space/assets/model_depth_error_five_views_m1_m4.png",
       "published": "assets/model_depth_error_five_views_m1_m4.png",
-      "sha256": "a38b146beb0a02d17016ebad7eccd375957a7da76146fa1ccf0ac120baa0cc2a",
-      "bytes": 463378
+      "sha256": "448bc111da467461ae84941bc6ea5f5601ca5f9746d292dc1b8b279bbfa153ce",
+      "bytes": 469515
     },
     "assets/teaser_originals.png": {
       "source": "teaser_originals.png",
