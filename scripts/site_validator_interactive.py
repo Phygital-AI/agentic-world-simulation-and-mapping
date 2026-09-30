@@ -32,7 +32,7 @@ for key,rows in tables["tables"].items(): assert [r["method"] for r in rows]==li
 m4_table2=next(row for row in tables["tables"]["table2"] if row["method"]=="M4")
 assert m4_table2["ate_m"]=="-" and m4_table2["rotation_deg"]=="-"
 docs={name:Doc(ROOT/name) for name in ("index.html","en.html")}
-required={"question","pose-depth","editable","geometry","appearance","novel-depth","limitations","office-cafe",
+required={"introduction","motivation","method","results","interactive","discussion","limitations","office-cafe",
           "model-select","scene-mode","scene-reset","scene-split","scene-retry","compare-method","compare-frame",
           *{f"table-{i}" for i in range(1,8)},*{f"figure-{i}" for i in range(1,7)}}
 for name,doc in docs.items():
@@ -56,14 +56,22 @@ for name,doc in docs.items():
     assert 'src="https://office-cafe-vipe.hiwtishere.chatgpt.site/"' in html
     assert 'href="https://office-cafe-vipe.hiwtishere.chatgpt.site/shake.html"' in html
     assert 'type="importmap"' in html and 'scene-compare.js' in html
+    assert 'name="twitter:card" content="summary_large_image"' in html
+    assert 'name="twitter:image" content="https://wentingw.github.io/agentic-world-blog/assets/teaser_originals.png"' in html
 
 assert not (ROOT/"vendor/model-viewer-4.1.0.min.js").exists()
 published_runtime="\n".join((ROOT/name).read_text(errors="ignore")
     for name in ("index.html","en.html","app.js","scene-compare.js","style.css"))
 assert "model-viewer" not in published_runtime.lower()
-assert "rev4 尚无完整独立视觉复审" in (ROOT/"index.html").read_text()
-assert "展示副本和运行时配准不改变冻结模型" in (ROOT/"index.html").read_text()
-assert "display copies and runtime registrations do not alter the frozen models" in (ROOT/"en.html").read_text().lower()
+zh=(ROOT/"index.html").read_text()
+en=(ROOT/"en.html").read_text()
+assert "M4 revision 4 尚未完成完整独立视觉复审" in zh
+assert "运行时配准与显示选择不会修改可下载的冻结 GLB 或 Blend 文件" in zh
+assert "runtime registration and display choices do not modify the downloadable frozen glb or blend files" in en.lower()
+assert "100 视角检查衡量一致性，而不是未见视角泛化" in zh
+assert "the 100-view check measures consistency, not unseen-view generalization" in en.lower()
+assert "一个场景可以看起来合理，却在空间上是错的" in zh
+assert "a scene can look plausible and still be spatially wrong" in en.lower()
 
 contract=json.loads((ROOT/"data/source_contract.json").read_text())
 assert contract["presentation"]["table3_hidden_columns"]==["model_sha256","alignment"]

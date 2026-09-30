@@ -24,9 +24,16 @@ with sync_playwright() as pw:
             def record_failure(request):
                 if request.url.endswith("/assets/walkthrough.mp4") and request.failure=="net::ERR_ABORTED":
                     return
+                if "/assets/fixed_views/" in request.url and request.failure=="net::ERR_ABORTED":
+                    return
                 failed.append(f"{request.url}: {request.failure}")
             page.on("requestfailed",record_failure)
             page.goto(a.url.rstrip("/")+"/"+path,wait_until="networkidle",timeout=120_000)
+            assert page.locator("h1").inner_text()==("合理，不等于忠实" if lang=="zh" else "Plausible Is Not Faithful")
+            for section_id in ("introduction","motivation","method","results","interactive","discussion","limitations","office-cafe"):
+                assert page.locator(f"#{section_id}").count()==1
+            assert page.locator("#introduction .insight-strip > div").count()==3
+            assert page.locator('meta[name="twitter:card"]').get_attribute("content")=="summary_large_image"
             page.wait_for_selector("#table-7 table"); assert page.locator(".table-figure table").count()==7
             table2_headers=page.locator("#table-2 thead th").all_text_contents()
             assert len(table2_headers)==5 and all("配准" not in x and "Alignment" not in x for x in table2_headers)

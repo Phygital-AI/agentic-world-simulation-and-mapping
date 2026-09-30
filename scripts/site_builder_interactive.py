@@ -54,7 +54,7 @@ def table(n):
     return f'<figure class="table-figure" id="table-{n}" data-table-key="table{n}"><figcaption><span>Table {n}.</span> <span class="table-title"></span></figcaption><div class="table-scroll table-mount" role="region" tabindex="0" aria-label="Table {n}"></div></figure>'
 
 def hero_figure(en):
-    return f'''<figure class="hero" id="figure-1"><img src="assets/teaser_originals.png" alt="From plausible scenes to faithful spaces: geometry and reference fidelity"><figcaption><span>Figure 1.</span> {"From plausible scenes to faithful spaces: depth constrains geometric structure, while inertial cues improve reference fidelity." if en else "从合理场景到忠实空间：深度约束几何结构，惯性线索进一步提升参考保真度。"}</figcaption></figure>'''
+    return f'''<figure class="hero" id="figure-1"><img src="assets/teaser_originals.png" alt="From plausible scenes to faithful spaces: geometry and reference fidelity"><figcaption><span>Figure 1.</span> {"Additional geometric evidence progressively constrains spatial structure; reference appearance remains a separate objective." if en else "更多几何证据逐步约束空间结构，而参考外观仍然是另一条独立评价轴。"}</figcaption></figure>'''
 
 def overview_figure(en):
     return f'''<figure id="figure-5"><img loading="lazy" src="assets/fixed_five_view_comparison_m1_m4.jpg" alt="M1 to M4 and input GT across five fixed views"><figcaption><span>Figure 5.</span> {"M1–M4 and input GT across five fixed views." if en else "M1–M4 与输入 GT 在五个固定视角下的并排比较。"}</figcaption></figure>'''
@@ -77,7 +77,7 @@ def downloads():
 def office_section(en):
     return f'''<section id="office-cafe"><p class="section-tag">08 / OFFICE CAFÉ</p><h2>{"From a phone walkthrough to an interactive twin" if en else "从手机视频到可交互空间"}</h2><p>{"The complete Office Café viewer is embedded below. It retains model-only, scan ↔ model, and source-video ↔ model comparison modes; playback follows all 2,103 solved source-camera poses. The linked shake experiment retains control, gentle, and strong MuJoCo replays." if en else "下方嵌入完整 Office Café 查看器：保留“模型”“扫描 ↔ 模型”“原视频 ↔ 模型”三种对照方式，并可沿 2,103 个求解后的原视频相机位姿播放。摇晃实验继续提供零摇晃、轻度和较强三组 MuJoCo 回放。"}</p><p class="office-links"><a href="{OFFICE_URL}" target="_blank" rel="noopener">{"Open full viewer" if en else "全屏打开模型"} ↗</a><a href="{OFFICE_URL}shake.html" target="_blank" rel="noopener">{"Open shake experiment" if en else "打开摇晃实验"} ↗</a></p><div class="office-cafe-embed"><iframe src="{OFFICE_URL}" title="Office Café interactive spatial twin" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div></section>'''
 
-def page(en=False):
+def legacy_page(en=False):
     title="Four paths to an editable world" if en else "四条路径，重建一个可编辑世界"
     desc=("A measured comparison of four Astra–Blender reconstructions: pose, depth, geometry, appearance, and novel-view depth." if en else "对四种 Astra–Blender 重建的克制比较：位姿、深度、几何、外观和同场景新视角深度。")
     sections=(["Question & four methods","Pose and native/model depth","Editable M1–M4","Geometry","Appearance","Same-scene novel-view depth","Limits & evidence","Office Café twin"] if en else ["问题与四种方法","位姿与原生/模型深度","可编辑 M1–M4","几何","外观","同场景新视角深度","局限与证据","Office Café 模型"])
@@ -111,6 +111,145 @@ function loadScene(id){if(!cache.has(id)){const promise=new GLTFLoader().loadAsy
 async function selectScene(){if(!manifest)return;const request=++version,id=select.value;setStatus(zh?`正在加载 ${id}…`:`Loading ${id}…`);try{const [model,gt]=await Promise.all([loadScene(id),loadScene('GT')]);if(request!==version)return;selectedScene=model;truthScene=gt;setStatus('');updateMode();panel.dataset.loadedModel=id;panel.dataset.gtLoaded='true'}catch(e){if(request!==version)return;console.error('Scene asset load failed',e);setStatus(zh?'场景加载失败，请重试。':'Scene loading failed. Retry.',true)}}
 async function start(){if(started)return;started=true;try{setStatus(zh?'正在加载对比场景…':'Loading comparison scenes…');const response=await fetch('data/scene_comparison.json');if(!response.ok)throw Error(`manifest HTTP ${response.status}`);manifest=await response.json();renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.domElement.setAttribute('aria-label',zh?'重建与 GT 三维场景':'Reconstruction and GT 3D scene');renderer.domElement.tabIndex=0;stage.prepend(renderer.domElement);camera=new THREE.PerspectiveCamera(42,1,.05,500);controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=false;controls.minDistance=1;controls.maxDistance=200;controls.addEventListener('change',render);const pmrem=new THREE.PMREMGenerator(renderer),room=new RoomEnvironment();environment=pmrem.fromScene(room,.04).texture;room.dispose();pmrem.dispose();resizeObserver=new ResizeObserver(resize);resizeObserver.observe(stage);resetCamera();resize();panel.sceneDiagnostics=()=>({selected:select.value,loaded:selectedScene?.userData.method,gtLoaded:!!truthScene,hiddenCutaway:selectedScene?.userData.hiddenCutaway||0,camera:camera.position.toArray(),target:controls.target.toArray(),split,mode:mode.value,singleCamera:true,singleViewport:true,coordinateConversion:manifest.coordinate_conversion,cachedModels:[...cache.keys()]});await selectScene()}catch(e){console.error('Scene comparison initialization failed',e);resizeObserver?.disconnect();controls?.dispose();environment?.dispose();renderer?.dispose();renderer?.domElement.remove();renderer=camera=controls=environment=manifest=undefined;selectedScene=truthScene=undefined;cache.clear();started=false;setStatus(zh?'无法启动三维场景，请重试。':'Unable to start 3D viewer. Retry.',true)}}
 select.addEventListener('change',()=>{updateMode();selectScene()});mode.addEventListener('change',updateMode);slider.addEventListener('input',()=>updateSplit(slider.value));panel.querySelector('#scene-reset').addEventListener('click',resetCamera);panel.querySelector('#scene-retry').addEventListener('click',()=>manifest&&renderer?selectScene():start());divider.addEventListener('pointerdown',e=>{e.preventDefault();active=true;divider.setPointerCapture(e.pointerId);if(controls)controls.enabled=false});divider.addEventListener('pointermove',e=>{if(!active)return;const b=stage.getBoundingClientRect();updateSplit((e.clientX-b.left)/b.width*100)});const stop=()=>{active=false;if(controls)controls.enabled=true};divider.addEventListener('pointerup',stop);divider.addEventListener('pointercancel',stop);divider.addEventListener('keydown',e=>{const d={ArrowLeft:-2,ArrowRight:2,PageDown:-10,PageUp:10};if(e.key in d){e.preventDefault();updateSplit(split*100+d[e.key])}});updateSplit(50);updateMode();const lazy=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){lazy.disconnect();start()}},{rootMargin:'300px'});lazy.observe(panel)}'''
+
+def academic_page(en=False):
+    current, other = ("en.html", "index.html") if en else ("index.html", "en.html")
+    if en:
+        title = "Plausible Is Not Faithful"
+        desc = "Four reconstruction routes reveal how pose, depth, and programmatic modeling shape an editable 3D world."
+        sections = [
+            ("introduction", "Introduction"),
+            ("motivation", "Motivation"),
+            ("method", "Four routes"),
+            ("results", "Three findings"),
+            ("interactive", "Inspect the worlds"),
+            ("discussion", "Discussion"),
+            ("limitations", "Limits & evidence"),
+            ("office-cafe", "Beyond the lobby"),
+        ]
+        copy = {
+            "hook": "A scene can look plausible and still be spatially wrong.",
+            "intro1": "Image synthesis rewards a convincing frame. A spatial system has a harder obligation: scale, location, occlusion, and object boundaries must remain coherent when the camera moves—and the result must still be editable after rendering ends.",
+            "intro2": "We reconstruct the same World Lobby through four complete engineering routes, from RGB-only modeling to ground-truth-pose-conditioned modeling. Each route produces a frozen Blender scene, not merely a point cloud or a novel-view renderer. The experiment asks what additional geometric evidence buys, where it fails to help, and which errors survive object-centric reconstruction.",
+            "metric1": "0.376 → 0.072 m",
+            "metric1_label": "bidirectional surface error",
+            "metric2": "16.44% → 7.60%",
+            "metric2_label": "180-view model-depth AbsRel",
+            "metric3": "No universal winner",
+            "metric3_label": "PSNR, SSIM, and LPIPS disagree",
+            "motivation_title": "From a good-looking render to a usable spatial representation",
+            "motivation1": "An editable world model is useful because its objects can be selected, moved, hidden, assigned materials, queried for collisions, and revisited from known cameras. Those affordances matter for design, robotics, and simulation. They also expose errors that a single attractive image can conceal.",
+            "motivation2": "Our working hypothesis is that measurement does not replace generative reasoning; it constrains it. Pose and depth should reduce the space of plausible layouts, while the modeling system converts noisy observations into a compact semantic scene. That conversion can regularize noise, but it is also lossy: omitted surfaces and simplified materials do not reappear simply because the camera trajectory improves.",
+            "method_title": "Four routes, one frozen evaluation contract",
+            "method1": "All routes receive the same 180 RGB identities and the same Astra–Blender modeling objective. M1 tests how far visual priors can go without metric measurements. M2 adds RGB-only ViPE poses and pose-conditioned DA3 depth. M3 uses monocular-inertial ORB-SLAM3 poses with the same class of DA3 observations. M4 supplies ground-truth camera poses to diagnose the remaining modeling error; it does not receive the GT mesh or GT depth as modeling input.",
+            "method2": "Ground truth is introduced only after the scenes are frozen. M2 and M3 are evaluated under one global SE(3) alignment with scale fixed to one; no mesh ICP or per-view fitting is used. M1 has no native metric trajectory, so its model-space numbers use one frozen GT-assisted Sim(3) from five manual camera associations and remain diagnostic rather than evidence of metric recovery.",
+            "results_title": "Three findings matter more than a leaderboard",
+            "finding1_title": "1. Better pose does not mechanically imply better native depth",
+            "finding1": "M3 improves trajectory accuracy over M2—ATE falls from 0.167 m to 0.121 m and rotation error from 0.31° to 0.19°. Yet its native DA3 AbsRel is slightly worse (20.38% versus 19.06%). After modeling, the ordering reverses: M3 reaches 8.37% model-depth AbsRel versus 9.29% for M2. Upstream metrics and downstream scene fidelity are related, but they are not interchangeable.",
+            "finding2_title": "2. Geometric evidence turns a plausible layout into a more faithful space",
+            "finding2": "Under the declared alignment and without mesh ICP, bidirectional surface error falls from 0.376 m for the RGB-only diagnostic baseline to 0.118 m with ViPE, 0.082 m with ORB-SLAM3, and 0.072 m with GT poses. M4 is strongest on geometry in this case, while M3 closes most of the gap using an estimated trajectory.",
+            "finding3_title": "3. Geometric fidelity and image similarity are different objectives",
+            "finding3": "There is no appearance champion. Across the 100-view check, M2 has the highest PSNR (13.21 dB), M3 the highest SSIM (0.397), and M4 the lowest LPIPS (0.524). M4 simultaneously has the best geometry and model-depth AbsRel. A more faithful spatial model can still lose pixels to approximate materials, lighting, and simplified object boundaries.",
+            "interactive_title": "Do not trust the aggregate alone—inspect the frozen worlds",
+            "interactive1": "Use the shared camera to compare each reconstruction with GT. Start with M1 to see how a semantically plausible room can drift in metric layout; compare M2 and M3 to find regions where geometry improves without a matching gain in RGB similarity; then inspect M4 to isolate errors that remain even when camera pose is no longer the bottleneck.",
+            "interactive2": "The browser hides ceilings and surrounding walls only for cutaway inspection. Runtime registration and display choices do not modify the downloadable frozen GLB or Blend files.",
+            "discussion_title": "What this case suggests about editable world models",
+            "discussion1_title": "Modeling behaves like a structured—and lossy—regularizer",
+            "discussion1": "For M2–M4, the final scene depth is substantially closer to GT than native DA3 depth on the shared 180-view protocol: AbsRel falls by roughly 51–60%. One plausible interpretation is that object-level aggregation suppresses inconsistent local predictions. This is a hypothesis, not a controlled causal result: the same abstraction can also erase real surfaces and fine geometry.",
+            "discussion2_title": "Measurement constrains generation; it does not solve appearance",
+            "discussion2": "The strongest geometric route does not dominate PSNR or SSIM. Pose removes one source of uncertainty, but appearance still depends on material estimation, lighting, object detail, and renderer mismatch. Evaluating only RGB would miss spatial progress; evaluating only geometry would miss perceptual failure.",
+            "discussion3_title": "The 100-view check measures consistency, not unseen-view generalization",
+            "discussion3": "Tables 5 and 7 use the same seeded set of 100 cameras drawn from the 175 modeling frames outside the fixed-five check. These are additional evaluation views relative to that check, but their RGB images were available during modeling. On this set, M4 has the lowest depth AbsRel (7.47%), while M3 has the lowest RMSE (1.090 m).",
+            "limits_title": "The boundaries are part of the result",
+            "limits": [
+                "One synthetic scene and one engineering run per route do not establish general superiority or statistical significance.",
+                "The four routes are complete systems, not a strict single-variable ablation; M2 versus M3 cannot be attributed to IMU alone.",
+                "M4 uses GT camera poses and is a diagnostic route, not a deployable baseline or a theoretical upper bound.",
+                "M1 model-space metrics rely on GT-assisted Sim(3) and must not be ranked as native metric recovery.",
+                "The 100-view appearance and depth sets contain modeling RGB inputs; they are not a held-out novel-view benchmark.",
+                "Appearance metrics mix geometry, material, illumination, and rendering error. M4 revision 4 has not received a complete independent visual re-review.",
+            ],
+            "evidence": "Every table is generated from frozen assets. The public manifests expose model hashes, registrations, fixed views, and the exact seeded evaluation indices.",
+            "office_title": "Beyond the lobby: what survives in a phone-captured space?",
+            "office1": "Office Café is not a second run of the World Lobby benchmark and is not quantitative validation under the same protocol. It is an external, real-capture case study showing how an object-centric scene, a solved source-camera trajectory, video-to-model comparison, and physics replays can coexist in one inspectable artifact.",
+            "open_viewer": "Open full viewer",
+            "open_shake": "Open shake experiment",
+        }
+    else:
+        title = "合理，不等于忠实"
+        desc = "同一场景、四条重建路径：位姿、深度与程序化建模如何共同塑造一个可编辑三维世界。"
+        sections = [
+            ("introduction", "引言"),
+            ("motivation", "研究动机"),
+            ("method", "四条重建路径"),
+            ("results", "三个核心发现"),
+            ("interactive", "交互检查"),
+            ("discussion", "讨论"),
+            ("limitations", "边界与证据"),
+            ("office-cafe", "走出仿真大厅"),
+        ]
+        copy = {
+            "hook": "一个场景可以看起来合理，却在空间上是错的。",
+            "intro1": "图像生成奖励一张令人信服的画面；空间系统承担更严格的义务：当相机移动时，尺度、位置、遮挡与物体边界仍需保持一致，而且渲染结束后，结果还必须能够被编辑。",
+            "intro2": "我们让同一个 World Lobby 沿四条完整工程路径重建：从纯 RGB 建模，逐步加入估计位姿、深度与真实相机位姿。每条路径交付的是冻结的 Blender 场景，而不只是点云或新视角渲染器。实验关注的不是谁生成了最漂亮的单帧，而是几何证据究竟带来了什么、没有解决什么，以及哪些误差会穿过对象化建模继续存在。",
+            "metric1": "0.376 → 0.072 m",
+            "metric1_label": "双向表面误差",
+            "metric2": "16.44% → 7.60%",
+            "metric2_label": "180 视角模型深度 AbsRel",
+            "metric3": "没有单一赢家",
+            "metric3_label": "PSNR、SSIM 与 LPIPS 结论分化",
+            "motivation_title": "从“看起来不错”到“可以使用”的空间表示",
+            "motivation1": "可编辑世界模型的价值，在于其中的对象能够被选择、移动、隐藏、赋予材质、查询碰撞，并从已知相机重新访问。这些能力服务于设计、机器人与仿真，也会暴露一张漂亮图片可以掩盖的空间错误。",
+            "motivation2": "我们的工作假设是：测量不是生成推理的替代品，而是它的约束。位姿与深度应当缩小合理布局的解空间，建模系统则把噪声观测压缩为语义场景。这种转换可能正则化噪声，但同样是有损的：遗漏的表面、近似的材质，不会仅仅因为相机轨迹更准确而自动恢复。",
+            "method_title": "四条路径，一份冻结评测契约",
+            "method1": "四条路径使用相同的 180 张 RGB 身份和相同的 Astra–Blender 建模目标。M1 检验没有米制测量时视觉先验能走多远；M2 加入 RGB-only ViPE 位姿与 pose-conditioned DA3 深度；M3 使用 ORB-SLAM3 单目惯性位姿与同类 DA3 观测；M4 提供 GT 相机位姿，用于诊断剩余建模误差，但建模时不读取 GT 网格或 GT 深度。",
+            "method2": "所有场景冻结后才引入真值。M2/M3 只使用一次全局 SE(3) 配准，尺度固定为 1；不进行 mesh ICP 或逐视角拟合。M1 没有原生米制轨迹，其模型空间指标使用由 5 个手工相机关联得到、冻结不变的 GT-assisted Sim(3)，因此只能解释形状与显示误差，不能视为米制恢复。",
+            "results_title": "比排行榜更重要的三个发现",
+            "finding1_title": "1. 更好的位姿不会机械地带来更好的原生深度",
+            "finding1": "M3 的轨迹优于 M2：ATE 从 0.167 m 降至 0.121 m，旋转误差从 0.31° 降至 0.19°；但 M3 的原生 DA3 AbsRel 反而略差（20.38% 对 19.06%）。经过建模后，排序再次反转：M3 的模型深度 AbsRel 为 8.37%，优于 M2 的 9.29%。上游指标与最终场景忠实度相关，却不能彼此替代。",
+            "finding2_title": "2. 几何证据把“合理布局”约束成更忠实的空间",
+            "finding2": "在声明配准且不使用 mesh ICP 的条件下，双向表面误差从纯 RGB 诊断基线的 0.376 m，依次降至 ViPE 的 0.118 m、ORB-SLAM3 的 0.082 m 与 GT 位姿的 0.072 m。M4 在本案例中拥有最强几何，而 M3 依靠估计轨迹已经缩小了大部分差距。",
+            "finding3_title": "3. 几何忠实度与图像相似度是不同目标",
+            "finding3": "外观指标没有统一冠军。在 100 视角检查中，M2 的 PSNR 最高（13.21 dB），M3 的 SSIM 最高（0.397），M4 的 LPIPS 最低（0.524）；与此同时，M4 的几何与模型深度最好。更忠实的空间仍可能因为近似材质、光照与简化物体边界而损失像素相似度。",
+            "interactive_title": "不要只相信平均值——亲自检查冻结场景",
+            "interactive1": "在共享相机中将每个重建与 GT 对照：先从 M1 观察语义上合理的房间如何偏离米制布局；再比较 M2/M3，寻找几何改善但 RGB 相似度未同步提升的区域；最后检查 M4，把相机位姿不再是瓶颈后仍然存在的建模与材质误差分离出来。",
+            "interactive2": "网页只在运行时隐藏顶棚与四周墙体，以便剖视检查；运行时配准与显示选择不会修改可下载的冻结 GLB 或 Blend 文件。",
+            "discussion_title": "这个案例对可编辑世界模型意味着什么",
+            "discussion1_title": "建模像一种结构化、同时有损的正则化",
+            "discussion1": "在共享的 180 视角协议下，M2–M4 的最终场景深度都显著接近 GT：相较原生 DA3，AbsRel 约下降 51–60%。一种可能解释是，对象级聚合抑制了局部不一致预测；但这仍是假说，而非受控因果结论。同一种抽象也可能删除真实表面与细节。",
+            "discussion2_title": "测量约束生成，却不会自动解决外观",
+            "discussion2": "几何最强的路径并未统治 PSNR 或 SSIM。位姿消除了一类不确定性，外观仍受材质估计、照明、物体细节与渲染器差异支配。只评 RGB 会漏掉空间进步，只评几何也会漏掉感知失败。",
+            "discussion3_title": "100 视角检查衡量一致性，而不是未见视角泛化",
+            "discussion3": "Table 5/7 使用同一组固定随机种子的 100 个相机，它们从固定 5 帧之外的 175 张建模帧中抽取。这些视角相对固定检查是额外视角，但其 RGB 在建模阶段可见。在该集合上，M4 的深度 AbsRel 最低（7.47%），M3 的 RMSE 最低（1.090 m）。",
+            "limits_title": "边界本身也是结果的一部分",
+            "limits": [
+                "一个合成场景、每条路径一次工程运行，不能建立一般优越性或统计显著性。",
+                "四条路径是完整系统，而非严格的单变量消融；M2 与 M3 的差异不能只归因于 IMU。",
+                "M4 使用 GT 相机位姿，是诊断路线，不是可部署基线，也不是理论上界。",
+                "M1 模型空间指标依赖 GT-assisted Sim(3)，不能与原生米制恢复混为一谈。",
+                "100 视角外观与深度集合包含建模 RGB 输入，不是 held-out novel-view benchmark。",
+                "外观指标混合了几何、材质、照明与渲染误差；M4 revision 4 尚未完成完整独立视觉复审。",
+            ],
+            "evidence": "所有表格都由冻结资产生成；公开 manifest 提供模型哈希、配准、固定视角与固定随机评测索引。",
+            "office_title": "走出仿真大厅：手机采集空间中还剩下什么？",
+            "office1": "Office Café 不是 World Lobby 基准的第二次运行，也不构成同协议的定量验证。它是一个真实采集的外部案例，用于展示对象化场景、求解后的原视频相机轨迹、视频—模型对照与物理回放如何组合成一个可检查的空间产物。",
+            "open_viewer": "全屏打开模型",
+            "open_shake": "打开摇晃实验",
+        }
+    toc = "".join(f'<a href="#{anchor}">{label}</a>' for anchor, label in sections)
+    limits = "".join(f"<li>{item}</li>" for item in copy["limits"])
+    return f'''<!doctype html><html lang="{"en" if en else "zh-CN"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title} — Agentic World</title><meta name="description" content="{desc}"><meta property="og:type" content="article"><meta property="og:locale" content="{"en_US" if en else "zh_CN"}"><meta property="og:title" content="{title}: {"From Images to an Editable World" if en else "从图像到可编辑世界"}"><meta property="og:description" content="{desc}"><meta property="og:image" content="{BASE_URL}assets/teaser_originals.png"><meta property="og:url" content="{BASE_URL}{current}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}: {"From Images to an Editable World" if en else "从图像到可编辑世界"}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{BASE_URL}assets/teaser_originals.png"><link rel="canonical" href="{BASE_URL}{current}"><link rel="alternate" hreflang="zh-CN" href="{BASE_URL}index.html"><link rel="alternate" hreflang="en" href="{BASE_URL}en.html"><link rel="stylesheet" href="style.css"><script type="importmap">{{"imports":{{"three":"./vendor/three/three.module.js"}}}}</script><script src="app.js" defer></script><script type="module" src="scene-compare.js"></script></head>
+<body data-lang="{"en" if en else "zh"}"><a class="skip" href="#main">{"Skip to article" if en else "跳到正文"}</a><nav><a class="brand" href="index.html">ASTRA / WORLD MODELS</a><div><a href="index.html" {"aria-current='page'" if not en else ""}>中文</a><a href="en.html" {"aria-current='page'" if en else ""}>EN</a><a href="data/source_contract.json">DATA ↗</a></div></nav><header><p class="eyebrow">RESEARCH ESSAY · EDITABLE WORLD MODELS</p><h1>{title}</h1><p class="lead">{desc}</p><div class="meta"><span>{"1 controlled scene" if en else "1 个受控场景"}</span><span>{"4 reconstruction routes" if en else "4 条重建路径"}</span><span>{"editable Blender outputs" if en else "可编辑 Blender 交付"}</span></div></header>
+{hero_figure(en)}<div class="layout"><aside class="toc"><p>ON THIS PAGE</p>{toc}</aside><main id="main">
+<section id="introduction"><p class="section-tag">01 / INTRODUCTION</p><h2>{copy["hook"]}</h2><p class="standfirst">{copy["intro1"]}</p><p>{copy["intro2"]}</p><div class="insight-strip"><div><strong>{copy["metric1"]}</strong><span>{copy["metric1_label"]}</span></div><div><strong>{copy["metric2"]}</strong><span>{copy["metric2_label"]}</span></div><div><strong>{copy["metric3"]}</strong><span>{copy["metric3_label"]}</span></div></div><p class="metric-caveat">{"M1 values use a diagnostic GT-assisted Sim(3); all claims are scoped to this frozen single-scene study." if en else "M1 数值使用诊断性的 GT-assisted Sim(3)；所有结论仅适用于本次冻结的单场景研究。"}</p></section>
+<section id="motivation"><p class="section-tag">02 / MOTIVATION</p><h2>{copy["motivation_title"]}</h2><p>{copy["motivation1"]}</p><p>{copy["motivation2"]}</p><aside class="claim"><strong>{"Research question" if en else "研究问题"}</strong><p>{"How does progressively stronger geometric evidence change the fidelity—and the remaining failure modes—of an editable object-centric world?" if en else "逐步增强的几何证据，如何改变一个对象化可编辑世界的忠实度，以及它仍然保留的失败模式？"}</p></aside></section>
+<section id="method"><p class="section-tag">03 / METHOD</p><h2>{copy["method_title"]}</h2><p>{copy["method1"]}</p>{table(1)}<p>{copy["method2"]}</p><aside class="notice"><strong>M1 diagnostic limitation.</strong> {"Its Sim(3)-aligned geometry and depth numbers describe shape after GT-assisted display alignment, not native metric recovery." if en else "其 Sim(3) 配准后的几何与深度数值描述 GT-assisted 显示配准后的形状，不代表原生米制恢复。"}</aside></section>
+<section id="results"><p class="section-tag">04 / RESULTS</p><h2>{copy["results_title"]}</h2><article class="finding"><p class="finding-kicker">FINDING 01</p><h3>{copy["finding1_title"]}</h3><p>{copy["finding1"]}</p></article>{table(2)}<figure id="figure-2"><img loading="lazy" src="assets/figure14_abc.png" alt="Trajectory, native depth, and model depth"><figcaption><span>Figure 2.</span> {"The upstream trajectory and native-depth ranking does not map one-to-one onto frozen-scene depth." if en else "上游轨迹与原生深度的排序，并不会一一映射为冻结场景的深度排序。"}</figcaption></figure><article class="finding"><p class="finding-kicker">FINDING 02</p><h3>{copy["finding2_title"]}</h3><p>{copy["finding2"]}</p></article>{table(3)}<article class="finding"><p class="finding-kicker">FINDING 03</p><h3>{copy["finding3_title"]}</h3><p>{copy["finding3"]}</p></article>{table(4)}{table(5)}</section>
+<section id="interactive"><p class="section-tag">05 / INTERACTIVE INSPECTION</p><h2>{copy["interactive_title"]}</h2><p>{copy["interactive1"]}</p>{scene_figure(en)}{fixed_figure(en)}{overview_figure(en)}<p>{copy["interactive2"]}</p></section>
+<section id="discussion"><p class="section-tag">06 / DISCUSSION</p><h2>{copy["discussion_title"]}</h2><h3>{copy["discussion1_title"]}</h3><p>{copy["discussion1"]}</p><h3>{copy["discussion2_title"]}</h3><p>{copy["discussion2"]}</p><h3>{copy["discussion3_title"]}</h3><p>{copy["discussion3"]}</p><figure id="figure-6"><img loading="lazy" src="assets/model_depth_error_five_views_m1_m4.png" alt="Model-depth error at five fixed evaluation views"><figcaption><span>Figure 6.</span> {"Model-depth error at the fixed-five check; teal marks missing or invalid predictions." if en else "固定 5 视角检查中的模型深度误差；青绿色表示缺失或无效预测。"}</figcaption></figure>{table(6)}{table(7)}</section>
+<section id="limitations"><p class="section-tag">07 / LIMITATIONS & EVIDENCE</p><h2>{copy["limits_title"]}</h2><ul class="limits-list">{limits}</ul><p>{copy["evidence"]}</p>{downloads()}<p class="evidence-links"><a href="data/tables_1_7.json">Tables JSON</a> · <a href="data/scene_comparison.json">Scene manifest</a> · <a href="data/fixed_views.json">Fixed views</a> · <a href="evidence/publication_manifest.json">Publication manifest</a> · <a href="evidence/SHA256SUMS">SHA256</a></p></section>
+<section id="office-cafe"><p class="section-tag">08 / EXTERNAL CASE STUDY</p><h2>{copy["office_title"]}</h2><p>{copy["office1"]}</p><p class="office-links"><a href="{OFFICE_URL}" target="_blank" rel="noopener">{copy["open_viewer"]} ↗</a><a href="{OFFICE_URL}shake.html" target="_blank" rel="noopener">{copy["open_shake"]} ↗</a></p><div class="office-cafe-embed"><iframe src="{OFFICE_URL}" title="Office Café interactive spatial twin" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div></section><noscript>JavaScript is required for tables and interactive figures.</noscript></main></div><footer>Agentic World · frozen evidence, editable outputs · <a href="{other}">{"中文" if en else "English"}</a></footer></body></html>'''
+
 
 README='''# Agentic World · editable World Lobby
 
@@ -177,12 +316,12 @@ def main():
     dump(ROOT/"data/fixed_views.json",{"schema_version":1,"source_manifest":VIEW_SOURCE,"source_manifest_sha256":sha(view_src),"frames":list(FRAMES),"methods":[*METHODS,"GT"],"images":fixed})
     (ROOT/"data").mkdir(parents=True,exist_ok=True); shutil.copy2(table_src,ROOT/"data/tables_1_7.json")
     dump(ROOT/"data/source_contract.json",{"schema_version":2,"old_site_baseline":"ae69dbe","source_root_name":source.name,"table_source":{"path":TABLE_SOURCE,"sha256":sha(table_src),"published_url":"data/tables_1_7.json"},"figures":assets,"models":models,"gt_asset":gt,"fixed_views_manifest":"data/fixed_views.json","scene_comparison_manifest":"data/scene_comparison.json","external_embed":{"office_cafe":{"url":OFFICE_URL,"shake_url":OFFICE_URL+"shake.html","retained_features":["model","scan_to_model","source_video_to_model","source_camera_trajectory_playback","shake_control","shake_gentle","shake_strong"]}},"vendor":vendor,"tables":[{"number":i,"key":f"table{i}","methods":list(METHODS),"columns":list(tables["tables"][f"table{i}"][0]),"url":f"index.html#table-{i}","english_url":f"en.html#table-{i}"} for i in range(1,8)],"presentation":{"table2_hidden_columns":["alignment"],"table3_hidden_columns":["model_sha256","alignment"],"figure1_layout":"single supplied teaser image","metric_best_values":"bold, raw-value comparison"},"protocols":tables["protocols"],"m1_notice":tables["m1_notice"]})
-    figure_width_style="#figure-5,#figure-6{width:100%;margin:30px 0}#figure-5>img,#figure-6>img{width:100%;background:var(--paper)}"
+    academic_style=r'''#figure-5,#figure-6{width:100%;margin:30px 0}#figure-5>img,#figure-6>img{width:100%;background:var(--paper)}main h3{font-family:Georgia,"Noto Serif CJK SC",serif;font-size:23px;font-weight:500;line-height:1.4;margin:32px 0 10px}.insight-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:34px 0 12px;background:var(--line);border:1px solid var(--line)}.insight-strip div{display:flex;min-height:125px;padding:22px 18px;background:var(--white);flex-direction:column;justify-content:space-between}.insight-strip strong{font:500 25px/1.15 Georgia,serif;color:var(--green);letter-spacing:-.02em}.insight-strip span{font-size:11px;line-height:1.45;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}.metric-caveat{margin:8px 0 0;color:var(--muted);font-size:12px}.claim{margin:30px 0;padding:20px 24px;border:1px solid var(--line);background:var(--white)}.claim strong,.finding-kicker{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green)}.claim p{margin:8px 0 0;font:500 21px/1.55 Georgia,"Noto Serif CJK SC",serif}.finding{margin:42px 0 18px;padding:0 0 22px;border-bottom:1px solid var(--line)}.finding h3{margin:5px 0 12px}.finding p:last-child{margin-bottom:0}.limits-list{padding-left:22px}.limits-list li{margin:10px 0}.evidence-links{font-size:12px;margin-top:25px}@media(max-width:700px){.insight-strip{grid-template-columns:1fr}.insight-strip div{min-height:98px}.claim p{font-size:18px}}'''
     eager_preload='const fixedPreloads=[];for(const m of ["M1","M2","M3","M4","GT"])for(const f of [0,36,72,108,144]){const image=new Image();image.src=`assets/fixed_views/${m}/${String(f).padStart(3,"0")}.png`;fixedPreloads.push(image)}'
     controls='const method=document.querySelector("#compare-method"),frame=document.querySelector("#compare-frame");'
     if eager_preload not in APP or controls not in APP: raise ValueError("Figure 4 app template changed")
     app_source=APP.replace(eager_preload,"").replace(controls,controls+"method.disabled=false;frame.disabled=false;")
-    write(ROOT/"style.css",STYLE+figure_width_style+"\n"); write(ROOT/"app.js",app_source+"\n"); write(ROOT/"scene-compare.js",SCENE_JS+"\n"); write(ROOT/"index.html",page()+"\n"); write(ROOT/"en.html",page(True)+"\n"); write(ROOT/"README.md",README); write(ROOT/"requirements.txt","playwright>=1.40,<2\n"); write(ROOT/".gitignore","__pycache__/\nqa/\n.venv/\n.publication.json\n"); (ROOT/".nojekyll").touch()
+    write(ROOT/"style.css",STYLE+academic_style+"\n"); write(ROOT/"app.js",app_source+"\n"); write(ROOT/"scene-compare.js",SCENE_JS+"\n"); write(ROOT/"index.html",academic_page()+"\n"); write(ROOT/"en.html",academic_page(True)+"\n"); write(ROOT/"README.md",README); write(ROOT/"requirements.txt","playwright>=1.40,<2\n"); write(ROOT/".gitignore","__pycache__/\nqa/\n.venv/\n.publication.json\n"); (ROOT/".nojekyll").touch()
     files=[]
     for p in sorted(ROOT.rglob("*")):
         if not p.is_file(): continue
