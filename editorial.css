@@ -1,0 +1,25 @@
+header h1{max-width:1080px;font-size:clamp(38px,5.5vw,72px);text-wrap:balance}
+header .eyebrow{max-width:760px;line-height:1.7}
+.embodied-demo{scroll-margin-top:30px}
+.mission-command{margin:28px 0 20px;padding:22px 26px;border-left:3px solid var(--green);background:#edf1e9;font-size:clamp(20px,2.4vw,27px);line-height:1.6}
+.mission-command>span{display:block;margin-bottom:8px;font:700 11px/1.5 system-ui,sans-serif;letter-spacing:.12em;color:var(--green)}
+.mission-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;list-style:none;padding:0;margin:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.mission-flow li{padding:14px 12px;font-size:13px;line-height:1.7}
+.mission-flow li+li{border-left:1px solid var(--line)}
+.mission-flow span{display:block;color:var(--green);font-size:11px;letter-spacing:.12em}
+.demo-film{margin:24px 0 14px}
+.demo-film video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#15231f;border:1px solid var(--line)}
+.demo-film figcaption{font-size:13px;line-height:1.8}
+.demo-links{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 22px;font-size:13px}
+.demo-protocol{margin:20px 0 0;border-top:1px solid var(--line);padding:14px 0;font-size:14px;color:var(--muted)}
+.demo-protocol summary{cursor:pointer;color:var(--green);font-weight:650;min-height:30px}
+.demo-protocol p{font-size:14px}
+.grounding-block{margin-top:32px;padding-top:22px;border-top:1px solid var(--line)}
+.spatial-foundation{margin-top:38px;padding-top:25px;border-top:1px solid var(--line)}
+.capability-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;margin:18px 0}
+.capability-grid>div{padding:12px 0;border-top:1px solid var(--line)}
+.capability-grid h4{margin:0 0 8px;font-size:17px;color:var(--green)}
+.capability-grid p{margin:0;font-size:15px;line-height:1.85}
+.demo-protocol summary:focus-visible,.demo-links a:focus-visible{outline:2px solid var(--green);outline-offset:4px}
+@media(max-width:600px){header h1{font-size:clamp(34px,9vw,46px)}nav{gap:15px;flex-wrap:wrap}.brand{font-size:11px}.mission-command{padding:18px}.mission-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.mission-flow li:nth-child(3){border-left:0}.mission-flow li:nth-child(n+3){border-top:1px solid var(--line)}.capability-grid{grid-template-columns:1fr}.demo-links{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

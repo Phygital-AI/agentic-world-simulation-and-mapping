@@ -3,6 +3,7 @@
 from pathlib import Path
 from urllib.request import Request, urlopen
 import argparse, hashlib, html, json, shutil, tempfile
+from editorial import BASE_URL, SITE_TITLE, REFERENCES, narrative_copy, editorial_page
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT.parent / "world_lobby_four_trajectory_20260929"
@@ -14,7 +15,6 @@ METHODS, FRAMES = ("M1", "M2", "M3", "M4"), (0, 36, 72, 108, 144)
 GT_URL = "https://wentingw.github.io/astra-world-model-blog/assets/comparison/GT.glb"
 GT_SHA = "6c28ab067c63c5b1fce19c6a972f3d66c7ac4d9bd9ce3b5a57e2e18f5641fe8f"
 GT_BYTES = 24816108
-BASE_URL = "https://wentingw.github.io/agentic-world-blog/"
 OFFICE_URL = "https://office-cafe-vipe.hiwtishere.chatgpt.site/"
 
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -115,8 +115,8 @@ select.addEventListener('change',()=>{updateMode();selectScene()});mode.addEvent
 def academic_page(en=False):
     current, other = ("en.html", "index.html") if en else ("index.html", "en.html")
     if en:
-        title = "Plausible Is Not Faithful"
-        desc = "Four reconstruction routes reveal how pose, depth, and programmatic modeling shape an editable 3D world."
+        title = SITE_TITLE
+        desc = "From geometry-grounded reconstruction to map-based embodied action—and toward persistent spatial memory, interaction, and simulation."
         sections = [
             ("results", "Results"),
             ("motivation", "Motivation"),
@@ -190,8 +190,8 @@ def academic_page(en=False):
             "open_shake": "Open shake experiment",
         }
     else:
-        title = "合理，不等于忠实"
-        desc = "同一场景、四条重建路径：位姿、深度与程序化建模如何共同塑造一个可编辑三维世界。"
+        title = SITE_TITLE
+        desc = "从几何锚定的场景重建，到基于地图的具身行动；走向连接空间记忆、交互与仿真的持久空间表示。"
         sections = [
             ("results", "结果"),
             ("motivation", "研究动机"),
@@ -264,6 +264,7 @@ def academic_page(en=False):
             "open_viewer": "全屏打开模型",
             "open_shake": "打开摇晃实验",
         }
+    narrative_copy(copy, en)
     toc = "".join(f'<a href="#{anchor}">{label}</a>' for anchor, label in sections)
     limits = "".join(f"<li>{item}</li>" for item in copy["limits"])
     contributions = "".join(f"<li>{item}</li>" for item in copy["contributions"])
@@ -280,10 +281,10 @@ def academic_page(en=False):
         '</span>'
     )
     citation = html.escape("""@misc{agentic_world_2026,
-  title        = {Plausible Is Not Faithful: Pose, Depth, and Agentic Blender Reconstruction},
-  author       = {Agentic World Contributors},
+  title        = {Agentic World Simulation and Mapping: Geometry-Grounded Agentic Scene Reconstruction},
+  author       = {Phygital AI},
   year         = {2026},
-  howpublished = {\\url{https://wentingw.github.io/agentic-world-blog/}},
+  howpublished = {\\url{https://phygital-ai.github.io/agentic-world-simulation-and-mapping/}},
   note         = {Interactive research article and frozen evaluation assets}
 }""")
     references = [
@@ -302,11 +303,12 @@ def academic_page(en=False):
         ('Blender Foundation. Blender: Free and Open Source 3D Creation Suite.',
          'https://www.blender.org/'),
     ]
+    references.extend(REFERENCES)
     reference_list = "".join(
         f'<li><a href="{url}" target="_blank" rel="noopener">{text}</a></li>'
         for text, url in references
     )
-    return f'''<!doctype html><html lang="{"en" if en else "zh-CN"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title} — Agentic World</title><meta name="description" content="{desc}"><meta property="og:type" content="article"><meta property="og:locale" content="{"en_US" if en else "zh_CN"}"><meta property="og:title" content="{title}: {"From Images to an Editable World" if en else "从图像到可编辑世界"}"><meta property="og:description" content="{desc}"><meta property="og:image" content="{BASE_URL}assets/teaser_originals.png"><meta property="og:url" content="{BASE_URL}{current}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}: {"From Images to an Editable World" if en else "从图像到可编辑世界"}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{BASE_URL}assets/teaser_originals.png"><link rel="canonical" href="{BASE_URL}{current}"><link rel="alternate" hreflang="zh-CN" href="{BASE_URL}index.html"><link rel="alternate" hreflang="en" href="{BASE_URL}en.html"><link rel="stylesheet" href="style.css"><script type="importmap">{{"imports":{{"three":"./vendor/three/three.module.js"}}}}</script><script src="app.js" defer></script><script type="module" src="scene-compare.js"></script></head>
+    page = f'''<!doctype html><html lang="{"en" if en else "zh-CN"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title} — Phygital AI</title><meta name="description" content="{desc}"><meta property="og:type" content="article"><meta property="og:locale" content="{"en_US" if en else "zh_CN"}"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:image" content="{BASE_URL}assets/teaser_originals.png"><meta property="og:url" content="{BASE_URL}{current}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{BASE_URL}assets/teaser_originals.png"><link rel="canonical" href="{BASE_URL}{current}"><link rel="alternate" hreflang="zh-CN" href="{BASE_URL}index.html"><link rel="alternate" hreflang="en" href="{BASE_URL}en.html"><link rel="stylesheet" href="style.css"><script type="importmap">{{"imports":{{"three":"./vendor/three/three.module.js"}}}}</script><script src="app.js" defer></script><script type="module" src="scene-compare.js"></script></head>
 <body data-lang="{"en" if en else "zh"}"><a class="skip" href="#main">{"Skip to article" if en else "跳到正文"}</a><nav><a class="brand" href="index.html">ASTRA / WORLD MODELS</a><div><a href="index.html" {"aria-current='page'" if not en else ""}>中文</a><a href="en.html" {"aria-current='page'" if en else ""}>EN</a><a href="data/source_contract.json">DATA ↗</a></div></nav><header><p class="eyebrow">RESEARCH ESSAY · EDITABLE WORLD MODELS</p><h1>{title}</h1><p class="lead">{desc}</p><div class="meta"><span>{"1 controlled scene" if en else "1 个受控场景"}</span><span>{"4 reconstruction routes" if en else "4 条重建路径"}</span><span>{"editable Blender outputs" if en else "可编辑 Blender 交付"}</span></div></header>
 {hero_figure(en)}<div class="layout"><aside class="toc"><p>ON THIS PAGE</p>{toc}</aside><main id="main">
 <section id="results"><p class="section-tag">01 / RESULTS</p><aside class="tldr"><strong>TL;DR</strong><p>{copy["tldr"]}</p></aside><h2>{copy["hook"]}</h2><p class="standfirst">{copy["intro1"]}</p><p>{copy["intro2"]}</p><div class="insight-strip"><div><strong>{copy["metric1"]}</strong><span>{copy["metric1_label"]}</span></div><div><strong>{copy["metric2"]}</strong><span>{copy["metric2_label"]}</span></div><div><strong>{copy["metric3"]}</strong><span>{copy["metric3_label"]}</span></div></div><p class="metric-caveat">{"M1 values use a diagnostic GT-assisted Sim(3); all claims are scoped to this frozen single-scene study." if en else "M1 数值使用诊断性的 GT-assisted Sim(3)；所有结论仅适用于本次冻结的单场景研究。"}</p></section>
@@ -319,7 +321,10 @@ def academic_page(en=False):
 <section id="references"><p class="section-tag">08 / REFERENCES</p><h2>{"References" if en else "参考文献"}</h2><ol class="references-list">{reference_list}</ol></section><noscript>JavaScript is required for tables and interactive figures.</noscript></main></div><footer>Agentic World · frozen evidence, editable outputs · <a href="{other}">{"中文" if en else "English"}</a></footer></body></html>'''
 
 
-README='''# Agentic World · editable World Lobby
+    return editorial_page(page, en)
+
+
+README='''# Agentic World Simulation and Mapping
 
 Bilingual static research journal rebuilt from frozen local sources. Figure 3 uses one local Three.js renderer/camera/full viewport for split comparison of M1–M4 with GT. Figure 4 switches among 25 hash-verified source images. All viewer dependencies are local, with no CDN.
 

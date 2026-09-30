@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "title": "Map-based embodied execution: reception-desk task",
+  "run_id": "sceneweft-walljourney-20260930-144825",
+  "recording_date": "2026-09-30",
+  "task_intent": {
+    "zh": "让无人机去前台，并让机器人在那里排好队。",
+    "en": "Send the drone to the reception desk and have the robots line up there.",
+    "language_to_plan_parser_demonstrated": false
+  },
+  "scene": {
+    "method": "M4",
+    "blend_sha256": "cc6cb605246a255d94e36b9dc3f8b91d5a292b047470bc0ff75b8a5c404b0cfe",
+    "manifest": "evidence/M4/manifest.json"
+  },
+  "navigation": {
+    "localization": "simulator_pose",
+    "route": "predefined",
+    "route_screening": "reconstructed_and_original_geometry",
+    "environment": "Isaac Sim / PhysX dynamics simulation",
+    "embodiments": ["drone", "humanoid", "quadruped", "wheeled_robot"],
+    "demonstration": "target marked on reconstructed map, routes specified, controller execution"
+  },
+  "media": {
+    "video": "assets/embodied-demo/world-lobby-four-robots.mp4",
+    "poster": "assets/embodied-demo/poster.jpg",
+    "sha256": "7427552e2234614eff778c7fe724a3903e10300feeef358aff9a78eb79060c6c",
+    "bytes": 12243718,
+    "duration_s": 235.2,
+    "width": 1280,
+    "height": 720,
+    "playback_rate": "1x",
+    "source_fps": "100/7",
+    "frame_count": 3360,
+    "route_trimmed": false,
+    "segments": [
+      {"start_s": 0, "end_s": 18, "role": "historical scene, reconstruction and route presentation; not this run's execution"},
+      {"start_s": 18, "end_s": 235.2, "role": "recorded native RGB execution from run 20260930-144825"}
+    ]
+  },
+  "audit": {
+    "status": "FAILED",
+    "acceptance": false,
+    "review_status_at_export": "NOT_REVIEWED",
+    "summary": "evidence/embodied-demo-audit.json",
+    "ground_final_formation_reached": true,
+    "full_flight_mission_completed": false
+  },
+  "scope": {
+    "demonstrated": ["map-based route execution in simulation", "shared map used by multiple embodiments"],
+    "not_evaluated": ["online visual localization", "learned instruction parsing", "memory retrieval", "real-robot transfer", "navigation comparison across M1-M4", "policy sim-to-real gap"]
+  }
+}

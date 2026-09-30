@@ -1,12 +1,29 @@
-# Agentic World · editable World Lobby
+# Agentic World Simulation and Mapping
 
-Bilingual static research journal rebuilt from frozen local sources. Figure 3 uses one local Three.js renderer/camera/full viewport for split comparison of M1–M4 with GT. Figure 4 switches among 25 hash-verified source images. All viewer dependencies are local, with no CDN.
+Bilingual research article by Phygital AI: geometry-grounded agentic scene reconstruction, map-based embodied execution, and a research agenda for persistent spatial memory, interaction, and simulation.
 
-The build copies the unchanged `scene.glb`/`scene.blend` pairs, downloads and verifies `GT.glb`, copies five local Three.js modules, applies registrations only at runtime, and records provenance in `data/scene_comparison.json`.
+The original structure, seven experiment tables, six figures, frozen `scene.glb`/`scene.blend` pairs, and interactive comparisons are preserved from `wentingw/agentic-world-blog` at `3c5f27c`. Figure 3 shares a camera and viewport with GT; Figure 4 uses 25 hash-verified source images. All viewer dependencies are local.
+
+The reception-desk demo illustrates map-based navigation using predefined routes and simulator-pose feedback. The video is unchanged; protocol and audit status are in `data/embodied_demo.json`. Read `evidence/provenance-note.md` for upstream naming discrepancies and evidence boundaries.
+
+## Edit and validate
+
+`scripts/editorial.py` holds the bilingual narrative additions; `scripts/site_builder_interactive.py` retains the frozen article template. The standard build only regenerates pages and publication hashes. It never rebuilds models, changes experiment data, downloads source assets, or removes directories.
 
 ```bash
-python scripts/build.py --source ../world_lobby_four_trajectory_20260929
+python scripts/build.py
+python scripts/render.py --check
 python scripts/validate.py
 python -m http.server 8765
 python scripts/browser_qa.py --url http://127.0.0.1:8765/
 ```
+
+Browser QA requires the packages in `requirements.txt` and a Playwright Chromium installation. The separate historical `site_builder.py` / `site_validator.py` scripts require the original source dataset and are not part of the publication build.
+
+## Publish
+
+Repository: https://github.com/Phygital-AI/agentic-world-simulation-and-mapping
+
+Website: https://phygital-ai.github.io/agentic-world-simulation-and-mapping/
+
+Authenticate GitHub CLI outside this repository, commit the reviewed changes, then run `python scripts/publish.py`. The publisher checks the organization, repository, clean worktree, frozen assets, and non-force push. It uses the CLI credential store; never place access tokens in this repository or remote URLs.

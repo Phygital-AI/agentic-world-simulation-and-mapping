@@ -18,6 +18,16 @@
       "bytes": 24816108
     },
     {
+      "path": "assets/embodied-demo/poster.jpg",
+      "sha256": "5d73d103bd02a72508c6fcb36c819659397954902ff1ed37dead487e22eba64a",
+      "bytes": 172803
+    },
+    {
+      "path": "assets/embodied-demo/world-lobby-four-robots.mp4",
+      "sha256": "7427552e2234614eff778c7fe724a3903e10300feeef358aff9a78eb79060c6c",
+      "bytes": 12243718
+    },
+    {
       "path": "assets/figure14_abc.png",
       "sha256": "6ce74542f6ce9d45a985e1916a42ef2e1205b29bbcb03959e4b1ea08380dfa39",
       "bytes": 344653
@@ -163,6 +173,11 @@
       "bytes": 4000665
     },
     {
+      "path": "data/embodied_demo.json",
+      "sha256": "db010c9f4d99723be701b0e1758fac1f6b8540c540939b5407701db29297f774",
+      "bytes": 2192
+    },
+    {
       "path": "data/fixed_views.json",
       "sha256": "67611f8ecc63b44187d494984c9fea6cfe6ab1fb2e99cbe9196ec9ba1e3fb911",
       "bytes": 8773
@@ -183,9 +198,14 @@
       "bytes": 12692
     },
     {
+      "path": "editorial.css",
+      "sha256": "e84cbca873bdfba20a284ded3bbcf7d28e71bf43ca55b2cdd6fe5ecf98a315f1",
+      "bytes": 2450
+    },
+    {
       "path": "en.html",
-      "sha256": "1fd05d74feec7f920b1c0339d9d1ef53ec7dea1437b9a62a934c7598a12f1b4b",
-      "bytes": 23720
+      "sha256": "1aa46284b28db5af9314d56d3e4dc425fb67736cbbe3744535990d85106a4013",
+      "bytes": 33242
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -208,9 +228,19 @@
       "bytes": 2101
     },
     {
+      "path": "evidence/embodied-demo-audit.json",
+      "sha256": "6a698c5aa5b760b6dbe602e2a42899b5f0871910056655c0450f6edca805ecd5",
+      "bytes": 1125
+    },
+    {
+      "path": "evidence/provenance-note.md",
+      "sha256": "7d7f124bef0b12f0a5c71315456c774ccb4e652974f525efbf0e29236be9e2cb",
+      "bytes": 2970
+    },
+    {
       "path": "index.html",
-      "sha256": "79d6f2667f8a55595ee14a37a49c315ff9080129b6e4a29508ac7d5f714042c2",
-      "bytes": 22642
+      "sha256": "9948d5354582bc271d86887c7475f933a24d020297273323fd9a68d2cd3cd022",
+      "bytes": 31321
     },
     {
       "path": "models/M1/scene.blend",
