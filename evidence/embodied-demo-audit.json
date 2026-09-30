@@ -1,32 +1,19 @@
 {
   "schema_version": 1,
-  "run_id": "sceneweft-walljourney-20260930-144825",
+  "run_id": "sceneweft-walljourney-20260930-214924",
   "source": "wall-journey-audit.json from the recorded run; summarized without changing the verdict",
   "status": "FAILED",
   "passed": false,
   "ground_final_formation_reached": true,
-  "end_formation_hold_s": 8.135,
+  "full_flight_mission_completed": true,
+  "end_formation_hold_s": 7.994999821297824,
+  "passed_checks": ["computed_current_body_stream_map_clearance", "computed_current_body_stream_inter_robot_clearance", "measured_ground_path_length_and_waypoint_traversal", "fresh_current_run_closure_receipt"],
   "failed_checks": [
     {
-      "check": "map_clearance_envelope",
-      "robot": "G1",
-      "reconstructed_obstacle": "ceramic_plant_0",
-      "reconstructed_margin_m": -0.0022,
-      "original_obstacle": "Obstacle_09",
-      "original_margin_m": -0.0911,
-      "interpretation": "body-envelope against frozen AABBs; not a contact-sensor collision measurement"
-    },
-    {
-      "check": "strict_waypoint_traversal",
-      "tolerance_m": 0.1,
-      "G1_missed_waypoints": 2,
-      "A1_missed_waypoints": 1,
-      "Jackal_passed": true
-    },
-    {
-      "check": "flight_task_closure",
-      "mission_completed": false,
-      "interpretation": "completed flight waypoints do not establish completion of the entire flight task"
+      "check": "measured_terminal_health_and_formation_hold",
+      "required_hold_seconds": 8.0,
+      "measured_hold_seconds": 7.994999821297824,
+      "interpretation": "Measured hold falls short of the unchanged 8.0-second criterion. The later terminal hold is outside the 156-second presentation edit."
     }
   ],
   "publication_role": "execution illustration, not an accepted navigation benchmark"

@@ -1,7 +1,8 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "title": "Map-based embodied execution: reception-desk task",
-  "run_id": "sceneweft-walljourney-20260930-144825",
+  "run_id": "sceneweft-walljourney-20260930-214924",
+  "delivery": "20260930-four-robot-demo-final-156s",
   "recording_date": "2026-09-30",
   "task_intent": {
     "zh": "让无人机去前台，并让机器人在那里排好队。",
@@ -22,29 +23,52 @@
     "demonstration": "target marked on reconstructed map, routes specified, controller execution"
   },
   "media": {
-    "video": "assets/embodied-demo/world-lobby-four-robots.mp4",
-    "poster": "assets/embodied-demo/poster.jpg",
-    "sha256": "7427552e2234614eff778c7fe724a3903e10300feeef358aff9a78eb79060c6c",
-    "bytes": 12243718,
-    "duration_s": 235.2,
+    "video": "assets/embodied-demo/four-robots-214924-156s-phone.mp4",
+    "poster": "assets/embodied-demo/navigation-214924-poster.png",
+    "poster_sha256": "fe1dfcc8d014fc47f93a6e4e343598c146373c2d3dc7b41613123bb6caafec8f",
+    "sha256": "b9008c7b754f994d30a740a632b70ea0f693f3917fcf11820e64902ddbd13596",
+    "bytes": 11648571,
+    "duration_s": 156.0,
     "width": 1280,
     "height": 720,
     "playback_rate": "1x",
     "source_fps": "100/7",
-    "frame_count": 3360,
-    "route_trimmed": false,
+    "output_fps": 30,
+    "frame_count": 4680,
+    "route_trimmed": true,
+    "trimmed_opening_s": 12.32,
+    "source_frame_ids": [177, 2148],
+    "later_terminal_hold_included": false,
+    "frame_rate_conversion": "Timestamp-preserving frame duplication/drop; no optical-flow interpolation or acceleration",
+    "hd": {
+      "video": "assets/embodied-demo/four-robots-214924-156s-hd.mp4",
+      "sha256": "f83dbb49e3aa97fd3f5f9c54ed79ed8624bac75dbd7e4cdddc4dc414b76ed222",
+      "bytes": 49687378
+    },
+    "map": {
+      "image": "assets/embodied-demo/planned-route-156s.png",
+      "sha256": "e3c8e766f40a975a0aceca185fa60867375153fc8ddb6db451788eb935cb9b8b",
+      "bytes": 1125683,
+      "width": 1920,
+      "height": 1080,
+      "role": "static planned-route design, not a measured execution trajectory"
+    },
     "segments": [
-      {"start_s": 0, "end_s": 18, "role": "historical scene, reconstruction and route presentation; not this run's execution"},
-      {"start_s": 18, "end_s": 235.2, "role": "recorded native RGB execution from run 20260930-144825"}
+      {"start_s": 0, "end_s": 6, "role": "scene presentation"},
+      {"start_s": 6, "end_s": 12, "role": "reconstruction presentation"},
+      {"start_s": 12, "end_s": 18, "role": "static planned-route presentation; not an execution trace"},
+      {"start_s": 18, "end_s": 156, "role": "recorded native RGB execution from run 20260930-214924"}
     ]
   },
   "audit": {
     "status": "FAILED",
     "acceptance": false,
-    "review_status_at_export": "NOT_REVIEWED",
+    "film_accepted": false,
     "summary": "evidence/embodied-demo-audit.json",
     "ground_final_formation_reached": true,
-    "full_flight_mission_completed": false
+    "full_flight_mission_completed": true,
+    "required_terminal_hold_s": 8.0,
+    "measured_terminal_hold_s": 7.994999821297824
   },
   "scope": {
     "demonstrated": ["map-based route execution in simulation", "shared map used by multiple embodiments"],

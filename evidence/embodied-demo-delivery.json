@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "delivery": "20260930-four-robot-demo-final-156s",
+  "run_id": "sceneweft-walljourney-20260930-214924",
+  "exported_at": "2026-09-30T23:37:26.372334+08:00",
+  "media_copied_without_reencoding": true,
+  "original_records_retained_in_local_delivery": true,
+  "independent_film_accepted": false,
+  "source_records": [
+    {
+      "path": "README.md",
+      "sha256": "3eeb1197ae05a623f5a4f0241cd118a961534acd357cca215ab0a562a475a3cb",
+      "bytes": 2070
+    },
+    {
+      "path": "SHA256SUMS",
+      "sha256": "0cfd060f13facd03d376fae3b48da26350a511283868e56f8b13b1708fc54465",
+      "bytes": 235373
+    },
+    {
+      "path": "05_records/final-export-receipt.json",
+      "sha256": "325a667714c568d7ed7c252e9b72839eb143e1487f13168fe4f932917f7c74f9",
+      "bytes": 43265
+    },
+    {
+      "path": "05_records/wall-journey-audit.json",
+      "sha256": "5b15f5af8ebf031337f5c514af3054acf03a25176f1312a07b7defbf056b2755",
+      "bytes": 22408
+    },
+    {
+      "path": "05_records/flight-report.json",
+      "sha256": "f8324dd461588b90fb9e128d58f83b6eef9e18a696debaaca6b63822ca96a39b",
+      "bytes": 11779
+    },
+    {
+      "path": "05_records/navigation-completed-status.json",
+      "sha256": "8141b0142cebdfc39c6b07fff44ea813bd3bfcb5ade4a1e7d72c0950e3ad0da8",
+      "bytes": 20662
+    },
+    {
+      "path": "05_records/segment-validation.json",
+      "sha256": "d3719eed6bb02c70385c50b2a836f17e211a7e4f9a52a5ce3fea59dbd338251b",
+      "bytes": 814
+    }
+  ],
+  "asset_bindings": [
+    {
+      "source": "00_final/sceneweft-four-robots-final-156s-phone.mp4",
+      "published": "assets/embodied-demo/four-robots-214924-156s-phone.mp4",
+      "sha256": "b9008c7b754f994d30a740a632b70ea0f693f3917fcf11820e64902ddbd13596"
+    },
+    {
+      "source": "00_final/sceneweft-four-robots-final-156s.mp4",
+      "published": "assets/embodied-demo/four-robots-214924-156s-hd.mp4",
+      "sha256": "f83dbb49e3aa97fd3f5f9c54ed79ed8624bac75dbd7e4cdddc4dc414b76ed222"
+    },
+    {
+      "source": "03_planned_route/planned-route-original.png",
+      "published": "assets/embodied-demo/planned-route-156s.png",
+      "sha256": "e3c8e766f40a975a0aceca185fa60867375153fc8ddb6db451788eb935cb9b8b"
+    },
+    {
+      "source": "04_navigation/middle.png",
+      "published": "assets/embodied-demo/navigation-214924-poster.png",
+      "sha256": "fe1dfcc8d014fc47f93a6e4e343598c146373c2d3dc7b41613123bb6caafec8f"
+    }
+  ]
+}

@@ -76,19 +76,22 @@ def demo_section(en):
     )
     details = (
         '<p>The instruction above describes the intended task, not a demonstrated language-to-plan parser. Routes were manually specified and screened against both the M4 reconstructed map and original geometry. This is not a reconstruction-only planning benchmark.</p>'
-        '<p>The 235.2-second film is unchanged at 1× speed: 18 seconds of scene/reconstruction/route presentation, followed by the recorded execution from run <code>20260930-144825</code>. The ground robots reach their final formation. The independent audit records clearance-envelope and waypoint failures, and incomplete flight-task closure. An envelope violation is not itself a measured physical contact.</p>'
+        '<p>The 156-second presentation edit plays at 1×: Scene (0–6s), Reconstruction (6–12s), Planned route (12–18s), and Navigation (18–156s). Navigation uses the new run <code>20260930-214924</code>; the opening 12.32 seconds of waiting are omitted, and the later terminal hold is outside this cut. The map is a static route design, not a measured execution trace.</p>'
+        '<p>The source run reports completed flight and ground formation. Its independent audit passes the map-clearance, inter-robot-clearance, waypoint, and closure checks, but remains FAILED: measured terminal health/formation hold is 7.994999821 seconds against the unchanged 8.0-second requirement. Media export checks passed; independent physical and film acceptance are not claimed.</p>'
         '<p>This demo does not evaluate online visual localization, learned instruction understanding, memory retrieval, or real-robot transfer. Those are separate capabilities; the map-based execution shown here remains the intended demonstration.</p>'
         if en else
         '<p>上方指令说明任务意图，不代表本次演示实现了语言到计划的自动解析。路线人工设定，并同时参考 M4 重建地图和原始几何筛选；这不是只依赖重建图的规划 benchmark。</p>'
-        '<p>原片保持 1×、235.2 秒不变：前 18 秒为场景／重建／路线展示，其后为 <code>20260930-144825</code> 的执行录像。地面机器人到达最终队形；独立审计仍记录了净空包络、航点及飞行任务闭环方面的失败。几何包络违反不等于已检测到真实接触。</p>'
+        '<p>成片为 156 秒、1× 原速：场景（0–6秒）、重建（6–12秒）、路线设计（12–18秒）、导航（18–156秒）。导航来自新运行 <code>20260930-214924</code>，略去开头等待的 12.32 秒，后续终点保持过程不在本剪辑中。地图是静态路线设计图，不是实测执行轨迹。</p>'
+        '<p>源运行报告飞行任务与地面队形完成。独立审计中的地图净空、机器人间净空、航点及闭环检查已通过，但总判定仍为 FAILED：终点健康／队形保持实测 7.994999821 秒，未达到原定 8.0 秒要求。媒体导出检查通过，不据此宣称独立物理或影片验收通过。</p>'
         '<p>本 demo 不评测在线视觉定位、学习型指令理解、记忆检索或真实机器人迁移。这些是独立能力，不改变本演示所表达的“利用重建地图执行导航任务”。</p>'
     )
     return f'''<section id="embodied-demo" class="embodied-demo">
 <p class="section-tag">DEMO / MAP-BASED EMBODIED EXECUTION</p><h2>{title}</h2><p>{lead}</p>
 <blockquote class="mission-command"><span>{"Task intent" if en else "任务意图"}</span>“{command}”</blockquote>
 <ol class="mission-flow" aria-label="{"Task workflow" if en else "任务流程"}">{steps}</ol>
-<figure class="demo-film"><video controls playsinline preload="none" poster="assets/embodied-demo/poster.jpg" width="1280" height="720" aria-label="{"Four-robot map-based navigation demonstration" if en else "四机器人地图导航演示"}"><source src="assets/embodied-demo/world-lobby-four-robots.mp4" type="video/mp4">{"Your browser cannot play this video. Use the download link below." if en else "浏览器无法播放此视频，请使用下方下载链接。"}</video><figcaption>{caption}</figcaption></figure>
-<div class="demo-links"><a href="assets/embodied-demo/world-lobby-four-robots.mp4" download>{"Download full demo" if en else "下载完整演示"} · 12.24 MB · 3:55</a><a href="data/embodied_demo.json">{"Run &amp; media record" if en else "运行与视频记录"} ↗</a></div>
+<figure class="demo-film"><video controls playsinline preload="none" poster="assets/embodied-demo/navigation-214924-poster.png" width="1280" height="720" aria-label="{"Four-robot map-based navigation demonstration" if en else "四机器人地图导航演示"}"><source src="assets/embodied-demo/four-robots-214924-156s-phone.mp4" type="video/mp4">{"Your browser cannot play this video. Use the download link below." if en else "浏览器无法播放此视频，请使用下方下载链接。"}</video><figcaption>{caption}</figcaption></figure>
+<div class="demo-links"><a href="assets/embodied-demo/four-robots-214924-156s-phone.mp4" download>{"Download mobile edition" if en else "下载手机版"} · 11.65 MB · 2:36</a><a href="assets/embodied-demo/four-robots-214924-156s-hd.mp4" download>{"Download HD edition" if en else "下载高清版"} · 49.69 MB · 2:36</a><a href="data/embodied_demo.json">{"Run &amp; media record" if en else "运行与视频记录"} ↗</a></div>
+<figure class="demo-map" id="demo-route-map"><a href="assets/embodied-demo/planned-route-156s.png" target="_blank" rel="noopener"><img loading="lazy" src="assets/embodied-demo/planned-route-156s.png" width="1920" height="1080" alt="{"Planned routes for four robots, with the reception desk and waypoints marked; static design, not execution trajectories" if en else "标出前台与航点的四机器人路线设计图；静态设计，非执行轨迹"}"></a><figcaption><span>{"Navigation map." if en else "导航地图。"}</span> {"The reception desk and planned routes share the reconstructed scene. This is a static design preview, not a recorded trajectory. Open the image to inspect the full-resolution map." if en else "在重建场景中标出前台与规划路线。这是静态设计图，而非实跑轨迹；点击查看原尺寸地图。"}</figcaption></figure>
 <details class="demo-protocol"><summary>{"Demo protocol and scope" if en else "演示条件与范围"}</summary>{details}<p><a href="evidence/embodied-demo-audit.json">{"Independent audit summary" if en else "独立审计摘要"} ↗</a></p></details>
 </section>'''
 

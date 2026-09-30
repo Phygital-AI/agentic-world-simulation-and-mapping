@@ -18,14 +18,24 @@
       "bytes": 24816108
     },
     {
-      "path": "assets/embodied-demo/poster.jpg",
-      "sha256": "5d73d103bd02a72508c6fcb36c819659397954902ff1ed37dead487e22eba64a",
-      "bytes": 172803
+      "path": "assets/embodied-demo/four-robots-214924-156s-hd.mp4",
+      "sha256": "f83dbb49e3aa97fd3f5f9c54ed79ed8624bac75dbd7e4cdddc4dc414b76ed222",
+      "bytes": 49687378
     },
     {
-      "path": "assets/embodied-demo/world-lobby-four-robots.mp4",
-      "sha256": "7427552e2234614eff778c7fe724a3903e10300feeef358aff9a78eb79060c6c",
-      "bytes": 12243718
+      "path": "assets/embodied-demo/four-robots-214924-156s-phone.mp4",
+      "sha256": "b9008c7b754f994d30a740a632b70ea0f693f3917fcf11820e64902ddbd13596",
+      "bytes": 11648571
+    },
+    {
+      "path": "assets/embodied-demo/navigation-214924-poster.png",
+      "sha256": "fe1dfcc8d014fc47f93a6e4e343598c146373c2d3dc7b41613123bb6caafec8f",
+      "bytes": 1227190
+    },
+    {
+      "path": "assets/embodied-demo/planned-route-156s.png",
+      "sha256": "e3c8e766f40a975a0aceca185fa60867375153fc8ddb6db451788eb935cb9b8b",
+      "bytes": 1125683
     },
     {
       "path": "assets/figure14_abc.png",
@@ -179,8 +189,8 @@
     },
     {
       "path": "data/embodied_demo.json",
-      "sha256": "db010c9f4d99723be701b0e1758fac1f6b8540c540939b5407701db29297f774",
-      "bytes": 2192
+      "sha256": "716cf0950b01d09546799ae3caeda019a6c672ba3e979714ccd2c6dca41eea59",
+      "bytes": 3306
     },
     {
       "path": "data/fixed_views.json",
@@ -204,13 +214,13 @@
     },
     {
       "path": "editorial.css",
-      "sha256": "2ab127a6027264210df151e8ca4a6399193806b18f83d8e48ac1af9688389626",
-      "bytes": 6212
+      "sha256": "0142e8e5ad99f8132390908d0901b73c716642320ae940800b88a241851518d0",
+      "bytes": 6431
     },
     {
       "path": "en.html",
-      "sha256": "dd952076e8f101509813f400be2fa6596129d610bfcdd1b33ec261d2085da341",
-      "bytes": 33182
+      "sha256": "bad1dd3208dbe89bb2218ec36cea895f46815e407922539ef2962b4f5203bc45",
+      "bytes": 34283
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -234,18 +244,23 @@
     },
     {
       "path": "evidence/embodied-demo-audit.json",
-      "sha256": "6a698c5aa5b760b6dbe602e2a42899b5f0871910056655c0450f6edca805ecd5",
-      "bytes": 1125
+      "sha256": "4ea81e875634a2565aa50ac653a190a1544c154b516507345f8119e0ab2fc3f8",
+      "bytes": 994
+    },
+    {
+      "path": "evidence/embodied-demo-delivery.json",
+      "sha256": "fc2ec44f10a04f7b1c162e3071bf96e1e3a5249cdf4df25b4b5f47b84a675cca",
+      "bytes": 2434
     },
     {
       "path": "evidence/provenance-note.md",
-      "sha256": "7d7f124bef0b12f0a5c71315456c774ccb4e652974f525efbf0e29236be9e2cb",
-      "bytes": 2970
+      "sha256": "9f763f72ee089ece446df7dd40cf0b945721573b07077a87c3100f555d382ab4",
+      "bytes": 4442
     },
     {
       "path": "index.html",
-      "sha256": "dd952076e8f101509813f400be2fa6596129d610bfcdd1b33ec261d2085da341",
-      "bytes": 33182
+      "sha256": "bad1dd3208dbe89bb2218ec36cea895f46815e407922539ef2962b4f5203bc45",
+      "bytes": 34283
     },
     {
       "path": "models/M1/scene.blend",
@@ -329,8 +344,8 @@
     },
     {
       "path": "zh.html",
-      "sha256": "3a5789b1efb688c687ac548cf509d23769c580c10e331a1066b03771db93a4d9",
-      "bytes": 31384
+      "sha256": "a0edd85404e78125be81b60229ccdfeb952b6ca4218310bf02f4c171ad0003a7",
+      "bytes": 32380
     }
   ]
 }

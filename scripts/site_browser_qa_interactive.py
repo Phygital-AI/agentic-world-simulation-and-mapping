@@ -48,6 +48,9 @@ with sync_playwright() as pw:
             assert abs(heading_box["x"]-figure_box["x"])<1
             assert abs(heading_box["width"]-figure_box["width"])<1
             assert figure_box["width"]<=1000
+            if viewport=="desktop":
+                caption=page.locator("#figure-1 > figcaption")
+                assert caption.evaluate("element => element.getBoundingClientRect().height <= parseFloat(getComputedStyle(element).lineHeight) + 1")
             assert page.locator("header h1").evaluate("element => getComputedStyle(element).display")=="grid"
             assert "editorial.css?v=" in page.locator('link[rel="stylesheet"][href^="editorial.css"]').get_attribute("href")
             assert page.locator("header .pronunciation").text_content()==('AWSM 读作“awesome”；Phygital = physical（物理）+ digital（数字），即虚实融合。' if lang=="zh" else 'AWSM is pronounced “awesome”; phygital means physical + digital.')
@@ -75,6 +78,12 @@ with sync_playwright() as pw:
             assert video.locator("source").count()==1
             assert video.locator("source").get_attribute("src")==demo_media["video"]
             assert video.locator("source").get_attribute("type")=="video/mp4"
+            route_map=demo.locator("#demo-route-map img")
+            assert route_map.get_attribute("src")==demo_media["map"]["image"]
+            route_map.scroll_into_view_if_needed()
+            page.wait_for_function("image=>image.complete&&image.naturalWidth===1920",arg=route_map.element_handle())
+            assert demo.locator('a[download]').count()==2
+            assert demo.locator(f'a[href="{demo_media["hd"]["video"]}"]').count()==1
             details=demo.locator("details.demo-protocol")
             assert details.count()==1 and not details.get_attribute("open")
             details.locator("summary").click()

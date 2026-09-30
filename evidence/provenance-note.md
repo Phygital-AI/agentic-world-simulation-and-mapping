@@ -6,7 +6,11 @@ The Phygital AI edition changes the bilingual narrative and adds the reception-d
 
 The demo expresses map-based navigation: the destination is marked on the reconstructed map, routes are specified, and robot controllers execute them. It is not presented as an online visual-localization experiment. The task wording describes the intent, not a demonstrated language-to-plan parser.
 
-Video bytes remain unchanged (SHA-256 `7427552e2234614eff778c7fe724a3903e10300feeef358aff9a78eb79060c6c`). Run conditions and unresolved audit items are recorded in `data/embodied_demo.json` and `evidence/embodied-demo-audit.json`. The clip is identified by run ID, not as the latest successful experiment.
+The demo now uses the supplied `20260930-four-robot-demo-final-156s` delivery, copied without re-encoding. The mobile edition is 11,648,571 bytes (SHA-256 `b9008c7b754f994d30a740a632b70ea0f693f3917fcf11820e64902ddbd13596`); the HD edition is 49,687,378 bytes (SHA-256 `f83dbb49e3aa97fd3f5f9c54ed79ed8624bac75dbd7e4cdddc4dc414b76ed222`). Both are 156 seconds, 1280×720, 30 fps, at 1× playback speed. The package's original planned-route PNG and navigation screenshot are copied unchanged as the standalone map and video poster.
+
+The first 18 seconds present Scene, Reconstruction, and Planned route; the remaining 138 seconds show native RGB execution from run `sceneweft-walljourney-20260930-214924`. The package omits 12.32 seconds of opening waiting and truncates later footage, including terminal formation hold. The static map is a planned-route design, not a measured execution trace. These are presentation edits, not additional experiments.
+
+The new source run reports completed flight and formation. Unlike the superseded `144825` run, its independent audit passes map and inter-robot clearance, waypoint traversal, and closure checks. The total verdict remains FAILED because measured terminal health/formation hold is 7.994999821297824 seconds against an unchanged 8.0-second requirement. Media export checks do not establish physical or film acceptance. The old run's clearance, waypoint, and flight-closure failures are not attributed to this new run. Current conditions and audit details are recorded in `data/embodied_demo.json` and `evidence/embodied-demo-audit.json`; source-receipt hashes are in `evidence/embodied-demo-delivery.json`. Full production records and raw frames remain in the local delivery, rather than uploading the 2.61 GB package to the blog.
 
 ## Upstream naming discrepancy
 

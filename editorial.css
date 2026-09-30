@@ -16,7 +16,7 @@ header .pronunciation{max-width:760px;margin:12px 0 0;color:#60736b;font-size:13
 header .pronunciation small{font-size:inherit}
 body>.hero{margin-top:0;margin-bottom:72px}
 body>.hero>img{border:1px solid #dbe2d9;border-radius:5px;box-shadow:0 12px 36px -24px #243b3033}
-body>.hero>figcaption{max-width:86ch;margin-top:14px;line-height:1.75}
+body>.hero>figcaption{max-width:none;margin-top:14px;line-height:1.75}
 header h1,header .lead,header .pronunciation{animation:masthead-enter .7s cubic-bezier(.22,1,.36,1) both}
 header .lead{animation-delay:.08s}
 header .pronunciation{animation-delay:.14s}
@@ -35,6 +35,10 @@ header .pronunciation{animation-delay:.14s}
 .demo-film{margin:24px 0 14px}
 .demo-film video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#15231f;border:1px solid var(--line)}
 .demo-film figcaption{font-size:13px;line-height:1.8}
+.demo-map{margin:28px 0 20px}
+.demo-map img{width:100%;height:auto;border:1px solid var(--line);border-radius:4px}
+.demo-map a{display:block}
+.demo-map a:focus-visible{outline:2px solid var(--green);outline-offset:4px}
 .demo-links{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 22px;font-size:13px}
 .demo-protocol{margin:20px 0 0;border-top:1px solid var(--line);padding:14px 0;font-size:14px;color:var(--muted)}
 .demo-protocol summary{cursor:pointer;color:var(--green);font-weight:650;min-height:30px}

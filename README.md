@@ -14,7 +14,7 @@ The homepage (`index.html`) defaults to English. Chinese is at `zh.html`, titled
 
 The original structure, seven experiment tables, six figures, frozen `scene.glb`/`scene.blend` pairs, and interactive comparisons are preserved from `wentingw/agentic-world-blog` at `3c5f27c`. Figure 3 shares a camera and viewport with GT; Figure 4 uses 25 hash-verified source images. All viewer dependencies are local.
 
-The reception-desk demo illustrates map-based navigation using predefined routes and simulator-pose feedback. The video is unchanged; protocol and audit status are in `data/embodied_demo.json`. Read `evidence/provenance-note.md` for upstream naming discrepancies and evidence boundaries.
+The reception-desk demo illustrates map-based navigation using predefined routes and simulator-pose feedback. The 156-second delivery from run `20260930-214924` provides a mobile playback version, HD download, and a full-resolution planned-route map. Supplied media are copied without re-encoding; protocol and audit status are in `data/embodied_demo.json`. Read `evidence/provenance-note.md` for edit boundaries, upstream naming discrepancies, and source-record hashes.
 
 ## Edit and validate
 

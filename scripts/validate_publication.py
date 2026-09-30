@@ -18,8 +18,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGES = ("index.html", "en.html", "zh.html")
 TITLE = "AWSM: Agentic World Simulation and Mapping — Phygital AI"
 CANONICAL_ROOT = "https://phygital-ai.github.io/agentic-world-simulation-and-mapping/"
-VIDEO = "assets/embodied-demo/world-lobby-four-robots.mp4"
-POSTER = "assets/embodied-demo/poster.jpg"
+VIDEO = "assets/embodied-demo/four-robots-214924-156s-phone.mp4"
+POSTER = "assets/embodied-demo/navigation-214924-poster.png"
 HEX_SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -196,6 +196,20 @@ class PublicationValidation(unittest.TestCase):
         self.assertEqual(self.demo["navigation"]["localization"], "simulator_pose")
         self.assertEqual(self.demo["navigation"]["route"], "predefined")
         self.assert_hashed_file(media["video"], media["sha256"], media["bytes"])
+        self.assertEqual(media["duration_s"], 156.0)
+        self.assertEqual(media["frame_count"], 4680)
+        self.assertEqual(self.demo["run_id"], "sceneweft-walljourney-20260930-214924")
+        self.assert_hashed_file(media["poster"], media["poster_sha256"])
+        self.assert_hashed_file(media["hd"]["video"], media["hd"]["sha256"], media["hd"]["bytes"])
+        self.assert_hashed_file(media["map"]["image"], media["map"]["sha256"], media["map"]["bytes"])
+        self.assertEqual(self.demo["audit"]["measured_terminal_hold_s"], 7.994999821297824)
+        audit = load_json("evidence/embodied-demo-audit.json")
+        self.assertEqual(audit["run_id"], self.demo["run_id"])
+        self.assertEqual([check["check"] for check in audit["failed_checks"]], ["measured_terminal_health_and_formation_hold"])
+        delivery = load_json("evidence/embodied-demo-delivery.json")
+        self.assertEqual(delivery["run_id"], self.demo["run_id"])
+        for binding in delivery["asset_bindings"]:
+            self.assert_hashed_file(binding["published"], binding["sha256"])
 
     def test_embodied_demo_markup_and_bilingual_copy(self) -> None:
         navigation_terms = {
@@ -225,6 +239,10 @@ class PublicationValidation(unittest.TestCase):
             section_text = document.text_for("embodied-demo").lower()
             for term in navigation_terms[name]:
                 self.assertIn(term, section_text, f"{name}: embodied demo must state {term!r}")
+            self.assertIn("20260930-214924", section_text)
+            self.assertIn("2:36", section_text)
+            self.assertNotIn("235.2", section_text)
+            self.assertIn("demo-route-map", document.ids)
 
     def test_title_and_language_specific_canonical(self) -> None:
         expected = {
