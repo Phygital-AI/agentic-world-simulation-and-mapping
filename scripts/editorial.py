@@ -141,12 +141,13 @@ def editorial_page(page, en):
     page = page.replace('<a class="brand" href="index.html">ASTRA / WORLD MODELS</a>', '<a class="brand" href="index.html">PHYGITAL AI / AWSM</a>')
     subtitle = "From real spaces to worlds phygital agents can use." if en else "把真实空间，变成虚实融合智能体可以使用的世界。"
     pronunciation = 'AWSM is pronounced “awesome”.' if en else 'AWSM 读作 “awesome”。'
+    phygital_note = 'Phygital means physical + digital.' if en else 'Phygital = physical（物理）+ digital（数字），即虚实融合。'
     before_header, header_start, remainder = page.partition('<header>')
     old_header, header_end, after_header = remainder.partition('</header>')
     title_name = "Agentic World Simulation and Mapping" if en else "智能体世界仿真与建图"
     separator = ":" if en else "："
     heading = f'<h1><span class="title-mark">AWSM<span class="title-separator">{separator}</span></span> <span class="title-name">{title_name}</span></h1>'
-    page = before_header + header_start + heading + f'<p class="lead">{subtitle}</p><p class="pronunciation"><small>({pronunciation})</small></p>' + header_end + after_header
+    page = before_header + header_start + heading + f'<p class="lead">{subtitle}</p><p class="pronunciation"><small>({pronunciation})</small><small>{phygital_note}</small></p>' + header_end + after_header
     download_label = "Download BibTeX" if en else "下载 BibTeX 引用"
     page = page.replace('</code></pre></section>', f'</code></pre><a class="citation-download" href="data/awsm.bib" download="awsm.bib">{download_label} <span aria-hidden="true">↓</span></a></section>', 1)
     page = page.replace('<section id="motivation">', demo_section(en) + '\n<section id="motivation">', 1)

@@ -257,6 +257,7 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn(f'<meta name="description" content="{subtitle}">', markup)
             self.assertNotIn('class="brand-tagline"', header)
             self.assertIn('AWSM 读作 “awesome”。' if chinese else 'AWSM is pronounced “awesome”.', header)
+            self.assertIn('Phygital = physical（物理）+ digital（数字），即虚实融合。' if chinese else 'Phygital means physical + digital.', header)
             self.assertNotIn('class="eyebrow"', header)
             self.assertNotIn('class="meta"', header)
             self.assertIn('@misc{awsm_2026,', markup)
