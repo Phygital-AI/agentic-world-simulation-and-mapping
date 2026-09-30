@@ -29,7 +29,7 @@ REFERENCES = [
 def narrative_copy(copy, en):
     if en:
         copy.update({
-            "tldr": "Our goal is a persistent, editable spatial representation that connects reconstruction, map-based navigation, memory, interaction, and simulation. We study its geometric foundation through four frozen reconstruction routes, then show robots executing a reception-desk task using the reconstructed map. The experiments measure scene fidelity; the demo illustrates map-based execution; multimodal memory and long-term updates define the next research steps.",
+            "tldr": "Our goal is a persistent, editable spatial representation that connects reconstruction, map-based navigation, memory, interaction, and simulation. We study its geometric foundation through four frozen reconstruction routes, then show robots executing a reception-desk task using the reconstructed map. The experiments measure scene fidelity; the demo illustrates map-based execution. Improving efficiency and accuracy, building simulation-ready environments, and further integration with phygital agents define the next research steps.",
             "intro1": "A room that looks convincing is not yet a map an embodied agent can rely on. The agent needs to know where a destination is, how objects and free space relate, and which route its body can follow. Those answers should refer to the same space—not to separate, incompatible reconstructions for rendering, planning, and simulation.",
             "motivation_title": "A shared spatial foundation for embodied agents",
             "motivation1": "Consider the instruction: ‘Send the drone to the reception desk and have the robots line up there.’ The reception desk is a destination in the reconstructed map; a route is specified in that map, then controllers execute it. This is map-based navigation: reconstruction, target selection, route planning, and control share a spatial reference. An editable scene becomes an interface between a task and its execution.",
@@ -44,7 +44,7 @@ def narrative_copy(copy, en):
         copy["office1"] += " An author-observed failure—a curved real-world corner simplified into a square one—motivates separating local shape from global scale. A correct scale alone cannot repair that shape error; this is a qualitative observation, not another measured benchmark."
     else:
         copy.update({
-            "tldr": "我们希望构建一种持久、可编辑的空间表示，连接场景重建、地图导航、空间记忆、交互与仿真。本文用四条冻结重建路径研究它的几何基础，再展示机器人依据重建地图执行前台任务：实验回答场景有多忠实，demo 展示地图如何用于行动，多模态记忆与长期更新则是下一步研究方向。",
+            "tldr": "我们希望构建一种持久、可编辑的空间表示，连接场景重建、地图导航、空间记忆、交互与仿真。本文用四条冻结重建路径研究它的几何基础，再展示机器人依据重建地图执行前台任务：实验回答场景有多忠实，demo 展示地图如何用于行动。下一步研究将聚焦提升效率与精度、构建可直接用于仿真的场景，以及进一步与虚实融合智能体（phygital agents）集成。",
             "intro1": "一个看起来令人信服的房间，还不是具身 agent 可以依赖的地图。Agent 需要知道目标在哪里、物体与自由空间如何分布，以及自己的身体可以沿哪条路线通过。这些答案应当指向同一个空间，而不是渲染、规划与仿真各自维护一套互不一致的表示。",
             "motivation_title": "具身 agent 需要一个共享的空间基础",
             "motivation1": "考虑这样一条任务指令：“让无人机去前台，并让机器人在那里排好队。”前台是重建地图中的目标，路线在地图上设定，再由控制器执行。这就是基于地图的导航：重建、目标选择、路线规划和运动控制共享一个空间参照，可编辑场景由此成为任务与执行之间的接口。",
