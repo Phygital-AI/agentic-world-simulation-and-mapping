@@ -93,6 +93,21 @@
   },
   "fixed_views_manifest": "data/fixed_views.json",
   "scene_comparison_manifest": "data/scene_comparison.json",
+  "external_embed": {
+    "office_cafe": {
+      "url": "https://office-cafe-vipe.hiwtishere.chatgpt.site/",
+      "shake_url": "https://office-cafe-vipe.hiwtishere.chatgpt.site/shake.html",
+      "retained_features": [
+        "model",
+        "scan_to_model",
+        "source_video_to_model",
+        "source_camera_trajectory_playback",
+        "shake_control",
+        "shake_gentle",
+        "shake_strong"
+      ]
+    }
+  },
   "vendor": {
     "three.module.js": {
       "source": "world_model_blog/private_repo/sceneweft_sync_20260925/blog/vendor/three/three.module.js",
@@ -231,7 +246,8 @@
     "table3_hidden_columns": [
       "model_sha256",
       "alignment"
-    ]
+    ],
+    "figure1_layout": "always horizontal side-by-side"
   },
   "protocols": {
     "table2": "180 fixed views × 19,200 pixels; optical-Z; GT-valid domain; no per-view fitting",

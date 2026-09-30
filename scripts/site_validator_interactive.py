@@ -30,7 +30,7 @@ tables=json.loads((ROOT/"data/tables_1_5.json").read_text())
 assert list(tables["tables"])==[f"table{i}" for i in range(1,6)]
 for key,rows in tables["tables"].items(): assert [r["method"] for r in rows]==list(METHODS),key
 docs={name:Doc(ROOT/name) for name in ("index.html","en.html")}
-required={"question","pose-depth","editable","geometry","appearance","novel-depth","limitations",
+required={"question","pose-depth","editable","geometry","appearance","novel-depth","limitations","office-cafe",
           "model-select","scene-mode","scene-reset","scene-split","scene-retry","compare-method","compare-frame",
           *{f"table-{i}" for i in range(1,6)},*{f"figure-{i}" for i in range(1,7)}}
 for name,doc in docs.items():
@@ -50,6 +50,8 @@ for name,doc in docs.items():
     assert all(f"Figure {i}." in html for i in range(1,7))
     assert html.index('id="figure-4"') < html.index('id="figure-5"')
     assert 'assets/fixed_views/GT/000.png' in html and 'assets/fixed_views/M4/000.png' in html
+    assert 'src="https://office-cafe-vipe.hiwtishere.chatgpt.site/"' in html
+    assert 'href="https://office-cafe-vipe.hiwtishere.chatgpt.site/shake.html"' in html
     assert 'type="importmap"' in html and 'scene-compare.js' in html
 
 assert not (ROOT/"vendor/model-viewer-4.1.0.min.js").exists()
@@ -62,6 +64,10 @@ assert "display copies and runtime registrations do not alter the frozen models"
 
 contract=json.loads((ROOT/"data/source_contract.json").read_text())
 assert contract["presentation"]["table3_hidden_columns"]==["model_sha256","alignment"]
+assert contract["presentation"]["figure1_layout"]=="always horizontal side-by-side"
+assert contract["external_embed"]["office_cafe"]["retained_features"]==[
+    "model","scan_to_model","source_video_to_model","source_camera_trajectory_playback",
+    "shake_control","shake_gentle","shake_strong"]
 src_table=SOURCE/contract["table_source"]["path"]
 assert sha(src_table)==contract["table_source"]["sha256"]==sha(ROOT/"data/tables_1_5.json")
 for published,item in contract["figures"].items():
@@ -80,6 +86,8 @@ assert scene["gt_asset"]["sha256"]==GT_SHA and scene["gt_asset"]["bytes"]==GT_BY
 assert scene["camera"]=={"target":[18,1.2,-21],"position":[18,10,-3],"fov":42,"near":0.05,"far":500}
 c=[[1,0,0,0],[0,0,1,0],[0,-1,0,0],[0,0,0,1]]; ci=[[1,0,0,0],[0,0,-1,0],[0,1,0,0],[0,0,0,1]]
 assert scene["coordinate_conversion"]["C_mapping"]=="[x,y,z] -> [x,z,-y]"
+assert scene["display_cutaway"]["hide_name_pattern"]=="ceiling|roof|wall|facade"
+assert scene["display_cutaway"]["keep_name_pattern"]=="mirror|emblem|art|grass|metal"
 for method in METHODS:
     reg=scene["registrations"][method]
     assert reg["formula"]=="C * GT_from_model * C^-1"
@@ -113,8 +121,12 @@ for rel in ("three.module.js","three.core.js","loaders/GLTFLoader.js","controls/
 js=(ROOT/"scene-compare.js").read_text()
 assert "setScissor(" in js and "singleCamera:true" in js and "singleViewport:true" in js
 assert "runtime_matrix_gltf_y_up" in js and "applyMatrix4" in js
+assert "hiddenCutaway" in js and "ceiling|roof|wall|facade" in js
 app=(ROOT/"app.js").read_text()
 assert 'i!==3||!["model_sha256","alignment"].includes(k)' in app
+style=(ROOT/"style.css").read_text()
+assert ".hero-pair-grid{display:grid;grid-template-columns:1fr 1fr" in style
+assert ".hero-pair-grid{grid-template-columns:1fr}" not in style
 
 manifest=json.loads((ROOT/"evidence/publication_manifest.json").read_text())
 for row in manifest["files"]: assert sha(ROOT/row["path"])==row["sha256"],row["path"]

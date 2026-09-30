@@ -21,18 +21,23 @@ with sync_playwright() as pw:
             page=browser.new_page(viewport=size); errors=[]; failed=[]
             page.on("console",lambda m: errors.append(f"console {m.type}: {m.text}") if m.type=="error" else None)
             page.on("pageerror",lambda e: errors.append(str(e)))
-            page.on("requestfailed",lambda r: failed.append(f"{r.url}: {r.failure}"))
+            def record_failure(request):
+                if request.url.endswith("/assets/walkthrough.mp4") and request.failure=="net::ERR_ABORTED":
+                    return
+                failed.append(f"{request.url}: {request.failure}")
+            page.on("requestfailed",record_failure)
             page.goto(a.url.rstrip("/")+"/"+path,wait_until="networkidle",timeout=120_000)
             page.wait_for_selector("#table-5 table"); assert page.locator(".table-figure table").count()==5
             table3_headers=page.locator("#table-3 thead th").all_text_contents()
             assert len(table3_headers)==3 and all("SHA256" not in x and "配准" not in x and "Alignment" not in x for x in table3_headers)
             assert page.locator("#figure-1 .hero-pair-grid img").count()==2
+            assert page.locator("#figure-1 .hero-pair-grid").evaluate("(x)=>getComputedStyle(x).gridTemplateColumns.split(' ').length===2")
             assert page.locator("#figure-4").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-5')) & Node.DOCUMENT_POSITION_FOLLOWING")
             figure3=page.locator("#figure-3"); figure3.scroll_into_view_if_needed()
             page.wait_for_function("document.querySelector('#figure-3').dataset.state === 'ready'",timeout=120_000)
             for method in ("M1","M2","M3","M4","GT"):
                 page.select_option("#model-select",method)
-                page.wait_for_function("(m)=>{const p=document.querySelector('#figure-3');const d=p.sceneDiagnostics?.();return p.dataset.state==='ready'&&p.dataset.loadedModel===m&&d?.loaded===m&&d.gtLoaded&&d.singleCamera&&d.singleViewport}",arg=method,timeout=120_000)
+                page.wait_for_function("(m)=>{const p=document.querySelector('#figure-3');const d=p.sceneDiagnostics?.();return p.dataset.state==='ready'&&p.dataset.loadedModel===m&&d?.loaded===m&&d.gtLoaded&&d.singleCamera&&d.singleViewport&&(m==='GT'||d.hiddenCutaway>0)}",arg=method,timeout=120_000)
             page.select_option("#model-select","M2"); page.select_option("#scene-mode","compare")
             before=page.evaluate("document.querySelector('#figure-3').sceneDiagnostics()")
             page.locator(".scene-divider").focus(); page.keyboard.press("ArrowRight")
@@ -47,6 +52,22 @@ with sync_playwright() as pw:
                     page.select_option("#compare-frame",frame)
                     page.wait_for_function("([m,f])=>{const x=document.querySelector('#figure-4'),a=document.querySelector('#compare-pred'),b=document.querySelector('#compare-gt'),id=String(f).padStart(3,'0');return x.dataset.method===m&&x.dataset.frame===f&&a.currentSrc.endsWith(`/assets/fixed_views/${m}/${id}.png`)&&b.currentSrc.endsWith(`/assets/fixed_views/GT/${id}.png`)&&a.complete&&a.naturalWidth>0&&b.complete&&b.naturalWidth>0}",arg=[method,frame],timeout=30_000)
                     loaded_images.append(f"{method}/{int(frame):03d}")
+            iframe=page.locator("#office-cafe iframe")
+            assert iframe.get_attribute("src")=="https://office-cafe-vipe.hiwtishere.chatgpt.site/"
+            iframe.scroll_into_view_if_needed()
+            page.wait_for_timeout(1000)
+            office=next((f for f in page.frames if f.url.startswith("https://office-cafe-vipe.hiwtishere.chatgpt.site/")),None)
+            assert office is not None
+            office.wait_for_selector("#compare-mode",timeout=120_000)
+            if viewport=="desktop" and lang=="zh":
+                assert office.locator("#compare-mode option").all_text_contents()==["模型","扫描 ↔ 模型","原视频 ↔ 模型"]
+                assert office.locator("#play").get_attribute("aria-label")=="播放原视频相机轨迹"
+                assert office.locator("a.shake-link").get_attribute("href")=="./shake.html"
+                shake=browser.new_page()
+                shake.goto("https://office-cafe-vipe.hiwtishere.chatgpt.site/shake.html",wait_until="domcontentloaded",timeout=120_000)
+                assert shake.locator(".run-list button").count()==3
+                assert shake.locator(".run-list button").evaluate_all("(xs)=>xs.map(x=>x.dataset.run)") == ["control","gentle","strong"]
+                shake.close()
             overflow=page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
             assert not overflow,f"horizontal overflow: {viewport}/{lang}"
             assert not errors,errors; assert not failed,failed

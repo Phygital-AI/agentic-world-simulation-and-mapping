@@ -464,6 +464,18 @@
       "diagnostic_caveat": null
     }
   },
+  "display_cutaway": {
+    "scope": "runtime display only; frozen GLB/Blend bytes remain unchanged",
+    "hide_name_pattern": "ceiling|roof|wall|facade",
+    "keep_name_pattern": "mirror|emblem|art|grass|metal",
+    "applies_to": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "gt_asset": "already exported as a cutaway display model"
+  },
   "immutability": "Display copies and runtime registration do not alter frozen source GLB bytes.",
   "m1_diagnostic_caveat": "M1 registration is diagnostic only and is not native metric recovery.",
   "gt_asset": {
