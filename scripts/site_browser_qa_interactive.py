@@ -24,6 +24,10 @@ with sync_playwright() as pw:
             page.on("requestfailed",lambda r: failed.append(f"{r.url}: {r.failure}"))
             page.goto(a.url.rstrip("/")+"/"+path,wait_until="networkidle",timeout=120_000)
             page.wait_for_selector("#table-5 table"); assert page.locator(".table-figure table").count()==5
+            table3_headers=page.locator("#table-3 thead th").all_text_contents()
+            assert len(table3_headers)==3 and all("SHA256" not in x and "配准" not in x and "Alignment" not in x for x in table3_headers)
+            assert page.locator("#figure-1 .hero-pair-grid img").count()==2
+            assert page.locator("#figure-4").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-5')) & Node.DOCUMENT_POSITION_FOLLOWING")
             figure3=page.locator("#figure-3"); figure3.scroll_into_view_if_needed()
             page.wait_for_function("document.querySelector('#figure-3').dataset.state === 'ready'",timeout=120_000)
             for method in ("M1","M2","M3","M4","GT"):

@@ -227,6 +227,12 @@
       "english_url": "en.html#table-5"
     }
   ],
+  "presentation": {
+    "table3_hidden_columns": [
+      "model_sha256",
+      "alignment"
+    ]
+  },
   "protocols": {
     "table2": "180 fixed views × 19,200 pixels; optical-Z; GT-valid domain; no per-view fitting",
     "table3": {

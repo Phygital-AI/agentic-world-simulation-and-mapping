@@ -32,7 +32,7 @@ for key,rows in tables["tables"].items(): assert [r["method"] for r in rows]==li
 docs={name:Doc(ROOT/name) for name in ("index.html","en.html")}
 required={"question","pose-depth","editable","geometry","appearance","novel-depth","limitations",
           "model-select","scene-mode","scene-reset","scene-split","scene-retry","compare-method","compare-frame",
-          *{f"table-{i}" for i in range(1,6)},*{f"figure-{i}" for i in range(1,6)}}
+          *{f"table-{i}" for i in range(1,6)},*{f"figure-{i}" for i in range(1,7)}}
 for name,doc in docs.items():
     assert required<=doc.ids,f"{name}: missing {required-doc.ids}"
     assert "model-viewer" not in doc.tags and "model-viewer" not in (ROOT/name).read_text().lower()
@@ -47,7 +47,9 @@ for name,doc in docs.items():
             target_doc=docs.get(target.name) or Doc(target)
             assert unquote(u.fragment) in target_doc.ids,f"broken anchor {link}"
     html=(ROOT/name).read_text()
-    assert all(f"Figure {i}." in html for i in range(1,6))
+    assert all(f"Figure {i}." in html for i in range(1,7))
+    assert html.index('id="figure-4"') < html.index('id="figure-5"')
+    assert 'assets/fixed_views/GT/000.png' in html and 'assets/fixed_views/M4/000.png' in html
     assert 'type="importmap"' in html and 'scene-compare.js' in html
 
 assert not (ROOT/"vendor/model-viewer-4.1.0.min.js").exists()
@@ -59,6 +61,7 @@ assert "展示副本和运行时配准不改变冻结模型" in (ROOT/"index.htm
 assert "display copies and runtime registrations do not alter the frozen models" in (ROOT/"en.html").read_text().lower()
 
 contract=json.loads((ROOT/"data/source_contract.json").read_text())
+assert contract["presentation"]["table3_hidden_columns"]==["model_sha256","alignment"]
 src_table=SOURCE/contract["table_source"]["path"]
 assert sha(src_table)==contract["table_source"]["sha256"]==sha(ROOT/"data/tables_1_5.json")
 for published,item in contract["figures"].items():
@@ -110,10 +113,12 @@ for rel in ("three.module.js","three.core.js","loaders/GLTFLoader.js","controls/
 js=(ROOT/"scene-compare.js").read_text()
 assert "setScissor(" in js and "singleCamera:true" in js and "singleViewport:true" in js
 assert "runtime_matrix_gltf_y_up" in js and "applyMatrix4" in js
+app=(ROOT/"app.js").read_text()
+assert 'i!==3||!["model_sha256","alignment"].includes(k)' in app
 
 manifest=json.loads((ROOT/"evidence/publication_manifest.json").read_text())
 for row in manifest["files"]: assert sha(ROOT/row["path"])==row["sha256"],row["path"]
 for line in (ROOT/"evidence/SHA256SUMS").read_text().splitlines():
     expected_sha,rel=line.split("  ",1); assert sha(ROOT/rel)==expected_sha,rel
-print(json.dumps({"status":"PASS","tables":5,"models":4,"fixed_views":25,"figures":5,
+print(json.dumps({"status":"PASS","tables":5,"models":4,"fixed_views":25,"figures":6,
                   "checks":["links/anchors","GT SHA256","fixed-view SHA256","registration provenance","original GLB identity","no model-viewer"]},ensure_ascii=False))

@@ -9,8 +9,8 @@
     },
     {
       "path": "app.js",
-      "sha256": "8c43b50a6e6ddec679a7d52dfe73b1077419f02924c72c318f5c1ceb1f9bd572",
-      "bytes": 3510
+      "sha256": "dfbd75c402aa286fdaf48cd93f5ea43bf4989cd20ca216b3dd888628a9ed1b2c",
+      "bytes": 3570
     },
     {
       "path": "assets/comparison/GT.glb",
@@ -169,8 +169,8 @@
     },
     {
       "path": "data/source_contract.json",
-      "sha256": "ea29c81fb5d4090b7ee9d887f267227b8267f27a2f1cb9b054c2039d49809e20",
-      "bytes": 8441
+      "sha256": "076cecc661189998ebf11cd9308ad5deef166201c6de7368eea8783b23385537",
+      "bytes": 8543
     },
     {
       "path": "data/tables_1_5.json",
@@ -179,8 +179,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "1e25d4d920f10b1d8bef51e6f9e2dba7d507cc846f832df965184989a022a3f3",
-      "bytes": 10245
+      "sha256": "dd5ff979c7548864b5d783d46df8ad0b9ae0f1cb081d39263611ddff998edb46",
+      "bytes": 10806
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -204,8 +204,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "d33ee4e1853596bd8e876c20906c27091811ce910ced1fb6183559f12076bc81",
-      "bytes": 10193
+      "sha256": "e838789fce80978444f44304473db230a58e09b3fbc53181fb9091f3da27c6d6",
+      "bytes": 10737
     },
     {
       "path": "models/M1/scene.blend",
@@ -254,8 +254,8 @@
     },
     {
       "path": "style.css",
-      "sha256": "38bd4bde9926520a5f94a639f6c939ee561edd1a26f02e4befd8a5f9af23c738",
-      "bytes": 5341
+      "sha256": "e2f47a225c85a470409902f31919f55f85dde98818e37ffe6fec567048c7dfd1",
+      "bytes": 5653
     },
     {
       "path": "vendor/three/controls/OrbitControls.js",
