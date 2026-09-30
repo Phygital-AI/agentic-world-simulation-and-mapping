@@ -130,13 +130,12 @@ def editorial_page(page, en):
     page = page.replace('<a href="index.html" ', '<a href="zh.html" ', 1)
     page = page.replace('<a href="en.html" ', '<a href="index.html" ', 1)
     page = page.replace('<a class="brand" href="index.html">ASTRA / WORLD MODELS</a>', '<a class="brand" href="index.html">PHYGITAL AI / AWSM</a>')
-    subtitle = "Geometry-Grounded Agentic Reconstruction, Mapping, and Simulation" if en else "几何锚定的智能体重建、建图与仿真"
-    tagline = "From real spaces to worlds phygital agents can use." if en else "把真实空间，变成虚实融合智能体可以使用的世界。"
+    subtitle = "From real spaces to worlds phygital agents can use." if en else "把真实空间，变成虚实融合智能体可以使用的世界。"
     pronunciation = 'AWSM is pronounced “awesome”.' if en else 'AWSM 读作 “awesome”。'
     before_header, header_start, remainder = page.partition('<header>')
     old_header, header_end, after_header = remainder.partition('</header>')
     heading = old_header.split('<h1>', 1)[1].split('</h1>', 1)[0]
-    page = before_header + header_start + f'<h1>{heading}</h1><p class="lead">{subtitle}</p><p class="brand-tagline">{tagline}</p><p class="pronunciation"><small>({pronunciation})</small></p>' + header_end + after_header
+    page = before_header + header_start + f'<h1>{heading}</h1><p class="lead">{subtitle}</p><p class="pronunciation"><small>({pronunciation})</small></p>' + header_end + after_header
     page = page.replace('<section id="motivation">', demo_section(en) + '\n<section id="motivation">', 1)
     page = page.replace('</section>\n<section id="workflow">', grounding_section(en) + '</section>\n<section id="workflow">', 1)
     page = page.replace('</section>\n<section id="limitations">', outlook_section(en) + '</section>\n<section id="limitations">', 1)

@@ -249,8 +249,10 @@ class PublicationValidation(unittest.TestCase):
             header = markup.split('<header>', 1)[1].split('</header>', 1)[0]
             chinese = name == "zh.html"
             self.assertIn('<h1>AWSM：智能体世界仿真与建图</h1>' if chinese else '<h1>AWSM: Agentic World Simulation and Mapping</h1>', header)
-            self.assertIn('几何锚定的智能体重建、建图与仿真' if chinese else 'Geometry-Grounded Agentic Reconstruction, Mapping, and Simulation', header)
-            self.assertIn('把真实空间，变成虚实融合智能体可以使用的世界。' if chinese else 'From real spaces to worlds phygital agents can use.', header)
+            subtitle = '把真实空间，变成虚实融合智能体可以使用的世界。' if chinese else 'From real spaces to worlds phygital agents can use.'
+            self.assertIn(f'<p class="lead">{subtitle}</p>', header)
+            self.assertIn(f'<meta name="description" content="{subtitle}">', markup)
+            self.assertNotIn('class="brand-tagline"', header)
             self.assertIn('AWSM 读作 “awesome”。' if chinese else 'AWSM is pronounced “awesome”.', header)
             self.assertNotIn('class="eyebrow"', header)
             self.assertNotIn('class="meta"', header)

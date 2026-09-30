@@ -116,7 +116,7 @@ def academic_page(en=False):
     current, other = ("index.html", "zh.html") if en else ("zh.html", "index.html")
     if en:
         title = SITE_TITLE
-        desc = "Geometry-Grounded Agentic Reconstruction, Mapping, and Simulation. From real spaces to worlds phygital agents can use."
+        desc = "From real spaces to worlds phygital agents can use."
         sections = [
             ("results", "Results"),
             ("motivation", "Motivation"),
@@ -191,7 +191,7 @@ def academic_page(en=False):
         }
     else:
         title = "AWSM：智能体世界仿真与建图"
-        desc = "几何锚定的智能体重建、建图与仿真。把真实空间，变成虚实融合智能体可以使用的世界。"
+        desc = "把真实空间，变成虚实融合智能体可以使用的世界。"
         sections = [
             ("results", "结果"),
             ("motivation", "研究动机"),

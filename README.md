@@ -1,7 +1,8 @@
 # AWSM: Agentic World Simulation and Mapping
 
-Geometry-Grounded Agentic Reconstruction, Mapping, and Simulation.
-From real spaces to worlds phygital agents can use. AWSM is pronounced “awesome”.
+From real spaces to worlds phygital agents can use.
+
+AWSM is pronounced “awesome”.
 
 Bilingual research article by Phygital AI: geometry-grounded agentic scene reconstruction, map-based embodied execution, and a research agenda for persistent spatial memory, interaction, and simulation.
 
