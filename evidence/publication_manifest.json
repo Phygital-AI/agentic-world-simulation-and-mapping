@@ -169,8 +169,8 @@
     },
     {
       "path": "data/scene_comparison.json",
-      "sha256": "9399d3eeec039362fccf47a69081edc3a82eb1431d7677818177db7e823e5f12",
-      "bytes": 11047
+      "sha256": "cc4849e3569e283b4ff66737126864420d9721dc4bc2b1f5ca0258661f438dcd",
+      "bytes": 11120
     },
     {
       "path": "data/source_contract.json",
@@ -254,8 +254,8 @@
     },
     {
       "path": "scene-compare.js",
-      "sha256": "f5123e98142d307917d225bba9d2140e6ef43db69052e1bcad3a7feb16628874",
-      "bytes": 7023
+      "sha256": "ee2afc099c2c845570c9a78bea90aeebcd930415b79b9e64f46c564573afe341",
+      "bytes": 7191
     },
     {
       "path": "style.css",

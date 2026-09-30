@@ -56,6 +56,11 @@ with sync_playwright() as pw:
             for method in ("M1","M2","M3","M4","GT"):
                 page.select_option("#model-select",method)
                 page.wait_for_function("(m)=>{const p=document.querySelector('#figure-3');const d=p.sceneDiagnostics?.();return p.dataset.state==='ready'&&p.dataset.loadedModel===m&&d?.loaded===m&&d.gtLoaded&&d.singleCamera&&d.singleViewport&&(m==='GT'||d.hiddenCutaway>0)}",arg=method,timeout=120_000)
+                if method=="M4":
+                    bounds=page.evaluate("document.querySelector('#figure-3').sceneDiagnostics().bounds")
+                    assert bounds["min"][0]<18<bounds["max"][0]
+                    assert bounds["min"][1]<1.2<bounds["max"][1]
+                    assert bounds["min"][2]<-21<bounds["max"][2]
             page.select_option("#model-select","M2"); page.select_option("#scene-mode","compare")
             before=page.evaluate("document.querySelector('#figure-3').sceneDiagnostics()")
             page.locator(".scene-divider").focus(); page.keyboard.press("ArrowRight")

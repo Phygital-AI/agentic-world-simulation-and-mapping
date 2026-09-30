@@ -116,14 +116,14 @@
         ],
         [
           0,
-          1,
           0,
+          1,
           0
         ],
         [
           0,
+          -1,
           0,
-          1,
           0
         ],
         [
@@ -406,7 +406,7 @@
         "path": null,
         "sha256": null,
         "transform_direction": "GT_from_model",
-        "rule": "identity"
+        "rule": "identity_world; source GLB retains Blender Z-up axes"
       },
       "GT_from_model_blender_z_up": [
         [
@@ -443,14 +443,14 @@
         ],
         [
           0,
-          1,
           0,
+          1,
           0
         ],
         [
           0,
+          -1,
           0,
-          1,
           0
         ],
         [
@@ -460,7 +460,7 @@
           1
         ]
       ],
-      "formula": "C * GT_from_model * C^-1",
+      "formula": "C (axis conversion only; GT_from_model is identity)",
       "diagnostic_caveat": null
     }
   },

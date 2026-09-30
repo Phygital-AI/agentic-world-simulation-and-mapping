@@ -118,16 +118,19 @@ assert scene["display_cutaway"]["hide_name_pattern"]=="ceiling|roof|wall|facade"
 assert scene["display_cutaway"]["keep_name_pattern"]=="mirror|emblem|art|grass|metal"
 for method in METHODS:
     reg=scene["registrations"][method]
-    assert reg["formula"]=="C * GT_from_model * C^-1"
     if method=="M4":
-        assert reg["source"]["rule"]=="identity" and reg["source"]["path"] is None
+        assert reg["source"]["rule"]=="identity_world; source GLB retains Blender Z-up axes"
+        assert reg["source"]["path"] is None
+        assert reg["formula"]=="C (axis conversion only; GT_from_model is identity)"
+        assert reg["runtime_matrix_gltf_y_up"]==c
     else:
+        assert reg["formula"]=="C * GT_from_model * C^-1"
         expected=f"astra_blender2/evaluation/reference_style_figures/registration_{method}.json"
         source=SOURCE/expected; raw=json.loads(source.read_text())
         assert reg["source"]["path"]==expected and reg["source"]["sha256"]==sha(source)
         assert reg["source"]["transform_direction"]=="GT_from_model"
         assert reg["GT_from_model_blender_z_up"]==raw["transform"]
-    assert reg["runtime_matrix_gltf_y_up"]==mm(mm(c,reg["GT_from_model_blender_z_up"]),ci)
+        assert reg["runtime_matrix_gltf_y_up"]==mm(mm(c,reg["GT_from_model_blender_z_up"]),ci)
 assert "diagnostic only" in scene["m1_diagnostic_caveat"].lower()
 
 fixed=json.loads((ROOT/"data/fixed_views.json").read_text())
@@ -163,6 +166,7 @@ for name in ("index.html","en.html"):
     assert '<figure class="hero" id="figure-1"><img src="assets/teaser_originals.png"' in html
 
 manifest=json.loads((ROOT/"evidence/publication_manifest.json").read_text())
+assert not any(row["path"].startswith("office-") and row["path"].endswith(".mp4") for row in manifest["files"])
 for row in manifest["files"]: assert sha(ROOT/row["path"])==row["sha256"],row["path"]
 for line in (ROOT/"evidence/SHA256SUMS").read_text().splitlines():
     expected_sha,rel=line.split("  ",1); assert sha(ROOT/rel)==expected_sha,rel
