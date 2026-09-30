@@ -43,8 +43,8 @@ with sync_playwright() as pw:
             page.goto(a.url.rstrip("/")+"/"+path,wait_until="networkidle",timeout=120_000)
             assert page.locator("h1").inner_text()==("智能体世界仿真与建图" if lang=="zh" else "Agentic World Simulation and Mapping")
             assert page.locator('nav a[aria-current="page"]').get_attribute("href")==path
-            assert page.locator('nav a',has_text="中文").get_attribute("href")=="zh.html"
-            assert page.locator('nav a',has_text="EN").get_attribute("href")=="index.html"
+            assert page.locator('nav').get_by_role("link",name="中文",exact=True).get_attribute("href")=="zh.html"
+            assert page.locator('nav').get_by_role("link",name="EN",exact=True).get_attribute("href")=="index.html"
             for section_id in ("results","motivation","workflow","more-results","related-work","limitations","citation","references"):
                 assert page.locator(f"#{section_id}").count()==1
             assert page.locator("#results .insight-strip > div").count()==3
