@@ -99,18 +99,16 @@
   },
   "fixed_views_manifest": "data/fixed_views.json",
   "scene_comparison_manifest": "data/scene_comparison.json",
-  "external_embed": {
+  "office_cafe_case_study": {
     "office_cafe": {
-      "url": "https://office-cafe-vipe.hiwtishere.chatgpt.site/",
-      "shake_url": "https://office-cafe-vipe.hiwtishere.chatgpt.site/shake.html",
-      "retained_features": [
-        "model",
+      "source_url": "https://office-cafe-vipe.hiwtishere.chatgpt.site/",
+      "presentation": "local_models_and_videos",
+      "included_assets": [
+        "original_model",
+        "legacy_model",
         "scan_to_model",
         "source_video_to_model",
-        "source_camera_trajectory_playback",
-        "shake_control",
-        "shake_gentle",
-        "shake_strong"
+        "strong_shake"
       ]
     }
   },

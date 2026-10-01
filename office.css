@@ -1,0 +1,118 @@
+.office-model-grid,
+.office-video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin: 28px 0;
+}
+
+.office-model-card,
+.office-video-card {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--white);
+}
+
+.office-model-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #e9ede5;
+}
+
+.office-model-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.office-model-card figcaption,
+.office-video-card figcaption {
+  margin: 0;
+  padding: 14px 16px 16px;
+}
+
+.office-model-card figcaption strong,
+.office-video-card figcaption strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.office-model-card figcaption span,
+.office-video-card figcaption span {
+  display: block;
+  line-height: 1.55;
+}
+
+.office-video-card video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  object-fit: cover;
+}
+
+.office-video-card-wide {
+  grid-column: 1 / -1;
+}
+
+.office-video-sync {
+  margin-bottom: 0;
+}
+
+.office-video-controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin: 0 0 28px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  border-radius: 0 0 6px 6px;
+  background: var(--white);
+}
+
+.office-video-play {
+  width: 38px;
+  height: 34px;
+  padding: 0;
+  color: var(--green);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--paper);
+  cursor: pointer;
+}
+
+.office-video-progress {
+  width: 100%;
+  accent-color: var(--green);
+}
+
+.office-video-time {
+  color: var(--muted);
+  font: 11px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: nowrap;
+}
+
+.office-model-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .office-model-grid,
+  .office-video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .office-video-card-wide {
+    grid-column: auto;
+  }
+}

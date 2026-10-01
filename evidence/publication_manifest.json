@@ -178,6 +178,31 @@
       "bytes": 469515
     },
     {
+      "path": "assets/office-cafe/atlas-scene.glb",
+      "sha256": "2f966df63078306062d0d68e3246d19a8f1179857a2fcc936835b33de1fcf87b",
+      "bytes": 10011388
+    },
+    {
+      "path": "assets/office-cafe/office-scan2model.mp4",
+      "sha256": "11a2db99879d1e9e4b681f5ce3f8e2bb68ea2d66116013c17036b1b0a0231b7a",
+      "bytes": 36167269
+    },
+    {
+      "path": "assets/office-cafe/office-shake-heavy.mp4",
+      "sha256": "7a5a3e79a0060c8658703208daf0c1a4c76c039f1165a9841193dc3ca64e517b",
+      "bytes": 3229810
+    },
+    {
+      "path": "assets/office-cafe/office-video2model.mp4",
+      "sha256": "4f0f2d4f243bf97e1ace0c874a111d7f743223109a53e84a47d036ccd0e51f2e",
+      "bytes": 10769208
+    },
+    {
+      "path": "assets/office-cafe/scene.glb",
+      "sha256": "cc2e2afcfd9426335f83cd6152f90d582f3a0e15dd4dfe5cf58d85e65c5b72ac",
+      "bytes": 9703664
+    },
+    {
       "path": "assets/teaser_originals.png",
       "sha256": "6099f12bdaea83fb2ce4f8e1ed282ac864d6f4ffb96911efb5a9101845656dae",
       "bytes": 4000665
@@ -204,8 +229,8 @@
     },
     {
       "path": "data/source_contract.json",
-      "sha256": "00525f47c2b666175ffb9d7dd9a995cfdac9f39e8485f8d6e88a19aa4cd00e61",
-      "bytes": 13993
+      "sha256": "6ad86370094b266dbf184a12cedcef7a3662927ca550569f930400899daccc77",
+      "bytes": 13912
     },
     {
       "path": "data/tables_1_7.json",
@@ -219,8 +244,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "1a14b787a33dbcfd347da35730eada844bdf9e6ac6b77403129331de7113c972",
-      "bytes": 34363
+      "sha256": "8fd316e60a022afa29d79c8d8ca4965ba101116d075fba19dece263e8a47435b",
+      "bytes": 36209
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -259,8 +284,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "1a14b787a33dbcfd347da35730eada844bdf9e6ac6b77403129331de7113c972",
-      "bytes": 34363
+      "sha256": "8fd316e60a022afa29d79c8d8ca4965ba101116d075fba19dece263e8a47435b",
+      "bytes": 36209
     },
     {
       "path": "models/M1/scene.blend",
@@ -301,6 +326,16 @@
       "path": "models/M4/scene.glb",
       "sha256": "716e4b89b7b11ad8a0cb0e238b366b4f5dc80e3a2c3cddb5eedc469ef4e63774",
       "bytes": 17202608
+    },
+    {
+      "path": "office-models.js",
+      "sha256": "60e9754ae96be61f09d37a70511a9115411cb494ef131de4238c7e5fde034fde",
+      "bytes": 6142
+    },
+    {
+      "path": "office.css",
+      "sha256": "5dcc2f7fe2847f6717e78200c275a245e79b270405d96db8b84ba70d7370f6fb",
+      "bytes": 2060
     },
     {
       "path": "scene-compare.js",
@@ -344,8 +379,8 @@
     },
     {
       "path": "zh.html",
-      "sha256": "81454d4e557e3e041322076cecdb95417ed3947d1436da75ef9a47053a2336a5",
-      "bytes": 32476
+      "sha256": "4f66d221aa51a6199e6a75602a16d8ae46408aea30811de962cd9c99c7a17c58",
+      "bytes": 34235
     }
   ]
 }
