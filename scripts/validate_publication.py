@@ -271,7 +271,10 @@ class PublicationValidation(unittest.TestCase):
             heading_text = re.sub(r'<[^>]+>', '', heading)
             self.assertEqual(heading_text, 'AWSM： 智能体世界仿真与建图' if chinese else 'AWSM: Agentic World Simulation and Mapping')
             subtitle = '把真实空间，变成虚实融合智能体可以使用的世界。' if chinese else 'From real spaces to worlds phygital agents can use.'
-            self.assertIn(f'<p class="lead">{subtitle}</p>', header)
+            lead = re.search(r'<p class="lead">(.*?)</p>', header).group(1)
+            self.assertEqual(re.sub(r'<[^>]+>', '', lead), subtitle)
+            emphasis = '虚实融合智能体可以使用的世界。' if chinese else 'worlds phygital agents can use.'
+            self.assertIn(f'<strong class="tagline-emphasis">{emphasis}</strong>', lead)
             self.assertIn(f'<meta name="description" content="{subtitle}">', markup)
             self.assertNotIn('class="brand-tagline"', header)
             brand_note = 'AWSM 读作“awesome”；Phygital = physical（物理）+ digital（数字），即虚实融合。' if chinese else 'AWSM is pronounced “awesome”; phygital means physical + digital.'

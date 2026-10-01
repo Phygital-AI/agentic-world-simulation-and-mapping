@@ -146,7 +146,7 @@ def editorial_page(page, en):
     page = page.replace('<a href="index.html" ', '<a href="zh.html" ', 1)
     page = page.replace('<a href="en.html" ', '<a href="index.html" ', 1)
     page = page.replace('<a class="brand" href="index.html">ASTRA / WORLD MODELS</a>', '<a class="brand" href="index.html">PHYGITAL AI / AWSM</a>')
-    subtitle = "From real spaces to worlds phygital agents can use." if en else "把真实空间，变成虚实融合智能体可以使用的世界。"
+    subtitle = 'From real spaces to <strong class="tagline-emphasis">worlds phygital agents can use.</strong>' if en else '把真实空间，变成<strong class="tagline-emphasis">虚实融合智能体可以使用的世界。</strong>'
     brand_note = 'AWSM is pronounced “awesome”; phygital means physical + digital.' if en else 'AWSM 读作“awesome”；Phygital = physical（物理）+ digital（数字），即虚实融合。'
     before_header, header_start, remainder = page.partition('<header>')
     old_header, header_end, after_header = remainder.partition('</header>')
