@@ -25,7 +25,7 @@
     }
   ],
   "schema_version": 1,
-  "preservation": "Original files published byte-for-byte; no transcoding.",
+  "preservation": "Original source files remain byte-for-byte in the release assets. Same-origin web playback files are listed separately below.",
   "order": [
     "office-input.mp4",
     "office-pmodel.mp4",
@@ -66,6 +66,44 @@
       "frame_index": 0,
       "sha256": "e4574f22938288bf76f5d123cbba7f871643a4889c519fab176484738438be6b",
       "bytes": 104096
+    }
+  ],
+  "web_playback": [
+    {
+      "source": "office-input.mp4",
+      "path": "assets/office-cafe/office-input-web.mp4",
+      "bytes": 11309649,
+      "sha256": "9a7ee27fd49a83369f625edd9e024fc2118f1bfecf75ed57339a19e6a1aa94a0",
+      "processing": "stream-copy, faststart",
+      "width": 960,
+      "height": 540,
+      "frames": 2103,
+      "frame_rate": "30/1",
+      "duration_seconds": 70.1
+    },
+    {
+      "source": "office-pmodel.mp4",
+      "path": "assets/office-cafe/office-pmodel-web.mp4",
+      "bytes": 19214748,
+      "sha256": "fe0415134adfd0129f9c6a8e9b33448757bef8c9de3a1e033aa0ccc81d8a6c07",
+      "processing": "stream-copy, faststart",
+      "width": 960,
+      "height": 540,
+      "frames": 2103,
+      "frame_rate": "30/1",
+      "duration_seconds": 70.1
+    },
+    {
+      "source": "office-scan.mp4",
+      "path": "assets/office-cafe/office-scan-web.mp4",
+      "bytes": 88520738,
+      "sha256": "a969042a6ed602774d0a316c6e83bd91e836e9793b8ceaf839751857f9acf88a",
+      "processing": "H.264 CRF 16, maxrate 10 Mbps, faststart, 2-second keyframes",
+      "width": 960,
+      "height": 540,
+      "frames": 2103,
+      "frame_rate": "30/1",
+      "duration_seconds": 70.1
     }
   ]
 }

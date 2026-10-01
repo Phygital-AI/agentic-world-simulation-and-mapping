@@ -189,17 +189,21 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
   const copy = zh ? {
     play: "播放全部三个视频", pause: "暂停全部三个视频",
     ready: "同步播放 · 70.1 秒 · 30 fps", waiting: "正在加载，三个视频就绪后将同步播放…",
-    failed: "视频加载失败，请点击播放重试。",
+    interrupted: "播放已中断，请点击播放继续。",
+    failedVideo: (name) => `${name}加载失败，请点击播放重试。`,
   } : {
     play: "Play all three videos", pause: "Pause all three videos",
     ready: "Shared playback · 70.1 seconds · 30 fps", waiting: "Loading — all three videos will start together…",
-    failed: "Unable to load the videos. Press play to retry.",
+    interrupted: "Playback was interrupted. Press play to continue.",
+    failedVideo: (name) => `Unable to load ${name}. Press play to retry.`,
   };
   let wanted = false;
   let waiting = false;
   let starting = false;
   let generation = 0;
   let targetTime = 0;
+  let startRetries = 0;
+  let retryAt = 0;
   const duration = () => Number.isFinite(primary.duration) ? primary.duration : 70.1;
   const formatTime = (seconds) => {
     const safe = Number.isFinite(seconds) ? seconds : 0;
@@ -221,7 +225,7 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
     video.playbackRate = 1;
   });
   const align = () => syncedVideos.forEach((video) => {
-    if (Number.isFinite(video.duration) && Math.abs(video.currentTime - targetTime) > 0.015) {
+    if (Number.isFinite(video.duration) && Math.abs(video.currentTime - targetTime) > 0.04) {
       video.currentTime = Math.min(targetTime, video.duration);
     }
   });
@@ -234,18 +238,47 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
     updateProgress();
   };
   const ready = () => syncedVideos.every((video) => !video.seeking && video.readyState >= 3);
+  const bufferedAhead = (video) => {
+    for (let i = 0; i < video.buffered.length; i += 1) {
+      if (video.buffered.start(i) <= video.currentTime + 0.05 && video.buffered.end(i) > video.currentTime) {
+        return video.buffered.end(i) - video.currentTime;
+      }
+    }
+    return 0;
+  };
+  // Some browsers stop preloading after a small byte budget. Let an idle
+  // decoder start so play() can resume the download; active downloads can
+  // build a buffer first. This also avoids a play/pause loop on slow links.
+  const buffered = () => ready() && syncedVideos.every((video) => {
+    if (video.networkState === HTMLMediaElement.NETWORK_IDLE) return true;
+    return bufferedAhead(video) >= Math.min(0.75, Math.max(0, video.duration - video.currentTime - 0.05));
+  });
   const resume = async () => {
-    if (!wanted || !waiting || starting || !ready()) return;
+    if (!wanted || !waiting || starting || performance.now() < retryAt || !buffered()) return;
     const attempt = ++generation;
     waiting = false;
     starting = true;
     const results = await Promise.allSettled(syncedVideos.map((video) => video.play()));
     if (attempt !== generation) return;
     starting = false;
-    if (results.some((result) => result.status === "rejected")) {
-      stop(copy.failed);
+    const rejected = results.find((result) => result.status === "rejected");
+    if (rejected) {
+      // pause(), seeking and load() can cancel play() without a media failure.
+      const mediaFailure = syncedVideos.find((video) => video.error);
+      if (!mediaFailure && rejected.reason?.name === "AbortError" && startRetries < 2) {
+        startRetries += 1;
+        targetTime = Math.min(...syncedVideos.map((video) => video.currentTime));
+        pauseAll();
+        align();
+        waiting = true;
+        retryAt = performance.now() + 250;
+        videoStatus.textContent = copy.waiting;
+        return;
+      }
+      stop(mediaFailure ? copy.failedVideo(mediaFailure.getAttribute("aria-label")) : copy.interrupted);
       return;
     }
+    startRetries = 0;
     videoStatus.textContent = copy.ready;
   };
   const hold = (time = primary.currentTime) => {
@@ -259,6 +292,7 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
     updateProgress();
     void resume();
   };
+  const waitForBuffer = () => hold(Math.min(...syncedVideos.map((video) => video.currentTime)));
 
   syncedVideos.forEach((video) => {
     video.muted = true;
@@ -271,9 +305,12 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
       });
     }
     video.addEventListener("waiting", () => {
-      if (wanted && !waiting && !ready()) hold();
+      if (wanted && !waiting && !ready()) waitForBuffer();
     });
-    video.addEventListener("error", () => stop(copy.failed));
+    video.addEventListener("error", () => {
+      // Ignore an old queued error after a successful load() retry.
+      if (video.error) stop(copy.failedVideo(video.getAttribute("aria-label")));
+    });
     video.addEventListener("ended", () => {
       stop();
       targetTime = duration();
@@ -290,10 +327,12 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
       return;
     }
     wanted = true;
+    startRetries = 0;
+    retryAt = 0;
     setPlaying(true);
     syncedVideos.forEach((video) => {
       video.preload = "auto";
-      if (video.error) video.load();
+      if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) video.load();
     });
     const time = waiting ? targetTime : primary.currentTime;
     hold(time >= duration() - 0.08 ? 0 : time);
@@ -305,7 +344,7 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
     if (wanted && waiting) void resume();
     if (wanted && !waiting && !starting) {
       if (!ready()) {
-        hold();
+        waitForBuffer();
       } else {
         for (const video of syncedVideos.slice(1)) {
           const drift = video.currentTime - primary.currentTime;

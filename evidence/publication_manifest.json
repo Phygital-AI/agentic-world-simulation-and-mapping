@@ -218,14 +218,29 @@
       "bytes": 94250
     },
     {
+      "path": "assets/office-cafe/office-input-web.mp4",
+      "sha256": "9a7ee27fd49a83369f625edd9e024fc2118f1bfecf75ed57339a19e6a1aa94a0",
+      "bytes": 11309649
+    },
+    {
       "path": "assets/office-cafe/office-pmodel-poster.jpg",
       "sha256": "61ea36de0e40a955879b3b0195961ad137c738373726efda760b50232b7041b8",
       "bytes": 80038
     },
     {
+      "path": "assets/office-cafe/office-pmodel-web.mp4",
+      "sha256": "fe0415134adfd0129f9c6a8e9b33448757bef8c9de3a1e033aa0ccc81d8a6c07",
+      "bytes": 19214748
+    },
+    {
       "path": "assets/office-cafe/office-scan-poster.jpg",
       "sha256": "59f64e13f254ef3c9dbf511277cd9782ac0267f25b54e99cba938269be30d4e3",
       "bytes": 218866
+    },
+    {
+      "path": "assets/office-cafe/office-scan-web.mp4",
+      "sha256": "a969042a6ed602774d0a316c6e83bd91e836e9793b8ceaf839751857f9acf88a",
+      "bytes": 88520738
     },
     {
       "path": "assets/office-cafe/office-scan2model.mp4",
@@ -274,8 +289,8 @@
     },
     {
       "path": "data/office_video_media.json",
-      "sha256": "17046fa5d43eeb49457104a73c588c4d4c0ce60ee7b20005d523ca7706df5060",
-      "bytes": 2367
+      "sha256": "a25ccf3dc70bd8bb2676b0cb03360a019664a15dfad513d806d0fab9503279c0",
+      "bytes": 3648
     },
     {
       "path": "data/scene_comparison.json",
@@ -299,8 +314,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "f47a1d7fe4a1789a2b29ab245480781b74d826cd3743945457dea7a544bc3fdb",
-      "bytes": 40943
+      "sha256": "ea35d2590b55c72cced5ebdf53b5ee89c71e0452f75686bb31b246eacffb8fb7",
+      "bytes": 40688
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -339,8 +354,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "f47a1d7fe4a1789a2b29ab245480781b74d826cd3743945457dea7a544bc3fdb",
-      "bytes": 40943
+      "sha256": "ea35d2590b55c72cced5ebdf53b5ee89c71e0452f75686bb31b246eacffb8fb7",
+      "bytes": 40688
     },
     {
       "path": "models/M1/scene.blend",
@@ -384,8 +399,8 @@
     },
     {
       "path": "office-models.js",
-      "sha256": "cb49acce1c90ee15904a3dfe7572905b2285f6bdcb6ef6d09b9218f4ec9813e2",
-      "bytes": 13011
+      "sha256": "39c2cb532986ce0cee609f83b0cd663e27d5a45e89956f0ce9fcc93a48a5641d",
+      "bytes": 15037
     },
     {
       "path": "office.css",
@@ -434,8 +449,8 @@
     },
     {
       "path": "zh.html",
-      "sha256": "c00c5a73a35ac82cd80788f796827acd9fa6e40a35c843a2ae1cc069dc8ceaee",
-      "bytes": 38632
+      "sha256": "36b90906279cafa8126e77dd4dd5676a02f198a3b0cb2e3ddc132bc4dfc1a84d",
+      "bytes": 38377
     }
   ]
 }

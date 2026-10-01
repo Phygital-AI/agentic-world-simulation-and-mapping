@@ -24,6 +24,12 @@ Office Café includes original-app links, on-demand embedded views requesting `l
 
 The reception-desk demo illustrates map-based navigation using predefined routes and simulator-pose feedback. The 156-second delivery from run `20260930-214924` provides a mobile playback version, HD download, and a full-resolution planned-route map. Supplied media are copied without re-encoding; protocol and audit status are in `data/embodied_demo.json`. Read `evidence/provenance-note.md` for edit boundaries, upstream naming discrepancies, and source-record hashes.
 
+## Office Café video playback
+
+The three synchronized videos load MP4 files from `assets/office-cafe/` on the same GitHub Pages origin. Input and procedural-model streams are copied without video re-encoding and use fast-start MP4 metadata. The point-cloud web edition uses H.264 CRF 16 with a 10 Mbps rate cap; all three retain 960×540, 30 fps, 2,103 frames and 70.1 seconds. Original files remain in the `office-media-20261001` release. Source and playback-file hashes are recorded separately in `data/office_video_media.json`.
+
+The player waits for all three videos, corrects drift, retries transient play cancellations, and reloads failed sources when the shared play button is pressed.
+
 ## Edit and validate
 
 `scripts/editorial.py` holds the bilingual narrative additions; `scripts/site_builder_interactive.py` retains the frozen article template. The standard build only regenerates pages and publication hashes. It never rebuilds models, changes experiment data, downloads source assets, or removes directories.

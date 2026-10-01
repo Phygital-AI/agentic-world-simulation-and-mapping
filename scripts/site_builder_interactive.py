@@ -86,11 +86,11 @@ def downloads():
     return '<div class="asset-downloads">'+"".join(f'<p><strong>{m}</strong> <a href="models/{m}/scene.blend" download>scene.blend ↓</a> · <a href="models/{m}/scene.glb" download>scene.glb ↓</a> · <a href="evidence/{m}/manifest.json">manifest ↗</a></p>' for m in METHODS)+'</div>'
 
 def office_videos(en):
-    media_root = "https://github.com/Phygital-AI/agentic-world-simulation-and-mapping/releases/download/office-media-20261001"
+    media_root = "assets/office-cafe"
     titles = ("Input video", "Procedural model", "Point cloud") if en else ("输入视频", "程序化模型", "点云")
     descriptions = ("Original phone walkthrough.", "Model rendered along the source-camera trajectory.", "Scan rendered along the same trajectory.") if en else ("原始手机拍摄视频。", "沿原视频相机轨迹渲染的模型。", "沿相同轨迹渲染的扫描点云。")
     cards = "".join(
-        f'<figure class="office-video-card"><video data-synced-video muted preload="metadata" playsinline poster="assets/office-cafe/{stem}-poster.jpg" src="{media_root}/{stem}.mp4" aria-label="{title}"></video><figcaption><strong>{title}</strong><span>{description}</span></figcaption></figure>'
+        f'<figure class="office-video-card"><video data-synced-video muted preload="metadata" playsinline poster="assets/office-cafe/{stem}-poster.jpg" src="{media_root}/{stem}-web.mp4" aria-label="{title}"></video><figcaption><strong>{title}</strong><span>{description}</span></figcaption></figure>'
         for stem, title, description in zip(("office-input", "office-pmodel", "office-scan"), titles, descriptions)
     )
     return f'''<div class="office-video-grid office-video-sync">{cards}</div>
