@@ -244,7 +244,7 @@
     },
     {
       "path": "en.html",
-      "sha256": "3f2243c621caf54d69b7da35d629ecbc28902b24d2fc323825013ac0b20b565a",
+      "sha256": "b22e8880a9bb63bc2b8e8038c07262ece095937b2ac76526c3ce5fa13560eca7",
       "bytes": 38390
     },
     {
@@ -284,7 +284,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "3f2243c621caf54d69b7da35d629ecbc28902b24d2fc323825013ac0b20b565a",
+      "sha256": "b22e8880a9bb63bc2b8e8038c07262ece095937b2ac76526c3ce5fa13560eca7",
       "bytes": 38390
     },
     {
@@ -329,8 +329,8 @@
     },
     {
       "path": "office-models.js",
-      "sha256": "9309b49097c393726e96242c7f38a4d2ae70856da7104c7b07b3118efd132c26",
-      "bytes": 8879
+      "sha256": "ecc63dd05b534b228f6efeddf31ca31198a2ea555dba3a05644b2768455de2ee",
+      "bytes": 9020
     },
     {
       "path": "office.css",
@@ -379,7 +379,7 @@
     },
     {
       "path": "zh.html",
-      "sha256": "34018c36bc06893a13eff91a099efac53a4d04b7169c5f2dbadeec32a8452380",
+      "sha256": "68042a399df411e09c908fe89d7fe8325cea5829a1617014a95154ed86db7748",
       "bytes": 36073
     }
   ]

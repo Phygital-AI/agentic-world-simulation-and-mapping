@@ -159,7 +159,13 @@ with sync_playwright() as pw:
                 toggle.click()
                 assert not stage.evaluate("stage => stage.sceneDiagnostics().cutaway")
                 toggle.click()
+                bounds=stage.locator('canvas').bounding_box()
+                page.mouse.move(bounds['x']+bounds['width']*0.5,bounds['y']+bounds['height']*0.6)
+                page.mouse.down()
+                page.mouse.move(bounds['x']+bounds['width']*0.7,bounds['y']+bounds['height']*0.65,steps=8)
+                page.mouse.up()
                 stage.locator('button').first.click()
+                page.wait_for_function("([selector,expected]) => document.querySelector(selector).sceneDiagnostics().camera.every((value,index) => Math.abs(value-expected[index]) < 0.001)",arg=[f'.office-model-stage[data-src="{stage.get_attribute("data-src")}"]',initial['camera']],timeout=10_000)
                 assert stage.evaluate("stage => stage.sceneDiagnostics().cutaway")
             overflow=page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
             assert not overflow,f"horizontal overflow: {viewport}/{lang}"

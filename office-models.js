@@ -80,9 +80,13 @@ function mount(stage) {
   const direction = new THREE.Vector3(0.45, 1, 0.65).normalize();
   const resetView = () => {
     if (!viewer.ready) return;
+    const damping = controls.enableDamping;
+    controls.enableDamping = false;
+    controls.update();
     controls.target.copy(viewer.center);
     camera.position.copy(viewer.center).addScaledVector(direction, initialDistance);
     controls.update();
+    controls.enableDamping = damping;
     syncView(viewer);
   };
   reset.addEventListener("click", resetView);
