@@ -9,8 +9,8 @@
     },
     {
       "path": "app.js",
-      "sha256": "1660a10633537b3cbbae4e3f1ae6a1d8145bc1970bc46715796163899f74e199",
-      "bytes": 7472
+      "sha256": "d70db3a6816b9e91abbd6f9711fbcf006113e913fa0800334ccb4af986c83012",
+      "bytes": 7499
     },
     {
       "path": "assets/awsm-promo-v5-poster.jpg",
@@ -299,8 +299,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "dff51d0586a50f87380f244afcb8a39024b24f03a5dffee382c91e2c7524c306",
-      "bytes": 40051
+      "sha256": "b150e2ef03be589eaf8f6a9b0867e2dd3b67a2c06542b07a3f2bd249cf86004c",
+      "bytes": 39153
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -339,8 +339,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "dff51d0586a50f87380f244afcb8a39024b24f03a5dffee382c91e2c7524c306",
-      "bytes": 40051
+      "sha256": "b150e2ef03be589eaf8f6a9b0867e2dd3b67a2c06542b07a3f2bd249cf86004c",
+      "bytes": 39153
     },
     {
       "path": "models/M1/scene.blend",
@@ -434,8 +434,8 @@
     },
     {
       "path": "zh.html",
-      "sha256": "19792e18c6926b777969bed0e162d2c7db3cd093e28475eadc151f6b4e5ebd24",
-      "bytes": 37769
+      "sha256": "b98d0659a2f0e6afbf1a5528a538b785b6f55abd40ba4aa6717103d8e0aaa427",
+      "bytes": 36915
     }
   ]
 }

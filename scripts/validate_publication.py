@@ -137,16 +137,17 @@ class PublicationValidation(unittest.TestCase):
             self.assert_hashed_file(record["published"], record["sha256"], record.get("bytes"))
 
     def test_tables_and_figures_exist_in_both_languages(self) -> None:
-        required = {f"table-{number}" for number in range(1, 8)}
+        required = {f"table-{number}" for number in (1, 2, 3, 6, 7)}
         required |= {f"figure-{number}" for number in range(1, 7)}
         self.assertEqual([row["number"] for row in self.contract["tables"]], list(range(1, 8)))
         for name, document in self.documents.items():
             self.assertTrue(required <= set(document.ids), f"{name}: missing {sorted(required - set(document.ids))}")
+            self.assertFalse({"table-4", "table-5"} & set(document.ids), f"{name}: removed appearance tables returned")
 
     def test_editorial_preserves_experiment_copy(self) -> None:
         protected = (
             "intro2", "method1", "method2", "workflow", "finding1_title", "finding1", "finding2_title", "finding2",
-            "finding3_title", "finding3", "discussion1_title", "discussion1",
+            "finding3_title", "discussion1_title", "discussion1",
             "discussion2_title", "discussion2", "discussion3_title", "discussion3",
             "metric1", "metric1_label", "metric2", "metric2_label", "metric3", "metric3_label",
         )

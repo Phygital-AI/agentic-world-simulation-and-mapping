@@ -41,6 +41,7 @@ fetch("data/tables_1_7.json").then(response => {
 }).then(data => {
   for (let number = 1; number <= 7; number++) {
     const figure = document.querySelector("#table-" + number);
+    if (!figure) continue;
     const rows = data.tables["table" + number];
     const keys = Object.keys(rows[0]).filter(key => !hidden[number]?.has(key));
     const best = {};
