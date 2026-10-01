@@ -1,4 +1,7 @@
 :root{--masthead-width:1080px;--masthead-gutter:40px}
+.insight-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:700px){.insight-strip{grid-template-columns:1fr}}
+.office-links{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:14px}
 body>nav,body>header,body>.hero{max-width:var(--masthead-width);padding-left:var(--masthead-gutter);padding-right:var(--masthead-gutter);margin-left:auto;margin-right:auto}
 body>nav{padding-top:24px;padding-bottom:24px;border-bottom:0;position:relative}
 body>nav::after{content:"";position:absolute;bottom:0;left:var(--masthead-gutter);right:var(--masthead-gutter);height:1px;background:var(--line)}

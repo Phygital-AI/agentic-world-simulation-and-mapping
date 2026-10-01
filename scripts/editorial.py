@@ -80,9 +80,9 @@ def narrative_copy(copy, en):
 def demo_section(en):
     title = "A reconstructed map. A destination. Robots in motion." if en else "一张重建地图，一个目标，一次具身执行。"
     lead = (
-        "The demo connects reconstruction to downstream use. The reception desk is marked in the navigation map, routes are specified, and a drone, humanoid, quadruped, and wheeled robot execute the task. The same spatial reference connects a destination, route constraints, and motion control: a scene to inspect becomes a map to act with."
+        "The demo connects reconstruction to downstream use in NVIDIA Isaac Sim. The reception desk is marked in the navigation map, routes are specified, and a drone, humanoid, quadruped, and wheeled robot execute the task. The same spatial reference connects a destination, route constraints, and motion control: a scene to inspect becomes a map to act with."
         if en else
-        "这个 demo 将重建连接到下游使用：在导航地图中标出前台，设定路线，再让无人机、人形、四足和轮式机器人执行任务。同一个空间参照连接目标、路径约束与运动控制：从可以查看的重建场景，走向可以用于行动的地图。"
+        "这个 demo 在 NVIDIA Isaac Sim 中将重建连接到下游使用：在导航地图中标出前台，设定路线，再让无人机、人形、四足和轮式机器人执行任务。同一个空间参照连接目标、路径约束与运动控制：从可以查看的重建场景，走向可以用于行动的地图。"
     )
     command = "Send the drone to the reception desk and have the robots line up there." if en else "让无人机去前台，并让机器人在那里排好队。"
     labels = ("Task instruction", "Locate the reception desk", "Set routes on the map", "Execute with controllers") if en else ("任务指令", "地图上定位前台", "设定导航路线", "控制器执行")
@@ -183,10 +183,10 @@ def editorial_page(page, en):
     page = page.replace('</head>', '<meta property="article:published_time" content="2026-10-01"></head>')
     download_label = "Download BibTeX" if en else "下载 BibTeX 引用"
     page = page.replace('</code></pre></section>', f'</code></pre><a class="citation-download" href="data/awsm.bib" download="awsm.bib">{download_label} <span aria-hidden="true">↓</span></a></section>', 1)
-    page = page.replace('<section id="more-results">', demo_section(en) + '\n<section id="more-results">', 1)
+    page = page.replace('<section id="related-work">', demo_section(en) + '\n<section id="related-work">', 1)
     page = page.replace('</section>\n<section id="workflow">', grounding_section(en) + '</section>\n<section id="workflow">', 1)
     page = page.replace('</section>\n<section id="limitations">', outlook_section(en) + '</section>\n<section id="limitations">', 1)
-    page = page.replace('href="#more-results">', 'href="#embodied-demo">' + ('Embodied demo' if en else '具身演示') + '</a><a href="#more-results">', 1)
+    page = page.replace('href="#related-work">', 'href="#embodied-demo">' + ('Embodied demo' if en else '具身演示') + '</a><a href="#related-work">', 1)
     evidence_link = '<p><a href="evidence/provenance-note.md">' + ('Version and provenance note' if en else '版本与资产来源说明') + ' ↗</a></p>'
     page = page.replace('</section>\n<section id="citation">', evidence_link + '</section>\n<section id="citation">', 1)
     return page.replace('Agentic World · frozen evidence, editable outputs', 'Phygital AI · AWSM · frozen evidence, editable outputs')

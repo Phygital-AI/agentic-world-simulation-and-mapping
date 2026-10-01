@@ -62,7 +62,7 @@ with sync_playwright() as pw:
             assert page.locator('nav').get_by_role("link",name="EN",exact=True).get_attribute("href")=="index.html"
             for section_id in ("results","motivation","workflow","more-results","related-work","limitations","citation","references"):
                 assert page.locator(f"#{section_id}").count()==1
-            assert page.locator("#results .insight-strip > div").count()==3
+            assert page.locator("#results .insight-strip > div").count()==2
             assert page.locator("#results .tldr").count()==1
             assert page.locator("#motivation .contributions > li").count()==3
             assert page.locator("#workflow .workflow-strip > div").count()==5
@@ -115,7 +115,8 @@ with sync_playwright() as pw:
                 assert page.locator(f"#table-{table_index} tbody strong").count()>0
             assert page.locator("#figure-1 > img").count()==1
             assert page.locator("#figure-1 > img").get_attribute("src")=="assets/teaser_originals.png"
-            assert page.locator("#figure-4").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-5')) & Node.DOCUMENT_POSITION_FOLLOWING")
+            assert page.locator("#figure-5").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-3')) & Node.DOCUMENT_POSITION_FOLLOWING")
+            assert page.locator("#more-results").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#embodied-demo')) & Node.DOCUMENT_POSITION_FOLLOWING")
             figure3=page.locator("#figure-3"); figure3.scroll_into_view_if_needed()
             page.wait_for_function("document.querySelector('#figure-3').dataset.state === 'ready'",timeout=120_000)
             assert page.locator("#model-select").input_value()=="M4"

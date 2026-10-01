@@ -164,7 +164,7 @@ class PublicationValidation(unittest.TestCase):
             academic_page(False)
 
     def test_narrative_roles_and_scope(self) -> None:
-        sections = ["results", "motivation", "workflow", "embodied-demo", "more-results", "related-work", "limitations", "citation", "references"]
+        sections = ["results", "motivation", "workflow", "more-results", "embodied-demo", "related-work", "limitations", "citation", "references"]
         for name, document in self.documents.items():
             self.assertEqual([element for element in document.ids if element in sections], sections)
             markup = (ROOT / name).read_text(encoding="utf-8")
@@ -179,6 +179,13 @@ class PublicationValidation(unittest.TestCase):
             self.assertTrue(document.text_for("more-results").startswith("04 / RESULTS AND ANALYSIS"))
             self.assertIn("大模型智能体" if chinese else "Large-model agents", results)
             self.assertIn("agentic", results.lower())
+            self.assertIn("NVIDIA Isaac Sim", results)
+            self.assertNotIn("No universal winner", results)
+            self.assertNotIn("PSNR, SSIM, and LPIPS disagree", results)
+            self.assertLess(markup.index('id="figure-5"'), markup.index('id="figure-3"'))
+            self.assertLess(markup.index('id="figure-3"'), markup.index('id="figure-4"'))
+            for suffix in ("?lang=en", "shake?lang=en"):
+                self.assertIn(f'href="https://office-cafe-vipe.hiwtishere.chatgpt.site/{suffix}"', markup)
             self.assertIn("可复用的仿真就绪" if chinese else "reusable simulation-ready", results)
             self.assertIn("控制器承担另一种角色" if chinese else "controllers have a separate role", document.text_for("workflow"))
             self.assertIn("而非学习得到的动力学预测模型" if chinese else "not a learned dynamics predictor", document.text_for("motivation"))
