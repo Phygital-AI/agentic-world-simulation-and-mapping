@@ -249,9 +249,12 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
   // Some browsers stop preloading after a small byte budget. Let an idle
   // decoder start so play() can resume the download; active downloads can
   // build a buffer first. This also avoids a play/pause loop on slow links.
-  const buffered = () => ready() && syncedVideos.every((video) => {
+  const buffered = () => syncedVideos.every((video) => {
+    // A paused decoder may stay at HAVE_CURRENT_DATA until play() is called,
+    // even with future bytes buffered. Requiring canplay here can deadlock.
+    if (video.seeking || video.error || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return false;
     if (video.networkState === HTMLMediaElement.NETWORK_IDLE) return true;
-    return bufferedAhead(video) >= Math.min(0.75, Math.max(0, video.duration - video.currentTime - 0.05));
+    return bufferedAhead(video) >= Math.min(0.5, Math.max(0, video.duration - video.currentTime - 0.05));
   });
   const resume = async () => {
     if (!wanted || !waiting || starting || performance.now() < retryAt || !buffered()) return;
