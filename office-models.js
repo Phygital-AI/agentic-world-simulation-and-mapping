@@ -202,6 +202,7 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
   let starting = false;
   let generation = 0;
   let targetTime = 0;
+  let finished = false;
   let startRetries = 0;
   let retryAt = 0;
   const duration = () => Number.isFinite(primary.duration) ? primary.duration : 70.1;
@@ -315,13 +316,19 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
       if (video.error) stop(copy.failedVideo(video.getAttribute("aria-label")));
     });
     video.addEventListener("ended", () => {
+      if (!wanted) return;
+      finished = true;
+      const end = duration();
       stop();
-      targetTime = duration();
-      align();
+      // Seeking exactly to duration may wrap a WebKit decoder back to zero.
+      syncedVideos.forEach((peer) => {
+        if (Math.abs(peer.currentTime - end) > 0.08) peer.currentTime = Math.max(0, end - 1 / 30);
+      });
       updateProgress();
     });
   });
   videoProgress.addEventListener("input", () => {
+    finished = false;
     hold((Number(videoProgress.value) / 1000) * duration());
   });
   videoPlay.addEventListener("click", () => {
@@ -338,7 +345,9 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
       if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) video.load();
     });
     const time = waiting ? targetTime : primary.currentTime;
-    hold(time >= duration() - 0.08 ? 0 : time);
+    const replay = finished || syncedVideos.some((video) => video.ended) || time >= duration() - 0.08;
+    finished = false;
+    hold(replay ? 0 : time);
   });
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) stop();

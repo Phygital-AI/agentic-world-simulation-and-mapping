@@ -26,7 +26,7 @@ The reception-desk demo illustrates map-based navigation using predefined routes
 
 ## Office Café video playback
 
-The three synchronized videos load MP4 files from `assets/office-cafe/` on the same GitHub Pages origin. Input and procedural-model streams are copied without video re-encoding and use fast-start MP4 metadata. The point-cloud web edition uses H.264 CRF 16 with a 10 Mbps rate cap; all three retain 960×540, 30 fps, 2,103 frames and 70.1 seconds. Original files remain in the `office-media-20261001` release. Source and playback-file hashes are recorded separately in `data/office_video_media.json`.
+The three synchronized videos load MP4 files from `assets/office-cafe/` on the same GitHub Pages origin. The web editions use H.264 Constrained Baseline with fast-start MP4 metadata, a 4 Mbps rate cap and fast decoding; all three retain 960×540, 30 fps, 2,103 frames and 70.1 seconds. Original files remain in the `office-media-20261001` release. Source and playback-file hashes are recorded separately in `data/office_video_media.json`.
 
 The player waits for all three videos, corrects drift, retries transient play cancellations, and reloads failed sources when the shared play button is pressed.
 
