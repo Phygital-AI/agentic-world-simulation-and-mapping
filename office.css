@@ -6,6 +6,15 @@
   margin: 28px 0;
 }
 
+.office-external-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.office-external-card { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: var(--white); }
+.office-external-card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.office-external-card figcaption { padding: 14px; margin: 0; }
+.office-external-card button { max-width: 100%; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); color: var(--green); font: inherit; cursor: pointer; }
+.office-external-note { font-size: 12px; color: var(--muted); }
+.office-external-slot iframe { width: 100%; height: 560px; border: 1px solid var(--line); border-radius: 6px; background: var(--white); }
+@media (max-width: 700px) { .office-external-grid { grid-template-columns: 1fr; } .office-external-slot iframe { height: 460px; } }
+
 .office-model-card,
 .office-video-card {
   margin: 0;

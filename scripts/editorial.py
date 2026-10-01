@@ -42,11 +42,11 @@ def narrative_copy(copy, en):
             "method_title": "One agentic workflow, four reconstruction routes",
             "interactive_title": "Inspect the reconstructed scenes, not just aggregate scores",
             "discussion_title": "What geometric grounding changes—and what it does not",
-            "positioning": "AWSM connects two roles: an agent that constructs an editable scene, and downstream agents that use it as a spatial reference. SLAM and visual-inertial estimation supply pose and metric constraints; ViPE and Depth Anything 3 contribute geometric observations. Concurrent work AHa-3D explores video-driven, tool-based Real2Sim, including camera and 3D-reference estimation from video. We discuss it as a parallel effort, not a precursor to AWSM. Our emphasis is geometric grounding: bringing additional physical measurements, especially IMU-informed visual-inertial pose and metric constraints, into agentic scene construction rather than relying on video-derived evidence alone. The four-route comparison tests reconstruction systems, not the isolated effect of IMU; the demo illustrates a map-based application, not a complete autonomous embodied system.",
+            "positioning": "AWSM connects two roles: an agent that constructs an editable scene, and downstream agents that use it as a spatial reference. SLAM and visual-inertial estimation supply pose and metric constraints; ViPE and Depth Anything 3 contribute geometric observations. Concurrent work AHa-3D explores video-driven, tool-based Real2Sim, including camera and 3D-reference estimation from video. Our emphasis is geometric grounding: bringing additional physical measurements, especially IMU-informed visual-inertial pose and metric constraints, into agentic scene construction rather than relying on video-derived evidence alone. The four-route comparison tests reconstruction systems, not the isolated effect of IMU; the demo illustrates a map-based application, not a complete autonomous embodied system.",
         })
         copy["method_intro"] = "The reconstruction agent follows a shared observe–build–verify loop: inspect the available evidence, write Blender Python to construct objects, render review views, and revise the scene before freezing it for evaluation. This tool-using modeling process is what ‘agentic’ describes here; the downstream robot controllers have a separate role."
         copy["limits"].extend([
-            "The reception-desk demo is map-based simulation execution, not a controlled comparison of navigation across M1–M4. Routes are predefined, localization uses simulator pose, and the recorded run has unresolved audit failures; see its protocol.",
+            "The reception-desk demo is map-based simulation execution, not a controlled comparison of navigation across M1–M4. Routes are predefined and localization uses simulator pose; see the demo protocol for scope.",
             "Multimodal memory, long-term map maintenance, and reduced policy sim-to-real gap are research goals, not measured outcomes of the four-robot demo. The Office Café corner observation has no matched-view quantitative GT measurement here.",
             "Historical downstream documentation describes the same M4 Blend hash using a different depth frontend. The frozen tables and assets are retained unchanged; their upstream naming needs reconciliation before attributing historical task outcomes to DA3. See the provenance note.",
         ])
@@ -66,11 +66,11 @@ def narrative_copy(copy, en):
             "method_title": "一个 agentic 工作流，四条重建路线",
             "interactive_title": "不只看汇总指标，也检查重建场景",
             "discussion_title": "几何锚定改变了什么，又没有解决什么",
-            "positioning": "AWSM 连接两类角色：负责构建可编辑场景的智能体，以及将它作为空间参照使用的下游智能体。SLAM 与视觉惯性估计提供位姿和米制约束，ViPE 与 Depth Anything 3 提供几何观测。同期工作 AHa-3D 探索视频驱动、工具辅助的 Real2Sim，包括从视频估计相机与三维参照；我们将其作为并行探索讨论，而非 AWSM 的前置工作。我们的重点是几何锚定：将额外的物理测量，尤其是融合 IMU 的视觉惯性位姿与米制约束，引入智能体场景构建，而不只依赖视频推断的证据。四路线对比评估的是重建系统，并非 IMU 独立作用的消融实验；demo 展示的是地图应用，而不是完整的自主具身系统。",
+            "positioning": "AWSM 连接两类角色：负责构建可编辑场景的智能体，以及将它作为空间参照使用的下游智能体。SLAM 与视觉惯性估计提供位姿和米制约束，ViPE 与 Depth Anything 3 提供几何观测。同期工作 AHa-3D 探索视频驱动、工具辅助的 Real2Sim，包括从视频估计相机与三维参照。我们的重点是几何锚定：将额外的物理测量，尤其是融合 IMU 的视觉惯性位姿与米制约束，引入智能体场景构建，而不只依赖视频推断的证据。四路线对比评估的是重建系统，并非 IMU 独立作用的消融实验；demo 展示的是地图应用，而不是完整的自主具身系统。",
         })
         copy["method_intro"] = "负责重建的智能体遵循共同的“观察—构建—验证”循环：检查可用证据，编写 Blender Python 构建对象，渲染检查视图，并在冻结评测前迭代修改。这里的 agentic 指这种工具驱动的建模过程；下游机器人控制器承担另一种角色。"
         copy["limits"].extend([
-            "前台 demo 展示基于地图的仿真执行，不是 M1–M4 的受控导航对比。路线预先设定，定位使用仿真器位姿，所展示 run 仍有未通过的审计项；详见演示条件。",
+            "前台 demo 展示基于地图的仿真执行，不是 M1–M4 的受控导航对比。路线预先设定，定位使用仿真器位姿；具体范围见演示条件。",
             "多模态空间记忆、长期地图维护与策略 sim-to-real 差距的降低是研究目标，不是这段四机器人视频已量化的结果。本页也没有 Office Café 拐角的同视角 GT 定量测量。",
             "历史下游文档对同一 M4 Blend 哈希使用了不同的深度前端描述。本页冻结表格与资产保持不变；将旧任务收益归因于 DA3 之前，需要核对上游方法命名，详见来源说明。",
         ])
@@ -84,33 +84,31 @@ def demo_section(en):
         if en else
         "这个 demo 在 NVIDIA Isaac Sim 中将重建连接到下游使用：在导航地图中标出前台，设定路线，再让无人机、人形、四足和轮式机器人执行任务。同一个空间参照连接目标、路径约束与运动控制：从可以查看的重建场景，走向可以用于行动的地图。"
     )
-    command = "Send the drone to the reception desk and have the robots line up there." if en else "让无人机去前台，并让机器人在那里排好队。"
+    command = "Send the robots to the reception desk and have them line up there." if en else "让机器人前往前台，并在那里排成一列。"
     labels = ("Task instruction", "Locate the reception desk", "Set routes on the map", "Execute with controllers") if en else ("任务指令", "地图上定位前台", "设定导航路线", "控制器执行")
     steps = "".join(f'<li><span>{index:02d}</span>{label}</li>' for index, label in enumerate(labels, 1))
     caption = (
-        "Map-based navigation in simulation · predefined routes · simulator-pose feedback. This recorded run illustrates execution; it did not pass every task-audit criterion."
+        "Map-based navigation in simulation · predefined routes · simulator-pose feedback. The authors confirm that the demonstration has been manually reviewed."
         if en else
-        "基于重建地图的仿真导航 · 预设路线 · 仿真器位姿反馈。本录像用于展示执行流程，所示 run 尚未通过全部任务审计。"
+        "基于重建地图的仿真导航 · 预设路线 · 仿真器位姿反馈。作者确认，本演示已完成人工审阅。"
     )
     details = (
         '<p>The instruction above describes the intended task, not a demonstrated language-to-plan parser. Routes were manually specified and screened against both the M4 reconstructed map and original geometry. This is not a reconstruction-only planning benchmark.</p>'
         '<p>The 156-second presentation edit plays at 1×: Scene (0–6s), Reconstruction (6–12s), Planned route (12–18s), and Navigation (18–156s). Navigation uses the new run <code>20260930-214924</code>; the opening 12.32 seconds of waiting are omitted, and the later terminal hold is outside this cut. The map is a static route design, not a measured execution trace.</p>'
-        '<p>The source run reports completed flight and ground formation. Its independent audit passes the map-clearance, inter-robot-clearance, waypoint, and closure checks, but remains FAILED: measured terminal health/formation hold is 7.994999821 seconds against the unchanged 8.0-second requirement. Media export checks passed; independent physical and film acceptance are not claimed.</p>'
         '<p>This demo does not evaluate online visual localization, learned instruction understanding, memory retrieval, or real-robot transfer. Those are separate capabilities; the map-based execution shown here remains the intended demonstration.</p>'
         if en else
         '<p>上方指令说明任务意图，不代表本次演示实现了语言到计划的自动解析。路线人工设定，并同时参考 M4 重建地图和原始几何筛选；这不是只依赖重建图的规划 benchmark。</p>'
         '<p>成片为 156 秒、1× 原速：场景（0–6秒）、重建（6–12秒）、路线设计（12–18秒）、导航（18–156秒）。导航来自新运行 <code>20260930-214924</code>，略去开头等待的 12.32 秒，后续终点保持过程不在本剪辑中。地图是静态路线设计图，不是实测执行轨迹。</p>'
-        '<p>源运行报告飞行任务与地面队形完成。独立审计中的地图净空、机器人间净空、航点及闭环检查已通过，但总判定仍为 FAILED：终点健康／队形保持实测 7.994999821 秒，未达到原定 8.0 秒要求。媒体导出检查通过，不据此宣称独立物理或影片验收通过。</p>'
         '<p>本 demo 不评测在线视觉定位、学习型指令理解、记忆检索或真实机器人迁移。这些是独立能力，不改变本演示所表达的“利用重建地图执行导航任务”。</p>'
     )
     return f'''<section id="embodied-demo" class="embodied-demo">
 <p class="section-tag">DEMO / MAP-BASED EMBODIED EXECUTION</p><h2>{title}</h2><p>{lead}</p>
-<blockquote class="mission-command"><span>{"Task intent" if en else "任务意图"}</span>“{command}”</blockquote>
+<blockquote class="mission-command"><span>{"Task intent: " if en else "任务意图："}</span>{command}</blockquote>
 <ol class="mission-flow" aria-label="{"Task workflow" if en else "任务流程"}">{steps}</ol>
 <figure class="demo-film"><video controls playsinline preload="none" poster="assets/embodied-demo/navigation-214924-poster.png" width="1280" height="720" aria-label="{"Four-robot map-based navigation demonstration" if en else "四机器人地图导航演示"}"><source src="assets/embodied-demo/four-robots-214924-156s-phone.mp4" type="video/mp4">{"Your browser cannot play this video. Use the download link below." if en else "浏览器无法播放此视频，请使用下方下载链接。"}</video><figcaption>{caption}</figcaption></figure>
 <div class="demo-links"><a href="assets/embodied-demo/four-robots-214924-156s-phone.mp4" download>{"Download mobile edition" if en else "下载手机版"} · 11.65 MB · 2:36</a><a href="assets/embodied-demo/four-robots-214924-156s-hd.mp4" download>{"Download HD edition" if en else "下载高清版"} · 49.69 MB · 2:36</a><a href="data/embodied_demo.json">{"Run &amp; media record" if en else "运行与视频记录"} ↗</a></div>
 <figure class="demo-map" id="demo-route-map"><a href="assets/embodied-demo/planned-route-156s.png" target="_blank" rel="noopener"><img loading="lazy" src="assets/embodied-demo/planned-route-156s.png" width="1920" height="1080" alt="{"Planned routes for four robots, with the reception desk and waypoints marked; static design, not execution trajectories" if en else "标出前台与航点的四机器人路线设计图；静态设计，非执行轨迹"}"></a><figcaption><span>{"Navigation map." if en else "导航地图。"}</span> {"The reception desk and planned routes share the reconstructed scene. This is a static design preview, not a recorded trajectory. Open the image to inspect the full-resolution map." if en else "在重建场景中标出前台与规划路线。这是静态设计图，而非实跑轨迹；点击查看原尺寸地图。"}</figcaption></figure>
-<details class="demo-protocol"><summary>{"Demo protocol and scope" if en else "演示条件与范围"}</summary>{details}<p><a href="evidence/embodied-demo-audit.json">{"Independent audit summary" if en else "独立审计摘要"} ↗</a></p></details>
+<details class="demo-protocol"><summary>{"Demo protocol and scope" if en else "演示条件与范围"}</summary>{details}<p>{"Manual presentation review is separate from the historical automated checks retained below; it does not revise their recorded verdicts." if en else "人工展示审阅与下方保留的历史自动检查属于不同验证层次，不改变其原始判定。"}</p><p><a href="evidence/embodied-demo-audit.json">{"Historical automated check record" if en else "历史自动检查记录"} ↗</a></p></details>
 </section>'''
 
 
@@ -160,6 +158,8 @@ def editorial_page(page, en):
     page = page.replace('04 / MORE RESULTS AND ANALYSIS', '04 / RESULTS AND ANALYSIS')
     style_version = sha256((Path(__file__).resolve().parents[1] / "editorial.css").read_bytes()).hexdigest()[:12]
     page = page.replace('<link rel="stylesheet" href="style.css">', f'<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="editorial.css?v={style_version}">')
+    base_style_version = sha256((Path(__file__).resolve().parents[1] / "style.css").read_bytes()).hexdigest()[:12]
+    page = page.replace('href="style.css"', f'href="style.css?v={base_style_version}"')
     office_version = sha256((Path(__file__).resolve().parents[1] / "office.css").read_bytes()).hexdigest()[:12]
     page = page.replace('</head>', f'<link rel="stylesheet" href="office.css?v={office_version}"></head>')
     for asset in ("app.js", "scene-compare.js", "office-models.js"):

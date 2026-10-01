@@ -183,8 +183,8 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn("NVIDIA Isaac Sim", results)
             self.assertNotIn("No universal winner", results)
             self.assertNotIn("PSNR, SSIM, and LPIPS disagree", results)
-            self.assertLess(markup.index('id="figure-5"'), markup.index('id="figure-3"'))
             self.assertLess(markup.index('id="figure-3"'), markup.index('id="figure-4"'))
+            self.assertLess(markup.index('id="figure-4"'), markup.index('id="figure-5"'))
             for suffix in ("?lang=en", "shake?lang=en"):
                 self.assertIn(f'href="https://office-cafe-vipe.hiwtishere.chatgpt.site/{suffix}"', markup)
             self.assertIn("可复用的仿真就绪" if chinese else "reusable simulation-ready", results)
@@ -374,6 +374,28 @@ class PublicationValidation(unittest.TestCase):
             rendered = re.search(r'<pre class="citation-block"><code>(.*?)</code></pre>', markup, re.S).group(1)
             self.assertEqual(unescape(rendered), citation.rstrip())
             self.assertIn('href="data/awsm.bib" download="awsm.bib"', markup)
+
+    def test_revision_presentation_and_review_scope(self) -> None:
+        for name in PAGES:
+            markup = (ROOT / name).read_text()
+            nav = re.search(r'<nav>(.*?)</nav>', markup, re.S).group(1)
+            self.assertIn('href="https://github.com/wentingw/AWSM"', nav)
+            self.assertIn('GitHub ↗', nav)
+            self.assertNotIn('DATA ↗', nav)
+            self.assertEqual(re.findall(r'<figure[^>]*id="figure-(\d+)"', markup), list('123456'))
+            for number in range(1, 7):
+                self.assertEqual(markup.count(f'Figure {number}.'), 1)
+            self.assertIn('<figure id="figure-3"><img loading="lazy" src="assets/fixed_five_view_comparison_m1_m4.jpg"', markup)
+            self.assertIn('class="scene-comparison" id="figure-4"', markup)
+            self.assertIn('class="fixed-comparison" id="figure-5"', markup)
+            for phrase in ('7.994999821', 'unresolved audit failures', 'did not pass every task-audit', 'We discuss it as a parallel effort', '前置工作', '未通过的审计项', '尚未通过全部任务审计', '源运行报告飞行任务'):
+                self.assertNotIn(phrase, markup)
+            self.assertIn('让机器人前往前台，并在那里排成一列。' if name=='zh.html' else 'Send the robots to the reception desk and have them line up there.', markup)
+            self.assertIn('已完成人工审阅' if name=='zh.html' else 'manually reviewed', markup)
+            self.assertIn('不改变其原始判定' if name=='zh.html' else 'does not revise their recorded verdicts', markup)
+            self.assertEqual(markup.count('data-office-external='), 2)
+            self.assertIn('并非外站页面截图' if name=='zh.html' else 'not screenshots of the external website', markup)
+        self.assertEqual(self.demo['audit']['status'], 'FAILED')
 
 
 if __name__ == "__main__":

@@ -324,3 +324,21 @@ if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && vide
   requestAnimationFrame(tick);
   updateProgress();
 }
+
+const officeExternalSlot = document.querySelector('#office-external-slot');
+for (const button of document.querySelectorAll('[data-office-external]')) {
+  button.addEventListener('click', () => {
+    const source = button.dataset.officeExternal;
+    if (!['https://office-cafe-vipe.hiwtishere.chatgpt.site/?lang=en', 'https://office-cafe-vipe.hiwtishere.chatgpt.site/shake?lang=en'].includes(source)) return;
+    const frame = document.createElement('iframe');
+    frame.src = source;
+    frame.lang = 'en';
+    frame.title = source.includes('/shake') ? 'Office Café shake experiment — English requested' : 'Office Café interactive model — English requested';
+    frame.allow = 'fullscreen';
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = 'no-referrer';
+    frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-pointer-lock');
+    officeExternalSlot.replaceChildren(frame);
+    officeExternalSlot.hidden = false;
+  });
+}
