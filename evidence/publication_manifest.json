@@ -183,6 +183,26 @@
       "bytes": 529379
     },
     {
+      "path": "assets/icons/LICENSE.octicons.txt",
+      "sha256": "da259c8bd0de62713ccdcf88910aebca810644f98c2c912bad814fc79ea778df",
+      "bytes": 1068
+    },
+    {
+      "path": "assets/icons/README.md",
+      "sha256": "7460123d09d83ab450e8b4012f1f2af3ff87daf6f63ac84426faacbb9e28a342",
+      "bytes": 460
+    },
+    {
+      "path": "assets/icons/github.svg",
+      "sha256": "7421820090b50ac79d7c2bf7c951a433d7098a8a9c474809207bdd45f62d9d46",
+      "bytes": 822
+    },
+    {
+      "path": "assets/icons/huggingface.svg",
+      "sha256": "9cb9d71c1513fd2c57181cede84cbf552fbd8da3e3e32da514b30412a37c93a6",
+      "bytes": 4654
+    },
+    {
       "path": "assets/model_depth_error_five_views_m1_m4.png",
       "sha256": "448bc111da467461ae84941bc6ea5f5601ca5f9746d292dc1b8b279bbfa153ce",
       "bytes": 469515
@@ -274,13 +294,13 @@
     },
     {
       "path": "editorial.css",
-      "sha256": "506bb698a8f701608f1051f58282ef20a6104009da6779482dca92e2c458a297",
-      "bytes": 6106
+      "sha256": "bd70ffbdbbd899217612485a66b9450441093aad5b4307ad6a78b70c951ada4f",
+      "bytes": 6741
     },
     {
       "path": "en.html",
-      "sha256": "c8432ed6b3ea79b0fa10c301345c7e5ddb0833f4c806d6ec7c38f1fe52268218",
-      "bytes": 39653
+      "sha256": "dff51d0586a50f87380f244afcb8a39024b24f03a5dffee382c91e2c7524c306",
+      "bytes": 40051
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -319,8 +339,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "c8432ed6b3ea79b0fa10c301345c7e5ddb0833f4c806d6ec7c38f1fe52268218",
-      "bytes": 39653
+      "sha256": "dff51d0586a50f87380f244afcb8a39024b24f03a5dffee382c91e2c7524c306",
+      "bytes": 40051
     },
     {
       "path": "models/M1/scene.blend",
@@ -414,8 +434,8 @@
     },
     {
       "path": "zh.html",
-      "sha256": "db470ad2046d1628155514b0725cf68bf82398a4cbc3a8f7a2ea0a6b06fa8b9c",
-      "bytes": 37376
+      "sha256": "19792e18c6926b777969bed0e162d2c7db3cd093e28475eadc151f6b4e5ebd24",
+      "bytes": 37769
     }
   ]
 }

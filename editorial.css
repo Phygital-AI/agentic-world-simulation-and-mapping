@@ -19,6 +19,11 @@ header .publication-date{margin:20px 0 0;color:#60736b;font-size:12px;letter-spa
 body>.hero{margin-top:0;margin-bottom:72px}
 body>.hero>video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#182c29;border:1px solid #dbe2d9;border-radius:5px;box-shadow:0 12px 36px -24px #243b3033}
 body>.hero>figcaption{max-width:none;margin-top:14px;line-height:1.75}
+.project-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;margin-top:24px}
+.project-links .project-resource{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:9px 18px;border:1px solid var(--line);border-radius:999px;background:var(--white);color:var(--ink);font-size:14px;font-weight:600;text-decoration:none}
+.project-links img{display:block;width:24px;height:24px;object-fit:contain;background:transparent}
+.project-links a:hover{border-color:#8eaa9e;background:#edf1e9}
+.project-links a:focus-visible{outline:2px solid var(--green);outline-offset:4px}
 header .title-name,header .title-lockup,header .lead{animation:masthead-enter .7s cubic-bezier(.22,1,.36,1) both}
 header .lead{animation-delay:.08s}
 .table-figure tbody th{white-space:normal;min-width:155px;max-width:215px;font-weight:600}
