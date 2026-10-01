@@ -160,6 +160,8 @@ def editorial_page(page, en):
     page = page.replace('04 / MORE RESULTS AND ANALYSIS', '04 / RESULTS AND ANALYSIS')
     style_version = sha256((Path(__file__).resolve().parents[1] / "editorial.css").read_bytes()).hexdigest()[:12]
     page = page.replace('<link rel="stylesheet" href="style.css">', f'<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="editorial.css?v={style_version}">')
+    office_version = sha256((Path(__file__).resolve().parents[1] / "office.css").read_bytes()).hexdigest()[:12]
+    page = page.replace('</head>', f'<link rel="stylesheet" href="office.css?v={office_version}"></head>')
     for asset in ("app.js", "scene-compare.js", "office-models.js"):
         version = sha256((Path(__file__).resolve().parents[1] / asset).read_bytes()).hexdigest()[:12]
         page = page.replace(f'src="{asset}"', f'src="{asset}?v={version}"')

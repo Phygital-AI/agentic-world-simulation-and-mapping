@@ -1,0 +1,71 @@
+{
+  "release_id": 400742542,
+  "tag": "office-media-20261001",
+  "assets": [
+    {
+      "file": "office-input.mp4",
+      "bytes": 11309649,
+      "sha256": "b99fbe48c99410972782b0a10754d3da2e461dda2dd95aa94c4213bb8d0baeb8",
+      "url": "https://github.com/Phygital-AI/agentic-world-simulation-and-mapping/releases/download/office-media-20261001/office-input.mp4",
+      "asset_id": 602717050
+    },
+    {
+      "file": "office-pmodel.mp4",
+      "bytes": 19214748,
+      "sha256": "f2caba7641bb50ff65a231ea1d245724e884d449a41b89e829854924b53a514b",
+      "url": "https://github.com/Phygital-AI/agentic-world-simulation-and-mapping/releases/download/office-media-20261001/office-pmodel.mp4",
+      "asset_id": 602717164
+    },
+    {
+      "file": "office-scan.mp4",
+      "bytes": 153594492,
+      "sha256": "4643631ba15e6a33c43ea3dd3f259f2b68fe1d67c69a44262ad5bf1519b5daf3",
+      "url": "https://github.com/Phygital-AI/agentic-world-simulation-and-mapping/releases/download/office-media-20261001/office-scan.mp4",
+      "asset_id": 602717518
+    }
+  ],
+  "schema_version": 1,
+  "preservation": "Original files published byte-for-byte; no transcoding.",
+  "order": [
+    "office-input.mp4",
+    "office-pmodel.mp4",
+    "office-scan.mp4"
+  ],
+  "video_spec": {
+    "width": 960,
+    "height": 540,
+    "frame_rate": "30/1",
+    "frames": 2103,
+    "duration_seconds": 70.1
+  },
+  "posters": [
+    {
+      "path": "assets/office-cafe/office-input-poster.jpg",
+      "source": "office-input.mp4",
+      "frame_index": 0,
+      "sha256": "09ee086ae0eca08afecbafb5fe5849600d0837349ae1b14e72dbdbaae9c2f237",
+      "bytes": 94250
+    },
+    {
+      "path": "assets/office-cafe/office-pmodel-poster.jpg",
+      "source": "office-pmodel.mp4",
+      "frame_index": 0,
+      "sha256": "61ea36de0e40a955879b3b0195961ad137c738373726efda760b50232b7041b8",
+      "bytes": 80038
+    },
+    {
+      "path": "assets/office-cafe/office-scan-poster.jpg",
+      "source": "office-scan.mp4",
+      "frame_index": 0,
+      "sha256": "59f64e13f254ef3c9dbf511277cd9782ac0267f25b54e99cba938269be30d4e3",
+      "bytes": 218866
+    },
+    {
+      "path": "assets/office-cafe/office-shake-heavy-poster.jpg",
+      "source": "office-shake-heavy.mp4",
+      "frame_index": 0,
+      "sha256": "e4574f22938288bf76f5d123cbba7f871643a4889c519fab176484738438be6b",
+      "bytes": 104096
+    }
+  ]
+}

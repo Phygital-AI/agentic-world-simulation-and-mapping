@@ -2,11 +2,6 @@ import * as THREE from "three";
 import { GLTFLoader } from "./vendor/three/loaders/GLTFLoader.js";
 import { OrbitControls } from "./vendor/three/controls/OrbitControls.js";
 
-const stylesheet = document.createElement("link");
-stylesheet.rel = "stylesheet";
-stylesheet.href = "./office.css";
-document.head.append(stylesheet);
-
 const stages = [...document.querySelectorAll(".office-model-stage")];
 const loader = new GLTFLoader();
 const viewers = [];
@@ -186,54 +181,146 @@ const syncedVideos = [...document.querySelectorAll("[data-synced-video]")];
 const videoPlay = document.querySelector(".office-video-play");
 const videoProgress = document.querySelector(".office-video-progress");
 const videoTime = document.querySelector(".office-video-time");
+const videoStatus = document.querySelector(".office-video-status");
 
-if (syncedVideos.length === 2 && videoPlay && videoProgress && videoTime) {
+if (syncedVideos.length === 3 && videoPlay && videoProgress && videoTime && videoStatus) {
   const primary = syncedVideos[0];
+  const zh = document.documentElement.lang.startsWith("zh");
+  const copy = zh ? {
+    play: "播放全部三个视频", pause: "暂停全部三个视频",
+    ready: "同步播放 · 70.1 秒 · 30 fps", waiting: "正在加载，三个视频就绪后将同步播放…",
+    failed: "视频加载失败，请点击播放重试。",
+  } : {
+    play: "Play all three videos", pause: "Pause all three videos",
+    ready: "Shared playback · 70.1 seconds · 30 fps", waiting: "Loading — all three videos will start together…",
+    failed: "Unable to load the videos. Press play to retry.",
+  };
+  let wanted = false;
+  let waiting = false;
+  let starting = false;
+  let generation = 0;
+  let targetTime = 0;
+  const duration = () => Number.isFinite(primary.duration) ? primary.duration : 70.1;
   const formatTime = (seconds) => {
     const safe = Number.isFinite(seconds) ? seconds : 0;
     return `${String(Math.floor(safe / 60)).padStart(2, "0")}:${String(Math.floor(safe % 60)).padStart(2, "0")}`;
   };
   const updateProgress = () => {
-    if (!primary.duration || videoProgress.matches(":active")) return;
-    videoProgress.value = String((primary.currentTime / primary.duration) * 1000);
-    videoTime.textContent = `${formatTime(primary.currentTime)} / ${formatTime(primary.duration)}`;
+    const time = waiting ? targetTime : primary.currentTime;
+    if (!videoProgress.matches(":active")) videoProgress.value = String((time / duration()) * 1000);
+    videoTime.textContent = `${formatTime(time)} / ${formatTime(duration())}`;
+    videoProgress.setAttribute("aria-valuetext", videoTime.textContent);
   };
   const setPlaying = (playing) => {
     videoPlay.textContent = playing ? "❚❚" : "▶";
-    videoPlay.setAttribute("aria-label", playing ? "Pause both videos" : "Play both videos");
+    videoPlay.setAttribute("aria-label", playing ? copy.pause : copy.play);
+    videoPlay.setAttribute("aria-pressed", String(playing));
+  };
+  const pauseAll = () => syncedVideos.forEach((video) => {
+    video.pause();
+    video.playbackRate = 1;
+  });
+  const align = () => syncedVideos.forEach((video) => {
+    if (Number.isFinite(video.duration) && Math.abs(video.currentTime - targetTime) > 0.015) {
+      video.currentTime = Math.min(targetTime, video.duration);
+    }
+  });
+  const stop = (message = copy.ready) => {
+    wanted = waiting = starting = false;
+    generation += 1;
+    pauseAll();
+    setPlaying(false);
+    videoStatus.textContent = message;
+    updateProgress();
+  };
+  const ready = () => syncedVideos.every((video) => !video.seeking && video.readyState >= 3);
+  const resume = async () => {
+    if (!wanted || !waiting || starting || !ready()) return;
+    const attempt = ++generation;
+    waiting = false;
+    starting = true;
+    const results = await Promise.allSettled(syncedVideos.map((video) => video.play()));
+    if (attempt !== generation) return;
+    starting = false;
+    if (results.some((result) => result.status === "rejected")) {
+      stop(copy.failed);
+      return;
+    }
+    videoStatus.textContent = copy.ready;
+  };
+  const hold = (time = primary.currentTime) => {
+    generation += 1;
+    starting = false;
+    waiting = true;
+    targetTime = time;
+    pauseAll();
+    align();
+    if (wanted) videoStatus.textContent = copy.waiting;
+    updateProgress();
+    void resume();
   };
 
   syncedVideos.forEach((video) => {
     video.muted = true;
     video.playsInline = true;
-  });
-  primary.addEventListener("loadedmetadata", updateProgress);
-  primary.addEventListener("timeupdate", updateProgress);
-  primary.addEventListener("ended", () => {
-    syncedVideos.forEach((video) => video.pause());
-    setPlaying(false);
+    for (const event of ["loadedmetadata", "loadeddata", "canplay", "seeked", "progress"]) {
+      video.addEventListener(event, () => {
+        if (waiting) align();
+        updateProgress();
+        void resume();
+      });
+    }
+    video.addEventListener("waiting", () => {
+      if (wanted && !waiting && !ready()) hold();
+    });
+    video.addEventListener("error", () => stop(copy.failed));
+    video.addEventListener("ended", () => {
+      stop();
+      targetTime = duration();
+      align();
+      updateProgress();
+    });
   });
   videoProgress.addEventListener("input", () => {
-    const fraction = Number(videoProgress.value) / 1000;
-    syncedVideos.forEach((video) => {
-      if (video.duration) video.currentTime = fraction * video.duration;
-    });
-    updateProgress();
+    hold((Number(videoProgress.value) / 1000) * duration());
   });
-  videoPlay.addEventListener("click", async () => {
-    if (primary.paused) {
-      await Promise.all(syncedVideos.map((video) => video.play()));
-      setPlaying(true);
-    } else {
-      syncedVideos.forEach((video) => video.pause());
-      setPlaying(false);
+  videoPlay.addEventListener("click", () => {
+    if (wanted) {
+      stop();
+      return;
     }
+    wanted = true;
+    setPlaying(true);
+    syncedVideos.forEach((video) => {
+      video.preload = "auto";
+      if (video.error) video.load();
+    });
+    const time = waiting ? targetTime : primary.currentTime;
+    hold(time >= duration() - 0.08 ? 0 : time);
   });
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      syncedVideos.forEach((video) => video.pause());
-      setPlaying(false);
-    }
+    if (document.hidden) stop();
   });
+  const tick = () => {
+    if (wanted && waiting) void resume();
+    if (wanted && !waiting && !starting) {
+      if (!ready()) {
+        hold();
+      } else {
+        for (const video of syncedVideos.slice(1)) {
+          const drift = video.currentTime - primary.currentTime;
+          if (Math.abs(drift) > 0.12) {
+            hold();
+            break;
+          }
+          // Small rate adjustments avoid repeated seeks for sub-frame drift.
+          video.playbackRate = Math.abs(drift) > 0.025 ? (drift > 0 ? 0.96 : 1.04) : 1;
+        }
+      }
+    }
+    updateProgress();
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
   updateProgress();
 }

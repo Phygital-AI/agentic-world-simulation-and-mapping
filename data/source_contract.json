@@ -102,14 +102,16 @@
   "office_cafe_case_study": {
     "office_cafe": {
       "source_url": "https://office-cafe-vipe.hiwtishere.chatgpt.site/",
-      "presentation": "local_models_and_videos",
+      "presentation": "local_models_and_synchronized_original_videos",
       "included_assets": [
         "original_model",
         "legacy_model",
-        "scan_to_model",
-        "source_video_to_model",
+        "input_video",
+        "procedural_model_video",
+        "scan_video",
         "strong_shake"
-      ]
+      ],
+      "video_manifest": "data/office_video_media.json"
     }
   },
   "vendor": {

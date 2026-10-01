@@ -63,7 +63,15 @@
 }
 
 .office-video-sync {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-bottom: 0;
+}
+
+.office-video-status {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .office-video-controls {
@@ -114,5 +122,23 @@
 
   .office-video-card-wide {
     grid-column: auto;
+  }
+
+  .office-video-sync {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .office-video-sync figcaption {
+    padding: 8px 6px;
+  }
+
+  .office-video-sync figcaption strong {
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+
+  .office-video-sync figcaption span {
+    display: none;
   }
 }
