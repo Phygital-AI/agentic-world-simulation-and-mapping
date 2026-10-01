@@ -93,8 +93,8 @@ function refresh() {
   document.querySelector("#compare-pred").src = `assets/fixed_views/${m}/${id}.png`;
   document.querySelector("#compare-gt").src = `assets/fixed_views/GT/${id}.png`;
   document.querySelector("#compare-label").textContent = `${m} / ${c.view} ${frame.value}`;
-  document.querySelector("#figure-5").dataset.method = m;
-  document.querySelector("#figure-5").dataset.frame = frame.value;
+  document.querySelector("#figure-4").dataset.method = m;
+  document.querySelector("#figure-4").dataset.frame = frame.value;
 }
 method?.addEventListener("change", refresh);
 frame?.addEventListener("change", refresh);

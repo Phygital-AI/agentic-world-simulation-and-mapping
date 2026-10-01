@@ -1,5 +1,6 @@
 :root{--masthead-width:1080px;--masthead-gutter:40px}
 .insight-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+.insight-strip .metric-reduction{display:block;margin-top:12px;color:var(--green);font-size:13px;font-weight:600;line-height:1.5}
 @media(max-width:700px){.insight-strip{grid-template-columns:1fr}}
 .office-links{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:14px}
 body>nav,body>header,body>.hero{max-width:var(--masthead-width);padding-left:var(--masthead-gutter);padding-right:var(--masthead-gutter);margin-left:auto;margin-right:auto}
@@ -18,7 +19,6 @@ body[data-lang="zh"] header .lead{line-height:1.6;letter-spacing:0}
 header .publication-date{margin:20px 0 0;color:#60736b;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 body>.hero{margin-top:0;margin-bottom:72px}
 body>.hero>video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#182c29;border:1px solid #dbe2d9;border-radius:5px;box-shadow:0 12px 36px -24px #243b3033}
-body>.hero>figcaption{max-width:none;margin-top:14px;line-height:1.75}
 .project-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;margin-top:24px}
 .project-links .project-resource{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:9px 18px;border:1px solid var(--line);border-radius:999px;background:var(--white);color:var(--ink);font-size:14px;font-weight:600;text-decoration:none}
 .project-links img{display:block;width:24px;height:24px;object-fit:contain;background:transparent}

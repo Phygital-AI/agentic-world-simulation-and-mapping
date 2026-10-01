@@ -48,12 +48,12 @@ with sync_playwright() as pw:
             assert page.locator(".tagline-emphasis").evaluate("element => getComputedStyle(element).textDecorationLine")=="none"
             assert page.locator('nav a').last.get_attribute('href')=='https://github.com/wentingw/AWSM'
             assert page.locator('nav a').last.inner_text()=='GitHub ↗'
-            assert page.locator('figure[id^="figure-"]').evaluate_all("elements => elements.map(element => element.id)")==[f'figure-{number}' for number in range(1,7)]
-            for number in range(1,7):
+            assert page.locator('figure[id^="figure-"]').evaluate_all("elements => elements.map(element => element.id)")==[f'figure-{number}' for number in range(1,6)]
+            for number in range(1,6):
                 assert page.locator(f'#figure-{number} > figcaption').inner_text().startswith(f'Figure {number}.')
-            assert page.locator('#figure-3 > img').get_attribute('src')=='assets/fixed_five_view_comparison_m1_m4.jpg'
-            assert page.locator('.scene-comparison').get_attribute('id')=='figure-4'
-            assert page.locator('.fixed-comparison').get_attribute('id')=='figure-5'
+            assert page.locator('#figure-2 > img').get_attribute('src')=='assets/fixed_five_view_comparison_m1_m4.jpg'
+            assert page.locator('.scene-comparison').get_attribute('id')=='figure-3'
+            assert page.locator('.fixed-comparison').get_attribute('id')=='figure-4'
             assert not page.locator('.office-external-slot iframe').count()
             for button in page.locator('[data-office-external]').all():
                 button.click()
@@ -114,21 +114,21 @@ with sync_playwright() as pw:
             assert len(table2_headers)==5 and all("配准" not in x and "Alignment" not in x for x in table2_headers)
             table3_headers=page.locator("#table-3 thead th").all_text_contents()
             assert len(table3_headers)==4 and all("SHA256" not in x and "配准" not in x and "Alignment" not in x for x in table3_headers)
-            assert page.locator("#table-2").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-2')) & Node.DOCUMENT_POSITION_FOLLOWING")
+            assert page.locator("#table-2").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-1')) & Node.DOCUMENT_POSITION_FOLLOWING")
             for table_index in (2,3,6,7):
                 assert page.locator(f"#table-{table_index} tbody strong").count()>0
-            assert page.locator("#figure-1 > video").count()==1
-            assert page.locator("#figure-1 > video > source").get_attribute("src")=="assets/awsm-promo-v5.mp4"
-            assert page.locator("#figure-3").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-4')) & Node.DOCUMENT_POSITION_FOLLOWING")
+            assert page.locator("#overview-video > video").count()==1
+            assert page.locator("#overview-video > video > source").get_attribute("src")=="assets/awsm-promo-v5.mp4"
+            assert page.locator("#figure-2").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#figure-3')) & Node.DOCUMENT_POSITION_FOLLOWING")
             assert page.locator("#more-results").evaluate("(x)=>x.compareDocumentPosition(document.querySelector('#embodied-demo')) & Node.DOCUMENT_POSITION_FOLLOWING")
-            figure3=page.locator("#figure-4"); figure3.scroll_into_view_if_needed()
-            page.wait_for_function("document.querySelector('#figure-4').dataset.state === 'ready'",timeout=120_000)
+            figure3=page.locator("#figure-3"); figure3.scroll_into_view_if_needed()
+            page.wait_for_function("document.querySelector('#figure-3').dataset.state === 'ready'",timeout=120_000)
             assert page.locator("#model-select").input_value()=="M4"
-            assert page.locator("#figure-4").get_attribute("data-loaded-model")=="M4"
+            assert page.locator("#figure-3").get_attribute("data-loaded-model")=="M4"
             scene_models=("M4","M3","GT") if a.quick else ("M1","M2","M3","M4","GT")
             for method in scene_models:
                 page.select_option("#model-select",method)
-                page.wait_for_function("(m)=>{const p=document.querySelector('#figure-4');const d=p.sceneDiagnostics?.();return p.dataset.state==='ready'&&p.dataset.loadedModel===m&&d?.loaded===m&&d.gtLoaded&&d.singleCamera&&d.singleViewport&&(m==='GT'||d.hiddenCutaway>0)}",arg=method,timeout=120_000)
+                page.wait_for_function("(m)=>{const p=document.querySelector('#figure-3');const d=p.sceneDiagnostics?.();return p.dataset.state==='ready'&&p.dataset.loadedModel===m&&d?.loaded===m&&d.gtLoaded&&d.singleCamera&&d.singleViewport&&(m==='GT'||d.hiddenCutaway>0)}",arg=method,timeout=120_000)
                 if not a.quick or method=="M4":
                     figure3.screenshot(path=str(out/f"{viewport}-{lang}-{method}.png"))
                 page.select_option("#scene-mode","single")
@@ -136,14 +136,14 @@ with sync_playwright() as pw:
                     figure3.screenshot(path=str(out/f"{viewport}-{lang}-{method}-single.png"))
                 page.select_option("#scene-mode","compare")
                 if method=="M4":
-                    bounds=page.evaluate("document.querySelector('#figure-4').sceneDiagnostics().bounds")
+                    bounds=page.evaluate("document.querySelector('#figure-3').sceneDiagnostics().bounds")
                     assert bounds["min"][0]<18<bounds["max"][0]
                     assert bounds["min"][1]<1.2<bounds["max"][1]
                     assert bounds["min"][2]<-21<bounds["max"][2]
             page.select_option("#model-select","M2"); page.select_option("#scene-mode","compare")
-            before=page.evaluate("document.querySelector('#figure-4').sceneDiagnostics()")
+            before=page.evaluate("document.querySelector('#figure-3').sceneDiagnostics()")
             page.locator(".scene-divider").focus(); page.keyboard.press("ArrowRight")
-            after=page.evaluate("document.querySelector('#figure-4').sceneDiagnostics()")
+            after=page.evaluate("document.querySelector('#figure-3').sceneDiagnostics()")
             assert after["split"]>before["split"] and after["singleCamera"] and after["singleViewport"]
             page.select_option("#scene-mode","single"); assert page.locator("#scene-split").is_disabled()
             page.click("#scene-reset")
@@ -152,7 +152,7 @@ with sync_playwright() as pw:
                 page.select_option("#compare-method",method)
                 for frame in (("0","144") if a.quick else ("0","36","72","108","144")):
                     page.select_option("#compare-frame",frame)
-                    page.wait_for_function("([m,f])=>{const x=document.querySelector('#figure-5'),a=document.querySelector('#compare-pred'),b=document.querySelector('#compare-gt'),id=String(f).padStart(3,'0');return x.dataset.method===m&&x.dataset.frame===f&&a.currentSrc.endsWith(`/assets/fixed_views/${m}/${id}.png`)&&b.currentSrc.endsWith(`/assets/fixed_views/GT/${id}.png`)&&a.complete&&a.naturalWidth>0&&b.complete&&b.naturalWidth>0}",arg=[method,frame],timeout=30_000)
+                    page.wait_for_function("([m,f])=>{const x=document.querySelector('#figure-4'),a=document.querySelector('#compare-pred'),b=document.querySelector('#compare-gt'),id=String(f).padStart(3,'0');return x.dataset.method===m&&x.dataset.frame===f&&a.currentSrc.endsWith(`/assets/fixed_views/${m}/${id}.png`)&&b.currentSrc.endsWith(`/assets/fixed_views/GT/${id}.png`)&&a.complete&&a.naturalWidth>0&&b.complete&&b.naturalWidth>0}",arg=[method,frame],timeout=30_000)
                     loaded_images.append(f"{method}/{int(frame):03d}")
             office=page.locator(".office-model-grid")
             office.scroll_into_view_if_needed()

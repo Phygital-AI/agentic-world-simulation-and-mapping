@@ -4,7 +4,7 @@ From real spaces to worlds phygital agents can use.
 
 AWSM is pronounced “awesome”; phygital means physical + digital.
 
-The bilingual masthead follows the supplied title reference: a small full name, a large serif AWSM wordmark with an adjacent pronunciation note, and a green-accented tagline. It shares a responsive, left-aligned content width with Figure 1, the supplied `assets/awsm-promo-v5.mp4` (copied without re-encoding). Its one-time entrance animation respects reduced-motion preferences. Citation text and the downloadable `data/awsm.bib` are generated from the same BibTeX source in `scripts/editorial.py`.
+The bilingual masthead follows the supplied title reference: a small full name, a large serif AWSM wordmark with an adjacent pronunciation note, and a green-accented tagline. It shares a responsive, left-aligned content width with the unnumbered overview video, the supplied `assets/awsm-promo-v5.mp4` (copied without re-encoding). Its one-time entrance animation respects reduced-motion preferences. Citation text and the downloadable `data/awsm.bib` are generated from the same BibTeX source in `scripts/editorial.py`.
 
 The generated pages version `editorial.css` and `app.js` by their content hashes so returning visitors request the updated styling and table text after a deployment. Table 1 body translations and the M1–M4 short method names used in the visible tables live in `app.js`; the frozen numerical table data remains unchanged.
 
@@ -14,9 +14,11 @@ The narrative distinguishes the tool-using reconstruction agent from downstream 
 
 The homepage (`index.html`) defaults to English. Chinese is at `zh.html`, titled **AWSM：智能体世界仿真与建图**. The existing `en.html` URL remains an English alias with the homepage as its canonical URL.
 
-The page displays five experiment tables (Tables 1–3, 6–7); appearance Tables 4–5 are omitted. The frozen JSON retains all seven source tables. The six figures, frozen `scene.glb`/`scene.blend` pairs, and interactive comparisons are preserved from `wentingw/agentic-world-blog` at `3c5f27c`. Figure 4 shares a camera and viewport with GT; Figure 5 uses 25 hash-verified source images. All viewer dependencies are local.
+The page displays five experiment tables (Tables 1–3, 6–7); appearance Tables 4–5 are omitted. The frozen JSON retains all seven source tables. The five numbered research figures, frozen `scene.glb`/`scene.blend` pairs, and interactive comparisons are preserved from `wentingw/agentic-world-blog` at `3c5f27c`. Figure 3 shares a camera and viewport with GT; Figure 4 uses 25 hash-verified source images. All viewer dependencies are local.
 
-The reconstruction results precede the embodied demo. The original five-view overview is now Figure 3, the interactive model comparison is Figure 4, and the fixed-view selector is Figure 5; captions, anchors, CSS, and runtime selectors use these numbers. The World Lobby scene and the embodied simulation are identified as NVIDIA Isaac Sim content.
+The reconstruction results precede the embodied demo. The original five-view overview is now Figure 2, the interactive model comparison is Figure 3, and the fixed-view selector is Figure 4; captions, anchors, CSS, and runtime selectors use these numbers. The World Lobby scene and the embodied simulation are identified as NVIDIA Isaac Sim content.
+
+The opening overview video is unnumbered and has no figure caption; research figures run from 1 to 5. TL;DR and the two overview metric cards report relative reductions computed from the unrounded M1/M4 values in the frozen table JSON: approximately 81% for bidirectional surface error and 54% for model-depth AbsRel. The comparison uses M1's GT-assisted Sim(3) alignment and M4's GT-pose-conditioned route; it is not an isolated IMU gain. The depth metric covers 180 evaluation views, not a 180-degree field of view. The demo is described as goal-directed navigation and task execution on a reconstructed map; object search remains a research direction.
 
 The authors confirm that the reception-desk demonstration has been manually reviewed. Presentation copy distinguishes that review from historical automated checks; the original audit JSON, logs, recorded verdicts, and experiment/media hashes are not edited to imply an automated PASS.
 

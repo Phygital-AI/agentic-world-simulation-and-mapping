@@ -1,6 +1,7 @@
 """Bilingual narrative and demo additions around the frozen research article."""
 
 from hashlib import sha256
+import json
 from pathlib import Path
 
 SITE_TITLE = "AWSM: Agentic World Simulation and Mapping"
@@ -26,10 +27,23 @@ REFERENCES = [
 ]
 
 
+def reconstruction_reductions():
+    tables = json.loads((Path(__file__).resolve().parents[1] / "data/tables_1_7.json").read_text())["tables"]
+    reductions = []
+    for table, field in (("table3", "bidirectional_mean_m"), ("table2", "model_depth_absrel")):
+        methods = {row["method"]: row[field] for row in tables[table]}
+        reductions.append(100 * (methods["M1"] - methods["M4"]) / methods["M1"])
+    return tuple(reductions)
+
+
 def narrative_copy(copy, en):
+    surface_reduction, depth_reduction = reconstruction_reductions()
+    copy["metric1_reduction"] = f"≈{surface_reduction:.0f}% relative reduction · M1 → M4" if en else f"相对降低约 {surface_reduction:.0f}% · M1 → M4"
+    copy["metric2_reduction"] = f"≈{depth_reduction:.0f}% relative reduction · M1 → M4" if en else f"相对降低约 {depth_reduction:.0f}% · M1 → M4"
+    copy["metric_scope"] = "Single-scene M1 → M4 diagnostic comparison: M1 uses GT-assisted Sim(3) alignment; M4 uses GT camera poses. Relative reductions compare complete pipelines, not IMU alone." if en else "单场景 M1 → M4 诊断性对比：M1 使用真值辅助的 Sim(3) 配准，M4 使用真值相机位姿。相对降幅比较的是完整管线，而非 IMU 的独立贡献。"
     if en:
         copy.update({
-            "tldr": "Large-model agents can build editable 3D scenes from visual observations, but plausible appearance does not guarantee spatial fidelity. AWSM explores grounding this reconstruction process in geometric evidence so the resulting scenes can serve as maps and simulation assets. Four reconstruction routes test scene fidelity; a multi-robot demo illustrates map-based execution. Next steps are higher efficiency and accuracy, reusable simulation-ready scene generation, and deeper integration with phygital agents—toward persistent spatial memory and interaction.",
+            "tldr": f"AWSM uses large-model agents to turn visual observations into editable 3D scenes, grounded in camera-pose and depth estimates—including IMU-informed visual–inertial constraints that tie geometry to physical scale. In one controlled Isaac Sim scene, four reconstruction routes test spatial fidelity, not just visual plausibility. The aligned comparison from RGB-only M1 to GT-pose-conditioned M4 shows ≈{surface_reduction:.0f}% lower bidirectional surface error and ≈{depth_reduction:.0f}% lower model-depth AbsRel across 180 evaluation views; these are system-level differences, not isolated IMU gains. A multi-robot demo then illustrates goal-directed navigation and task execution on the reconstructed map: follow predefined routes to a marked reception desk and line up there. Next steps are higher efficiency and accuracy, reusable simulation-ready assets, and deeper integration with phygital agents for persistent spatial memory, object search, and interaction.",
             "intro1": "Agentic reconstruction uses a large model to inspect observations, call modeling tools, and iteratively build and check an editable scene. The challenge is not only to produce a convincing room, but to preserve the scale, shape, and spatial relationships that make it useful beyond rendering. AWSM asks how geometric evidence can constrain this process so that its outputs become more faithful spatial references for downstream agents.",
             "motivation_title": "From plausible reconstruction to a usable spatial reference",
             "motivation1": "A reconstruction agent can assemble a plausible room while getting a corner, distance, or passage wrong. For an embodied agent, those are not merely visual defects: they change where a destination lies and which route a body can follow. Geometry grounding means constraining the modeling process with pose, depth, and metric evidence where available, rather than relying on visual plausibility alone. The question is how those constraints survive the conversion from observations into editable objects.",
@@ -53,7 +67,7 @@ def narrative_copy(copy, en):
         copy["office1"] += " An author-observed failure—a curved real-world corner simplified into a square one—motivates separating local shape from global scale. A correct scale alone cannot repair that shape error; this is a qualitative observation, not another measured benchmark."
     else:
         copy.update({
-            "tldr": "大模型智能体可以从视觉观察构建可编辑的 3D 场景，但视觉上合理并不等于空间上忠实。AWSM 探索用几何证据约束这一 agentic 重建过程，让生成的场景可作为地图与仿真资产使用。四条重建路径检验场景忠实度，多机器人 demo 展示基于地图的执行。下一步是提升效率与精度、形成可复用的仿真就绪场景生成流程，并进一步与虚实融合智能体（phygital agents）集成，走向持久空间记忆与交互。",
+            "tldr": f"AWSM 让大模型智能体将视觉观测转化为可编辑的 3D 场景，并以估计的相机位姿与深度进行几何锚定，其中包括融合 IMU 的视觉惯性约束，将几何与真实物理尺度绑定。在一个受控的 Isaac Sim 场景中，四条重建路线检验的不只是视觉合理性，更是空间忠实度：经配准的纯 RGB 路线 M1 与真值位姿条件路线 M4 对比，双向表面误差降低约 {surface_reduction:.0f}%，180 个评估视角上的模型深度绝对相对误差（AbsRel）降低约 {depth_reduction:.0f}%；这是完整系统之间的差异，并非 IMU 单独带来的增益。多机器人 demo 进一步展示基于重建地图的目标导航与任务执行：沿预设路线前往地图上已标记的前台，并在那里排队。下一步是提升效率与精度、形成可复用的仿真就绪资产，并进一步与虚实融合智能体（phygital agents）集成，支持持久空间记忆、寻物与交互。",
             "intro1": "Agentic 重建由大模型检查观测、调用建模工具，并迭代构建和验证可编辑场景。挑战不只是生成一个令人信服的房间，还在于保留尺度、形状与空间关系，让结果在渲染之外仍然有用。AWSM 研究如何用几何证据约束这一过程，让输出成为下游智能体更忠实的空间参照。",
             "motivation_title": "从看起来合理的重建，到可以使用的空间参照",
             "motivation1": "负责重建的智能体可以搭建一个看似合理的房间，却重建错转角、距离或通道。对具身智能体而言，这些不只是视觉缺陷，还会改变目标的位置与身体可以通过的路线。几何锚定，是在信息可用时以位姿、深度与米制证据约束建模过程，而非仅依赖视觉合理性。关键问题是：这些约束如何在观测转化为可编辑对象的过程中得到保留？",

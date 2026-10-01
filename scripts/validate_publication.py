@@ -15,7 +15,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 from unittest.mock import patch
 
-from editorial import narrative_copy
+from editorial import narrative_copy, reconstruction_reductions
 from site_builder_interactive import academic_page
 
 
@@ -138,7 +138,7 @@ class PublicationValidation(unittest.TestCase):
 
     def test_tables_and_figures_exist_in_both_languages(self) -> None:
         required = {f"table-{number}" for number in (1, 2, 3, 6, 7)}
-        required |= {f"figure-{number}" for number in range(1, 7)}
+        required |= {f"figure-{number}" for number in range(1, 6)}
         self.assertEqual([row["number"] for row in self.contract["tables"]], list(range(1, 8)))
         for name, document in self.documents.items():
             self.assertTrue(required <= set(document.ids), f"{name}: missing {sorted(required - set(document.ids))}")
@@ -178,13 +178,13 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn('<a href="#results">' + ("概览" if chinese else "Overview") + '</a>', toc)
             self.assertIn('<a href="#more-results">' + ("结果与分析" if chinese else "Results & analysis") + '</a>', toc)
             self.assertTrue(document.text_for("more-results").startswith("04 / RESULTS AND ANALYSIS"))
-            self.assertIn("大模型智能体" if chinese else "Large-model agents", results)
+            self.assertIn("大模型智能体" if chinese else "large-model agents", results)
             self.assertIn("agentic", results.lower())
             self.assertIn("NVIDIA Isaac Sim", results)
             self.assertNotIn("No universal winner", results)
             self.assertNotIn("PSNR, SSIM, and LPIPS disagree", results)
+            self.assertLess(markup.index('id="figure-2"'), markup.index('id="figure-3"'))
             self.assertLess(markup.index('id="figure-3"'), markup.index('id="figure-4"'))
-            self.assertLess(markup.index('id="figure-4"'), markup.index('id="figure-5"'))
             for suffix in ("?lang=en", "shake?lang=en"):
                 self.assertIn(f'href="https://office-cafe-vipe.hiwtishere.chatgpt.site/{suffix}"', markup)
             self.assertIn("可复用的仿真就绪" if chinese else "reusable simulation-ready", results)
@@ -382,12 +382,15 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn('href="https://github.com/wentingw/AWSM"', nav)
             self.assertIn('GitHub ↗', nav)
             self.assertNotIn('DATA ↗', nav)
-            self.assertEqual(re.findall(r'<figure[^>]*id="figure-(\d+)"', markup), list('123456'))
-            for number in range(1, 7):
+            self.assertEqual(re.findall(r'<figure[^>]*id="figure-(\d+)"', markup), list('12345'))
+            for number in range(1, 6):
                 self.assertEqual(markup.count(f'Figure {number}.'), 1)
-            self.assertIn('<figure id="figure-3"><img loading="lazy" src="assets/fixed_five_view_comparison_m1_m4.jpg"', markup)
-            self.assertIn('class="scene-comparison" id="figure-4"', markup)
-            self.assertIn('class="fixed-comparison" id="figure-5"', markup)
+            self.assertIn('<figure id="figure-2"><img loading="lazy" src="assets/fixed_five_view_comparison_m1_m4.jpg"', markup)
+            self.assertIn('class="scene-comparison" id="figure-3"', markup)
+            self.assertIn('class="fixed-comparison" id="figure-4"', markup)
+            self.assertIn('class="hero" id="overview-video"', markup)
+            self.assertNotIn('figure-1-caption', markup)
+            self.assertNotIn('AWSM: from real spaces to worlds phygital agents can use.', markup)
             for phrase in ('7.994999821', 'unresolved audit failures', 'did not pass every task-audit', 'We discuss it as a parallel effort', '前置工作', '未通过的审计项', '尚未通过全部任务审计', '源运行报告飞行任务'):
                 self.assertNotIn(phrase, markup)
             self.assertIn('让机器人前往前台，并在那里排成一列。' if name=='zh.html' else 'Send the robots to the reception desk and have them line up there.', markup)
@@ -396,6 +399,24 @@ class PublicationValidation(unittest.TestCase):
             self.assertEqual(markup.count('data-office-external='), 2)
             self.assertIn('并非外站页面截图' if name=='zh.html' else 'not screenshots of the external website', markup)
         self.assertEqual(self.demo['audit']['status'], 'FAILED')
+
+    def test_tldr_reductions_and_task_scope(self) -> None:
+        surface, depth = reconstruction_reductions()
+        self.assertAlmostEqual(surface, 80.95096, places=3)
+        self.assertAlmostEqual(depth, 53.77076, places=3)
+        for name, document in self.documents.items():
+            markup = (ROOT / name).read_text()
+            chinese = name == 'zh.html'
+            summary = re.search(r'<aside class="tldr"><strong>TL;DR</strong><p>(.*?)</p>', markup).group(1)
+            for term in ('IMU', 'M1', 'M4', '81%', '54%'):
+                self.assertIn(term, summary)
+            self.assertIn('真值位姿条件' if chinese else 'GT-pose-conditioned', summary)
+            self.assertIn('预设路线' if chinese else 'predefined routes', summary)
+            self.assertIn('180 个评估视角' if chinese else '180 evaluation views', document.text_for('results'))
+            self.assertEqual(markup.count('class="metric-reduction"'), 2)
+            self.assertNotIn('180 度', document.text_for('results'))
+            self.assertIn('相对降低约 81%' if chinese else '≈81% relative reduction', markup)
+            self.assertIn('相对降低约 54%' if chinese else '≈54% relative reduction', markup)
 
 
 if __name__ == "__main__":
