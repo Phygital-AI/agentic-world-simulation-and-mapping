@@ -320,9 +320,10 @@ class PublicationValidation(unittest.TestCase):
             markup = (ROOT / name).read_text(encoding="utf-8")
             header = markup.split('<header>', 1)[1].split('</header>', 1)[0]
             chinese = name == "zh.html"
-            heading = re.search(r'<h1>(.*?)</h1>', header).group(1)
-            heading_text = re.sub(r'<[^>]+>', '', heading)
-            self.assertEqual(heading_text, 'AWSM： 智能体世界仿真与建图' if chinese else 'AWSM: Agentic World Simulation and Mapping')
+            title_name = '智能体世界仿真与建图' if chinese else 'Agentic World Simulation and Mapping'
+            self.assertIn(f'<p class="title-name">{title_name}</p>', header)
+            self.assertIn(f'<h1 aria-label="AWSM: {title_name}">AWSM</h1>', header)
+            self.assertLess(header.index('class="title-name"'), header.index('class="title-lockup"'))
             subtitle = '把真实空间，变成虚实融合智能体可以使用的世界。' if chinese else 'From real spaces to worlds phygital agents can use.'
             lead = re.search(r'<p class="lead">(.*?)</p>', header).group(1)
             self.assertEqual(re.sub(r'<[^>]+>', '', lead), subtitle)
@@ -330,8 +331,10 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn(f'<strong class="tagline-emphasis">{emphasis}</strong>', lead)
             self.assertIn(f'<meta name="description" content="{subtitle}">', markup)
             self.assertNotIn('class="brand-tagline"', header)
-            brand_note = 'AWSM 读作“awesome”；Phygital = physical（物理）+ digital（数字），即虚实融合。' if chinese else 'AWSM is pronounced “awesome”; phygital means physical + digital.'
-            self.assertIn(f'<p class="pronunciation"><small>{brand_note}</small></p>', header)
+            pronunciation = '读作 “awesome”' if chinese else 'pronounced “awesome”'
+            self.assertIn(f'<p class="pronunciation">{pronunciation}</p>', header)
+            brand_note = 'Phygital = physical（物理）+ digital（数字），即虚实融合。' if chinese else 'Phygital = physical + digital.'
+            self.assertIn(f'<p class="brand-note">{brand_note}</p>', header)
             self.assertNotIn(')Phygital', header)
             self.assertNotIn('class="eyebrow"', header)
             self.assertNotIn('class="meta"', header)
@@ -349,7 +352,7 @@ class PublicationValidation(unittest.TestCase):
         self.assertNotIn("mirror", manifest["display_cutaway"]["keep_name_pattern"])
         for name in PAGES:
             markup = (ROOT / name).read_text(encoding="utf-8")
-            for asset in ("scene-compare.js", "office-models.js"):
+            for asset in ("app.js", "scene-compare.js", "office-models.js"):
                 self.assertIn(f'src="{asset}?v={sha256(ROOT / asset)[:12]}"', markup)
             self.assertIn('同期工作 AHa-3D' if name == 'zh.html' else 'Concurrent work AHa-3D', markup)
             self.assertIn('剖切视图' if name == 'zh.html' else 'Toggle Cutaway', markup)

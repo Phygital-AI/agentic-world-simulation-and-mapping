@@ -59,7 +59,9 @@ def table(n):
     return f'<figure class="table-figure" id="table-{n}" data-table-key="table{n}"><figcaption><span>Table {n}.</span> <span class="table-title"></span></figcaption><div class="table-scroll table-mount" role="region" tabindex="0" aria-label="Table {n}"></div></figure>'
 
 def hero_figure(en):
-    return f'''<figure class="hero" id="figure-1"><img src="assets/teaser_originals.png" alt="From plausible scenes to faithful spaces: geometry and reference fidelity"><figcaption><span>Figure 1.</span> {"Additional geometric evidence progressively constrains spatial structure; reference appearance remains a separate objective." if en else "更多几何证据逐步约束空间结构，而参考外观仍然是另一条独立评价轴。"}</figcaption></figure>'''
+    caption = "AWSM: from real spaces to worlds phygital agents can use." if en else "AWSM：把真实空间变成虚实融合智能体可以使用的世界。"
+    label = "AWSM introduction video" if en else "AWSM 介绍视频"
+    return f'''<figure class="hero" id="figure-1"><video controls playsinline preload="metadata" poster="assets/awsm-promo-v5-poster.jpg" aria-label="{label}" aria-describedby="figure-1-caption"><source src="assets/awsm-promo-v5.mp4" type="video/mp4"><a href="assets/awsm-promo-v5.mp4">{label}</a></video><figcaption id="figure-1-caption"><span>Figure 1.</span> {caption}</figcaption></figure>'''
 
 def overview_figure(en):
     return f'''<figure id="figure-5"><img loading="lazy" src="assets/fixed_five_view_comparison_m1_m4.jpg" alt="M1 to M4 and input GT across five fixed views"><figcaption><span>Figure 5.</span> {"M1–M4 and input GT across five fixed views." if en else "M1–M4 与输入 GT 在五个固定视角下的并排比较。"}</figcaption></figure>'''

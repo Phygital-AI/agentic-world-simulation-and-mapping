@@ -160,7 +160,7 @@ def editorial_page(page, en):
     page = page.replace('04 / MORE RESULTS AND ANALYSIS', '04 / RESULTS AND ANALYSIS')
     style_version = sha256((Path(__file__).resolve().parents[1] / "editorial.css").read_bytes()).hexdigest()[:12]
     page = page.replace('<link rel="stylesheet" href="style.css">', f'<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="editorial.css?v={style_version}">')
-    for asset in ("scene-compare.js", "office-models.js"):
+    for asset in ("app.js", "scene-compare.js", "office-models.js"):
         version = sha256((Path(__file__).resolve().parents[1] / asset).read_bytes()).hexdigest()[:12]
         page = page.replace(f'src="{asset}"', f'src="{asset}?v={version}"')
     if en:
@@ -172,14 +172,14 @@ def editorial_page(page, en):
     page = page.replace('<a href="en.html" ', '<a href="index.html" ', 1)
     page = page.replace('<a class="brand" href="index.html">ASTRA / WORLD MODELS</a>', '<a class="brand" href="index.html">PHYGITAL AI / AWSM</a>')
     subtitle = 'From real spaces to <strong class="tagline-emphasis">worlds phygital agents can use.</strong>' if en else '把真实空间，变成<strong class="tagline-emphasis">虚实融合智能体可以使用的世界。</strong>'
-    brand_note = 'AWSM is pronounced “awesome”; phygital means physical + digital.' if en else 'AWSM 读作“awesome”；Phygital = physical（物理）+ digital（数字），即虚实融合。'
+    pronunciation = 'pronounced “awesome”' if en else '读作 “awesome”'
+    brand_note = 'Phygital = physical + digital.' if en else 'Phygital = physical（物理）+ digital（数字），即虚实融合。'
     before_header, header_start, remainder = page.partition('<header>')
     old_header, header_end, after_header = remainder.partition('</header>')
     title_name = "Agentic World Simulation and Mapping" if en else "智能体世界仿真与建图"
-    separator = ":" if en else "："
-    heading = f'<h1><span class="title-mark">AWSM<span class="title-separator">{separator}</span></span> <span class="title-name">{title_name}</span></h1>'
+    heading = f'<p class="title-name">{title_name}</p><div class="title-lockup"><h1 aria-label="AWSM: {title_name}">AWSM</h1><p class="pronunciation">{pronunciation}</p></div>'
     publication = 'Published <time datetime="2026-10-01">October 1, 2026</time>' if en else '发布于 <time datetime="2026-10-01">2026年10月1日</time>'
-    page = before_header + header_start + heading + f'<p class="lead">{subtitle}</p><p class="pronunciation"><small>{brand_note}</small></p><p class="publication-date">{publication}</p>' + header_end + after_header
+    page = before_header + header_start + heading + f'<p class="lead">{subtitle}</p><p class="brand-note">{brand_note}</p><p class="publication-date">{publication}</p>' + header_end + after_header
     page = page.replace('</head>', '<meta property="article:published_time" content="2026-10-01"></head>')
     download_label = "Download BibTeX" if en else "下载 BibTeX 引用"
     page = page.replace('</code></pre></section>', f'</code></pre><a class="citation-download" href="data/awsm.bib" download="awsm.bib">{download_label} <span aria-hidden="true">↓</span></a></section>', 1)

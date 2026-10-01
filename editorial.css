@@ -5,26 +5,23 @@
 body>nav,body>header,body>.hero{max-width:var(--masthead-width);padding-left:var(--masthead-gutter);padding-right:var(--masthead-gutter);margin-left:auto;margin-right:auto}
 body>nav{padding-top:24px;padding-bottom:24px;border-bottom:0;position:relative}
 body>nav::after{content:"";position:absolute;bottom:0;left:var(--masthead-gutter);right:var(--masthead-gutter);height:1px;background:var(--line)}
-body>header{position:relative;isolation:isolate;margin-top:64px;margin-bottom:38px}
-body>header::before,body>header::after{content:"";position:absolute;z-index:-1;pointer-events:none}
-body>header::before{inset:-48px 0 -24px;background:radial-gradient(ellipse at 78% 35%,#dfe9df80,transparent 65%),radial-gradient(ellipse at 94% 5%,#efe6d570,transparent 45%);mask-image:radial-gradient(ellipse at 65% 42%,#000 12%,transparent 72%)}
-body>header::after{top:-24px;right:var(--masthead-gutter);width:42%;height:250px;background-image:linear-gradient(#19645112 1px,transparent 1px),linear-gradient(90deg,#19645112 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse at 80% 35%,#0009,transparent 72%)}
-header h1{display:grid;grid-template-columns:max-content minmax(0,1fr);align-items:center;gap:36px;max-width:none;margin:0;font-family:Inter,"Noto Sans CJK SC",system-ui,sans-serif;font-size:inherit;line-height:1.1;letter-spacing:normal;font-weight:500;text-wrap:balance}
-header .title-mark{color:#194d40;font-size:clamp(76px,7.5vw,108px);font-weight:650;letter-spacing:-.075em;line-height:1}
-header .title-separator{color:#8eaa9e;font-weight:350}
-header .title-name{max-width:620px;color:#203b34;font-size:clamp(32px,3.2vw,46px);font-weight:450;letter-spacing:-.045em;line-height:1.16}
-body[data-lang="zh"] header .title-name{max-width:10em;font-weight:500;letter-spacing:.025em;line-height:1.45}
-header .lead{max-width:760px;margin:28px 0 0;color:#3d5a50;font-size:clamp(19px,1.65vw,23px);line-height:1.6;letter-spacing:-.018em;text-wrap:pretty}
-header .lead .tagline-emphasis{color:#196451;font-weight:650;text-decoration:none}
+body>header{margin-top:48px;margin-bottom:34px}
+header .title-name{margin:0 0 14px;color:var(--green);font-size:clamp(14px,1.35vw,17px);font-weight:700;letter-spacing:.18em;line-height:1.6;text-transform:uppercase}
+header .title-lockup{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 34px}
+header h1{margin:0;color:#182f28;font-family:Georgia,"Times New Roman",serif;font-size:clamp(104px,16vw,190px);font-weight:500;letter-spacing:-.045em;line-height:1.04}
+header .pronunciation{margin:0;color:#7c8477;font:italic 400 clamp(22px,2.5vw,32px)/1.4 Georgia,"Noto Serif CJK SC",serif;white-space:nowrap}
+header .lead{max-width:none;margin:24px 0 0;color:#182f28;font-family:Georgia,"Noto Serif CJK SC",serif;font-size:clamp(26px,3.15vw,40px);font-weight:500;line-height:1.35;letter-spacing:-.02em;text-wrap:pretty}
+header .lead .tagline-emphasis{color:var(--green);font-weight:inherit;text-decoration:none}
+header .brand-note{margin:16px 0 0;color:var(--muted);font-size:14px;line-height:1.6}
+body[data-lang="zh"] header .title-name{letter-spacing:.16em}
+body[data-lang="zh"] header .lead{line-height:1.6;letter-spacing:0}
 header .publication-date{margin:20px 0 0;color:#60736b;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
-header .pronunciation{max-width:760px;margin:12px 0 0;color:#60736b;font-size:13px;letter-spacing:.015em;text-wrap:pretty}
-header .pronunciation small{font-size:inherit}
 body>.hero{margin-top:0;margin-bottom:72px}
-body>.hero>img{border:1px solid #dbe2d9;border-radius:5px;box-shadow:0 12px 36px -24px #243b3033}
+body>.hero>video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#182c29;border:1px solid #dbe2d9;border-radius:5px;box-shadow:0 12px 36px -24px #243b3033}
 body>.hero>figcaption{max-width:none;margin-top:14px;line-height:1.75}
-header h1,header .lead,header .pronunciation{animation:masthead-enter .7s cubic-bezier(.22,1,.36,1) both}
+header .title-name,header .title-lockup,header .lead{animation:masthead-enter .7s cubic-bezier(.22,1,.36,1) both}
 header .lead{animation-delay:.08s}
-header .pronunciation{animation-delay:.14s}
+.table-figure tbody th{white-space:normal;min-width:155px;max-width:215px;font-weight:600}
 @keyframes masthead-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .citation-block{border-radius:5px;border-color:#dbe2d9;background:#fbfcf8;white-space:pre-wrap;overflow-wrap:anywhere}
 .citation-download{display:inline-flex;align-items:center;gap:20px;min-height:44px;padding:8px 15px;border:1px solid var(--line);border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;transition:background-color .18s ease,border-color .18s ease}
@@ -55,6 +52,6 @@ header .pronunciation{animation-delay:.14s}
 .capability-grid h4{margin:0 0 8px;font-size:17px;color:var(--green)}
 .capability-grid p{margin:0;font-size:15px;line-height:1.85}
 .demo-protocol summary:focus-visible,.demo-links a:focus-visible{outline:2px solid var(--green);outline-offset:4px}
-@media(max-width:800px){:root{--masthead-gutter:28px}header h1{grid-template-columns:1fr;gap:18px}header .title-mark{font-size:88px}header .title-name{max-width:18em;font-size:38px}body>header{margin-top:44px}body[data-lang="zh"] header .title-name{max-width:12em}}
-@media(max-width:600px){:root{--masthead-gutter:22px}body>header{margin-top:36px;margin-bottom:28px}header .title-mark{font-size:76px}header .title-name{font-size:clamp(27px,7.8vw,36px);letter-spacing:-.035em}header .lead{margin-top:22px;font-size:19px}header .pronunciation{font-size:12px}body>header::after{width:60%;height:200px}body>.hero{margin-bottom:44px}nav{gap:15px;flex-wrap:wrap}.brand{font-size:11px}.mission-command{padding:18px}.mission-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.mission-flow li:nth-child(3){border-left:0}.mission-flow li:nth-child(n+3){border-top:1px solid var(--line)}.capability-grid{grid-template-columns:1fr}.demo-links{flex-direction:column}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}header h1,header .lead,header .pronunciation{animation:none}.citation-download{transition:none}}
+@media(max-width:800px){:root{--masthead-gutter:28px}body>header{margin-top:40px}header .title-lockup{column-gap:24px}}
+@media(max-width:600px){:root{--masthead-gutter:22px}body>header{margin-top:32px;margin-bottom:28px}header h1{font-size:clamp(82px,24vw,140px)}header .title-name{font-size:14px;letter-spacing:.13em}header .title-lockup{gap:8px 20px}header .pronunciation{font-size:24px}header .lead{margin-top:24px;font-size:28px}body>.hero{margin-bottom:44px}nav{gap:15px;flex-wrap:wrap}.brand{font-size:11px}.mission-command{padding:18px}.mission-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.mission-flow li:nth-child(3){border-left:0}.mission-flow li:nth-child(n+3){border-top:1px solid var(--line)}.capability-grid{grid-template-columns:1fr}.demo-links{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}header .title-name,header .title-lockup,header .lead{animation:none}.citation-download{transition:none}}
