@@ -164,9 +164,12 @@ class PublicationValidation(unittest.TestCase):
             academic_page(False)
 
     def test_narrative_roles_and_scope(self) -> None:
-        sections = ["results", "embodied-demo", "motivation", "workflow", "more-results", "related-work", "limitations", "citation", "references"]
+        sections = ["results", "motivation", "workflow", "embodied-demo", "more-results", "related-work", "limitations", "citation", "references"]
         for name, document in self.documents.items():
             self.assertEqual([element for element in document.ids if element in sections], sections)
+            markup = (ROOT / name).read_text(encoding="utf-8")
+            toc = re.search(r'<aside class="toc">(.*?)</aside>', markup, re.S).group(1)
+            self.assertEqual(re.findall(r'href="#([^"]+)"', toc), sections)
             chinese = name == "zh.html"
             results = document.text_for("results")
             self.assertIn("大模型智能体" if chinese else "Large-model agents", results)

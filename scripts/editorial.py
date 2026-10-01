@@ -176,10 +176,10 @@ def editorial_page(page, en):
     page = before_header + header_start + heading + f'<p class="lead">{subtitle}</p><p class="pronunciation"><small>{brand_note}</small></p>' + header_end + after_header
     download_label = "Download BibTeX" if en else "下载 BibTeX 引用"
     page = page.replace('</code></pre></section>', f'</code></pre><a class="citation-download" href="data/awsm.bib" download="awsm.bib">{download_label} <span aria-hidden="true">↓</span></a></section>', 1)
-    page = page.replace('<section id="motivation">', demo_section(en) + '\n<section id="motivation">', 1)
+    page = page.replace('<section id="more-results">', demo_section(en) + '\n<section id="more-results">', 1)
     page = page.replace('</section>\n<section id="workflow">', grounding_section(en) + '</section>\n<section id="workflow">', 1)
     page = page.replace('</section>\n<section id="limitations">', outlook_section(en) + '</section>\n<section id="limitations">', 1)
-    page = page.replace('href="#motivation">', 'href="#embodied-demo">' + ('Embodied demo' if en else '具身演示') + '</a><a href="#motivation">', 1)
+    page = page.replace('href="#more-results">', 'href="#embodied-demo">' + ('Embodied demo' if en else '具身演示') + '</a><a href="#more-results">', 1)
     evidence_link = '<p><a href="evidence/provenance-note.md">' + ('Version and provenance note' if en else '版本与资产来源说明') + ' ↗</a></p>'
     page = page.replace('</section>\n<section id="citation">', evidence_link + '</section>\n<section id="citation">', 1)
     return page.replace('Agentic World · frozen evidence, editable outputs', 'Phygital AI · AWSM · frozen evidence, editable outputs')

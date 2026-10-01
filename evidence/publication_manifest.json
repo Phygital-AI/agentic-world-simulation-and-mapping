@@ -244,7 +244,7 @@
     },
     {
       "path": "en.html",
-      "sha256": "efe5c15ed3c889f898703622f2b0e81c30cdc534d52ddbaf492ad3dc97068451",
+      "sha256": "35b2a93452ba9d2059007c408bfd1f054a29489cf1c959d85b2ecf189d1bf37e",
       "bytes": 37775
     },
     {
@@ -284,7 +284,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "efe5c15ed3c889f898703622f2b0e81c30cdc534d52ddbaf492ad3dc97068451",
+      "sha256": "35b2a93452ba9d2059007c408bfd1f054a29489cf1c959d85b2ecf189d1bf37e",
       "bytes": 37775
     },
     {
@@ -379,7 +379,7 @@
     },
     {
       "path": "zh.html",
-      "sha256": "67c12a008edb0c0a109818205ba27c2e9f2540825927da53476084b7ba7a8492",
+      "sha256": "f512dc98c791525ec88559409c0da9eb2889700488de4f9675244bb1c1cefdcd",
       "bytes": 35476
     }
   ]
