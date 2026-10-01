@@ -11,7 +11,18 @@ from editorial import BIBTEX
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PUBLIC_ROOT_FILES = (".nojekyll", "index.html", "en.html", "zh.html", "style.css", "editorial.css", "app.js", "scene-compare.js")
+PUBLIC_ROOT_FILES = (
+    ".nojekyll",
+    "index.html",
+    "en.html",
+    "zh.html",
+    "style.css",
+    "editorial.css",
+    "office.css",
+    "app.js",
+    "scene-compare.js",
+    "office-models.js",
+)
 PUBLIC_DIRECTORIES = ("assets", "data", "evidence", "models", "vendor")
 GENERATED_MANIFESTS = ("evidence/publication_manifest.json", "evidence/SHA256SUMS")
 
