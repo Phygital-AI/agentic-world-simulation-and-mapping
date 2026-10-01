@@ -7,11 +7,16 @@ import hashlib
 import json
 import re
 import unittest
+from copy import deepcopy
 from collections import Counter
 from html.parser import HTMLParser
 from html import unescape
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+from unittest.mock import patch
+
+from editorial import narrative_copy
+from site_builder_interactive import academic_page
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -137,6 +142,39 @@ class PublicationValidation(unittest.TestCase):
         self.assertEqual([row["number"] for row in self.contract["tables"]], list(range(1, 8)))
         for name, document in self.documents.items():
             self.assertTrue(required <= set(document.ids), f"{name}: missing {sorted(required - set(document.ids))}")
+
+    def test_editorial_preserves_experiment_copy(self) -> None:
+        protected = (
+            "intro2", "method1", "method2", "workflow", "finding1_title", "finding1", "finding2_title", "finding2",
+            "finding3_title", "finding3", "discussion1_title", "discussion1",
+            "discussion2_title", "discussion2", "discussion3_title", "discussion3",
+            "metric1", "metric1_label", "metric2", "metric2_label", "metric3", "metric3_label",
+        )
+
+        def check_copy(copy, english):
+            original = deepcopy(copy)
+            narrative_copy(copy, english)
+            for key in protected:
+                self.assertEqual(copy[key], original[key], f"{english}: {key}")
+            self.assertEqual(copy["limits"][:len(original["limits"])], original["limits"])
+            self.assertEqual(len(copy["contributions"]), 3)
+
+        with patch("site_builder_interactive.narrative_copy", side_effect=check_copy):
+            academic_page(True)
+            academic_page(False)
+
+    def test_narrative_roles_and_scope(self) -> None:
+        sections = ["results", "embodied-demo", "motivation", "workflow", "more-results", "related-work", "limitations", "citation", "references"]
+        for name, document in self.documents.items():
+            self.assertEqual([element for element in document.ids if element in sections], sections)
+            chinese = name == "zh.html"
+            results = document.text_for("results")
+            self.assertIn("大模型智能体" if chinese else "Large-model agents", results)
+            self.assertIn("agentic", results.lower())
+            self.assertIn("可复用的仿真就绪" if chinese else "reusable simulation-ready", results)
+            self.assertIn("控制器承担另一种角色" if chinese else "controllers have a separate role", document.text_for("workflow"))
+            self.assertIn("而非学习得到的动力学预测模型" if chinese else "not a learned dynamics predictor", document.text_for("motivation"))
+            self.assertIn("特定场景的仿真集成" if chinese else "scene-specific simulation integration", document.text_for("related-work"))
 
     def test_ids_links_and_anchors(self) -> None:
         for name, document in self.documents.items():

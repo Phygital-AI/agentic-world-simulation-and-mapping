@@ -10,6 +10,8 @@ The generated pages version `editorial.css` by its content hash so returning vis
 
 Bilingual research article by Phygital AI: geometry-grounded agentic scene reconstruction, map-based embodied execution, and a research agenda for persistent spatial memory, interaction, and simulation.
 
+The narrative distinguishes the tool-using reconstruction agent from downstream embodied agents. Geometry grounding is the approach, the four-route study supplies reconstruction evidence, and the demo illustrates map-based use. Persistent memory and maintenance, reusable simulation-ready generation, and deeper phygital-agent integration remain research directions. Narrative edits must preserve the measured findings, method-specific inputs, evaluation caveats, and supplied media.
+
 The homepage (`index.html`) defaults to English. Chinese is at `zh.html`, titled **AWSM：智能体世界仿真与建图**. The existing `en.html` URL remains an English alias with the homepage as its canonical URL.
 
 The original structure, seven experiment tables, six figures, frozen `scene.glb`/`scene.blend` pairs, and interactive comparisons are preserved from `wentingw/agentic-world-blog` at `3c5f27c`. Figure 3 shares a camera and viewport with GT; Figure 4 uses 25 hash-verified source images. All viewer dependencies are local.

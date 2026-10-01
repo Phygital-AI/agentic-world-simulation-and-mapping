@@ -29,13 +29,22 @@ REFERENCES = [
 def narrative_copy(copy, en):
     if en:
         copy.update({
-            "tldr": "Our goal is a persistent, editable spatial representation that connects reconstruction, map-based navigation, memory, interaction, and simulation. We study its geometric foundation through four frozen reconstruction routes, then show robots executing a reception-desk task using the reconstructed map. The experiments measure scene fidelity; the demo illustrates map-based execution. Improving efficiency and accuracy, building simulation-ready environments, and further integration with phygital agents define the next research steps.",
-            "intro1": "A room that looks convincing is not yet a map an embodied agent can rely on. The agent needs to know where a destination is, how objects and free space relate, and which route its body can follow. Those answers should refer to the same space—not to separate, incompatible reconstructions for rendering, planning, and simulation.",
-            "motivation_title": "A shared spatial foundation for embodied agents",
-            "motivation1": "Consider the instruction: ‘Send the drone to the reception desk and have the robots line up there.’ The reception desk is a destination in the reconstructed map; a route is specified in that map, then controllers execute it. This is map-based navigation: reconstruction, target selection, route planning, and control share a spatial reference. An editable scene becomes an interface between a task and its execution.",
-            "motivation2": "Our ambition is to turn captured spaces into persistent spatial representations: maps for navigation, references for multimodal retrieval, editable objects for interaction, and environments for simulation. More faithful reconstruction can reduce one source of mismatch between the map and the original space. Reaching a dependable, general-purpose system also requires localization, uncertainty, dynamics, and updates to remain consistent. The frozen study below examines the geometric foundation of that ambition.",
-            "positioning": "SLAM and visual-inertial estimation provide essential pose, registration, and metric constraints; geometric models such as ViPE and Depth Anything 3 provide complementary observations. Agentic Real2Sim systems such as AHa-3D show how tools can turn observations into editable scenes. We build on these directions rather than replace SLAM: the goal is to carry geometric evidence into a persistent, object-centric representation that agents can query, edit, navigate with, and simulate.",
+            "tldr": "Large-model agents can build editable 3D scenes from visual observations, but plausible appearance does not guarantee spatial fidelity. AWSM explores grounding this reconstruction process in geometric evidence so the resulting scenes can serve as maps and simulation assets. Four reconstruction routes test scene fidelity; a multi-robot demo illustrates map-based execution. Next steps are higher efficiency and accuracy, reusable simulation-ready scene generation, and deeper integration with phygital agents—toward persistent spatial memory and interaction.",
+            "intro1": "Agentic reconstruction uses a large model to inspect observations, call modeling tools, and iteratively build and check an editable scene. The challenge is not only to produce a convincing room, but to preserve the scale, shape, and spatial relationships that make it useful beyond rendering. AWSM asks how geometric evidence can constrain this process so that its outputs become more faithful spatial references for downstream agents.",
+            "motivation_title": "From plausible reconstruction to a usable spatial reference",
+            "motivation1": "A reconstruction agent can assemble a plausible room while getting a corner, distance, or passage wrong. For an embodied agent, those are not merely visual defects: they change where a destination lies and which route a body can follow. Geometry grounding means constraining the modeling process with pose, depth, and metric evidence where available, rather than relying on visual plausibility alone. The question is how those constraints survive the conversion from observations into editable objects.",
+            "motivation2": "The reception-desk task makes this connection concrete: mark a destination in the reconstructed map, specify routes, and execute them with robot controllers. We use ‘scene representation’ for the editable objects and geometry, ‘map’ for their navigation role, and ‘simulation assets’ for their integration into a simulator. The ‘world’ in AWSM refers to this reusable spatial environment, not a learned dynamics predictor. A persistent spatial foundation connecting navigation, memory, interaction, and simulation is the longer-term goal; the experiments and demo examine its geometric basis and one downstream use.",
+            "contributions": [
+                "A four-route study of geometry-grounded agentic reconstruction, keeping the scene, 180 RGB identities, modeling objective, and editable output format fixed while comparing complete pipelines with different geometric evidence.",
+                "An evaluation protocol that separates trajectory error, native depth, final-scene depth, surface geometry, and rendered appearance, with frozen Blend/GLB assets, reproducible evaluation subsets, public hashes, and interactive comparisons.",
+                "A map-based multi-robot simulation example connecting a reconstructed scene to destination marking, predefined routes, and controller execution. It illustrates downstream use rather than a controlled navigation comparison across reconstruction routes.",
+            ],
+            "method_title": "One agentic workflow, four reconstruction routes",
+            "interactive_title": "Inspect the reconstructed scenes, not just aggregate scores",
+            "discussion_title": "What geometric grounding changes—and what it does not",
+            "positioning": "AWSM connects two roles: an agent that constructs an editable scene, and downstream agents that use it as a spatial reference. SLAM and visual-inertial estimation supply pose and metric constraints; ViPE and Depth Anything 3 contribute geometric observations; agentic Real2Sim work such as AHa-3D connects observations to tool-based scene construction. Our focus is how geometric evidence carries through that construction process into the final scene. The present comparison studies reconstruction fidelity, while the demo shows one map-based application; neither replaces SLAM or establishes a complete autonomous embodied system.",
         })
+        copy["method_intro"] = "The reconstruction agent follows a shared observe–build–verify loop: inspect the available evidence, write Blender Python to construct objects, render review views, and revise the scene before freezing it for evaluation. This tool-using modeling process is what ‘agentic’ describes here; the downstream robot controllers have a separate role."
         copy["limits"].extend([
             "The reception-desk demo is map-based simulation execution, not a controlled comparison of navigation across M1–M4. Routes are predefined, localization uses simulator pose, and the recorded run has unresolved audit failures; see its protocol.",
             "Multimodal memory, long-term map maintenance, and reduced policy sim-to-real gap are research goals, not measured outcomes of the four-robot demo. The Office Café corner observation has no matched-view quantitative GT measurement here.",
@@ -44,13 +53,22 @@ def narrative_copy(copy, en):
         copy["office1"] += " An author-observed failure—a curved real-world corner simplified into a square one—motivates separating local shape from global scale. A correct scale alone cannot repair that shape error; this is a qualitative observation, not another measured benchmark."
     else:
         copy.update({
-            "tldr": "我们希望构建一种持久、可编辑的空间表示，连接场景重建、地图导航、空间记忆、交互与仿真。本文用四条冻结重建路径研究它的几何基础，再展示机器人依据重建地图执行前台任务：实验回答场景有多忠实，demo 展示地图如何用于行动。下一步研究将聚焦提升效率与精度、构建可直接用于仿真的场景，以及进一步与虚实融合智能体（phygital agents）集成。",
-            "intro1": "一个看起来令人信服的房间，还不是具身 agent 可以依赖的地图。Agent 需要知道目标在哪里、物体与自由空间如何分布，以及自己的身体可以沿哪条路线通过。这些答案应当指向同一个空间，而不是渲染、规划与仿真各自维护一套互不一致的表示。",
-            "motivation_title": "具身 agent 需要一个共享的空间基础",
-            "motivation1": "考虑这样一条任务指令：“让无人机去前台，并让机器人在那里排好队。”前台是重建地图中的目标，路线在地图上设定，再由控制器执行。这就是基于地图的导航：重建、目标选择、路线规划和运动控制共享一个空间参照，可编辑场景由此成为任务与执行之间的接口。",
-            "motivation2": "我们的目标是把采集到的空间变成可以持续使用的空间表示：导航使用的地图、多模态检索的空间参照、可交互的对象，以及可编辑的仿真环境。重建越忠实，地图与原空间之间的一类误差就越小；要成为稳定、通用的具身基础，还需要定位、不确定性、动力学和长期更新保持一致。下文的冻结实验研究的正是这一愿景的几何基础。",
-            "positioning": "SLAM 与视觉惯性估计提供重要的位姿、配准与米制约束，ViPE、Depth Anything 3 等几何模型提供互补观测，AHa-3D 等 agentic Real2Sim 系统展示如何用工具把观测组织成可编辑场景。我们的方向不是替代 SLAM，而是在这些能力之上，让几何证据进入持久、对象化的空间表示，供 agent 查询、编辑、导航和仿真共同使用。",
+            "tldr": "大模型智能体可以从视觉观察构建可编辑的 3D 场景，但视觉上合理并不等于空间上忠实。AWSM 探索用几何证据约束这一 agentic 重建过程，让生成的场景可作为地图与仿真资产使用。四条重建路径检验场景忠实度，多机器人 demo 展示基于地图的执行。下一步是提升效率与精度、形成可复用的仿真就绪场景生成流程，并进一步与虚实融合智能体（phygital agents）集成，走向持久空间记忆与交互。",
+            "intro1": "Agentic 重建由大模型检查观测、调用建模工具，并迭代构建和验证可编辑场景。挑战不只是生成一个令人信服的房间，还在于保留尺度、形状与空间关系，让结果在渲染之外仍然有用。AWSM 研究如何用几何证据约束这一过程，让输出成为下游智能体更忠实的空间参照。",
+            "motivation_title": "从看起来合理的重建，到可以使用的空间参照",
+            "motivation1": "负责重建的智能体可以搭建一个看似合理的房间，却重建错转角、距离或通道。对具身智能体而言，这些不只是视觉缺陷，还会改变目标的位置与身体可以通过的路线。几何锚定，是在信息可用时以位姿、深度与米制证据约束建模过程，而非仅依赖视觉合理性。关键问题是：这些约束如何在观测转化为可编辑对象的过程中得到保留？",
+            "motivation2": "前台任务让这种联系变得具体：在重建地图中标记目标、设定路线，再由机器人控制器执行。本文用“场景表示”指可编辑的对象与几何，用“地图”描述它在导航中的作用，用“仿真资产”描述它与仿真器的集成。AWSM 中的“世界”指这种可复用的空间环境，而非学习得到的动力学预测模型。连接导航、记忆、交互与仿真的持久空间基础是长期目标；当前实验和 demo 分别研究其几何基础，并展示一种下游用途。",
+            "contributions": [
+                "对几何锚定的 agentic 重建开展四路线研究：固定场景、同一组 180 帧 RGB 输入、建模目标与可编辑输出格式，比较具有不同几何证据的完整管线。",
+                "将轨迹误差、原生深度、最终场景深度、表面几何和渲染外观分开评测，并提供冻结 Blend/GLB 资产、可复现评测子集、公开哈希与交互式对照。",
+                "通过基于地图的多机器人仿真示例，将重建场景连接到目标标记、预设路线和控制器执行；它展示下游用途，而非不同重建路线之间的受控导航对比。",
+            ],
+            "method_title": "一个 agentic 工作流，四条重建路线",
+            "interactive_title": "不只看汇总指标，也检查重建场景",
+            "discussion_title": "几何锚定改变了什么，又没有解决什么",
+            "positioning": "AWSM 连接两类角色：负责构建可编辑场景的智能体，以及将它作为空间参照使用的下游智能体。SLAM 与视觉惯性估计提供位姿和米制约束，ViPE 与 Depth Anything 3 提供几何观测，AHa-3D 等 agentic Real2Sim 工作将观测连接到工具驱动的场景构建。本文关注几何证据如何穿过这一构建过程，影响最终场景：当前对比研究重建忠实度，demo 展示一种地图应用；它们不是替代 SLAM，也不意味着已构建完整的自主具身系统。",
         })
+        copy["method_intro"] = "负责重建的智能体遵循共同的“观察—构建—验证”循环：检查可用证据，编写 Blender Python 构建对象，渲染检查视图，并在冻结评测前迭代修改。这里的 agentic 指这种工具驱动的建模过程；下游机器人控制器承担另一种角色。"
         copy["limits"].extend([
             "前台 demo 展示基于地图的仿真执行，不是 M1–M4 的受控导航对比。路线预先设定，定位使用仿真器位姿，所展示 run 仍有未通过的审计项；详见演示条件。",
             "多模态空间记忆、长期地图维护与策略 sim-to-real 差距的降低是研究目标，不是这段四机器人视频已量化的结果。本页也没有 Office Café 拐角的同视角 GT 定量测量。",
@@ -62,9 +80,9 @@ def narrative_copy(copy, en):
 def demo_section(en):
     title = "A reconstructed map. A destination. Robots in motion." if en else "一张重建地图，一个目标，一次具身执行。"
     lead = (
-        "The reception desk is marked in the navigation map, routes are specified, and a drone, humanoid, quadruped, and wheeled robot execute the task. The same spatial reference connects a destination, route constraints, and motion control: a scene to inspect becomes a map to act with."
+        "The demo connects reconstruction to downstream use. The reception desk is marked in the navigation map, routes are specified, and a drone, humanoid, quadruped, and wheeled robot execute the task. The same spatial reference connects a destination, route constraints, and motion control: a scene to inspect becomes a map to act with."
         if en else
-        "导航地图中标出前台，在地图上设定路线，再让无人机、人形、四足和轮式机器人执行任务。同一个空间参照连接目标、路径约束与运动控制：从可以查看的重建场景，走向可以用于行动的地图。"
+        "这个 demo 将重建连接到下游使用：在导航地图中标出前台，设定路线，再让无人机、人形、四足和轮式机器人执行任务。同一个空间参照连接目标、路径约束与运动控制：从可以查看的重建场景，走向可以用于行动的地图。"
     )
     command = "Send the drone to the reception desk and have the robots line up there." if en else "让无人机去前台，并让机器人在那里排好队。"
     labels = ("Task instruction", "Locate the reception desk", "Set routes on the map", "Execute with controllers") if en else ("任务指令", "地图上定位前台", "设定导航路线", "控制器执行")
@@ -110,29 +128,31 @@ def grounding_section(en):
 
 def outlook_section(en):
     if en:
-        title = "Beyond a navigation map: a persistent world agents can use"
-        intro = "The long-term opportunity is a shared spatial foundation, not simply a more attractive mesh. Localization and mapping remain essential; an object-centric scene can connect their outputs to memory, interaction, and simulation. These are research directions extending the present reconstruction study and map-based demo—not additional completed experiments."
+        title = "Toward persistent spaces for phygital agents"
+        intro = "The current outputs are editable scene snapshots, and the demo shows a scene-specific simulation integration. The longer-term goal is to make geometry-grounded agentic reconstruction a reusable process for building and maintaining spaces that phygital agents can use. Saving an editable asset is a starting point, not a demonstration of lifelong map maintenance. The directions below extend the present evidence."
         cards = [
             ("Navigate", "Use destinations, free space, and body-specific clearance in a shared geometric frame. Better reconstruction can reduce map mismatch; reliable navigation also needs localization and current observations."),
             ("Remember & retrieve", "Link object identities and locations to source views so language, images, and past observations can refer to the same place. Retrieval and safe arrival should be evaluated separately."),
             ("Interact & maintain", "Edit object properties and relationships, revisit changed areas, and preserve evidence and versions. Persistent memory must distinguish observed geometry, inferred completion, and unknown space."),
-            ("Simulate & learn", "Reuse the scene for task rehearsal, scenario variation, and training. Geometric fidelity may reduce the geometric part of sim-to-real mismatch; materials, dynamics, sensors, and policy transfer still need calibration and testing."),
+            ("Simulate & learn", "Move from the current scene-specific integration to reusable simulation-ready exports with checked scale, collision geometry, and physical parameters. These can support task rehearsal, scenario variation, and training; reduced policy sim-to-real gap remains a separate question to test."),
         ]
         closing = "A full mesh is not required for every retrieval task: Memory Over Maps uses posed RGB-D keyframes for on-demand localization, while 3D-Mem and task-oriented scene graphs explore complementary memory and representation choices. Our proposed direction is hybrid: preserve visual evidence, refine task-relevant geometry, and build editable simulation assets where they add value. The next question is when an agent has enough evidence to act—and when it should observe again and update its map."
+        next_steps = "The immediate agenda is higher reconstruction efficiency and accuracy, reusable simulation-ready scene generation, and deeper integration with phygital agents. Together, these steps connect the reconstruction agent’s modeling and revision loop to the downstream agent’s navigation, memory, and interaction needs."
         label = "RESEARCH DIRECTION"
     else:
-        title = "不止是一张导航地图，而是 agent 可以持续使用的世界"
-        intro = "长期机会是一种共享的空间基础，而不只是更漂亮的 mesh。定位和建图仍然重要；对象化场景则把它们的输出连接到记忆、交互与仿真。以下是从当前重建实验和地图导航 demo 延伸出的研究方向，不是新增的已完成实验。"
+        title = "走向虚实融合智能体可持续使用的空间"
+        intro = "当前输出是可编辑的场景快照，demo 展示了针对特定场景的仿真集成。长期目标是把几何锚定的 agentic 重建发展为可复用流程，构建并维护虚实融合智能体能够使用的空间。保存可编辑资产是起点，不等于已经验证长期地图维护；以下方向是在当前证据基础上的延伸。"
         cards = [
             ("导航", "在同一几何坐标中表达目标、自由空间与不同机器人的通行净空。更忠实的重建可以减少地图失配，可靠导航还需要定位与实时观测。"),
             ("记忆与多模态检索", "将对象身份、位置和源视图关联，让语言、图像与过去的观察指向同一个地点。检索到对象与安全到达对象，需要分别评测。"),
             ("交互与长期维护", "编辑对象属性与关系，重访变化区域，保留证据和版本。持久记忆应区分实际观察、推断补全和未知空间，而非把所有生成内容都当作事实。"),
-            ("仿真与学习", "同一场景用于任务预演、环境变体和训练。几何忠实度有望缩小 sim-to-real 的几何差距；材质、动力学、传感器与策略迁移仍需单独标定和验证。"),
+            ("仿真与学习", "从当前特定场景的集成，走向可复用的仿真就绪导出流程，检查尺度、碰撞几何与物理参数。它可支持任务预演、场景变体和训练；是否降低策略 sim-to-real 差距，仍需单独检验。"),
         ]
         closing = "并非每次寻物都需要完整网格：Memory Over Maps 用带位姿 RGB-D 关键帧按需定位，3D-Mem 与任务相关场景图也探索了不同记忆和表示方式。我们主张混合路线：保留视觉证据，细化任务相关几何，在有价值的地方构建可编辑仿真资产。下一步的关键问题是：什么时候证据已经足够支持行动，什么时候 agent 应重新观察并更新地图？"
+        next_steps = "近期重点是提升重建效率与精度、形成可复用的仿真就绪场景生成流程，以及进一步与虚实融合智能体集成，让重建智能体的建模与修正循环连接到下游智能体的导航、记忆和交互需求。"
         label = "研究方向"
     items = "".join(f'<div><h4>{name}</h4><p>{text}</p></div>' for name, text in cards)
-    return f'''<div id="spatial-foundation" class="analysis-block spatial-foundation"><p class="section-tag">{label}</p><h3>{title}</h3><p>{intro}</p><div class="capability-grid">{items}</div><p>{closing}</p><p class="inline-sources"><a href="https://arxiv.org/abs/2603.20530" target="_blank" rel="noopener">Memory Over Maps</a> · <a href="https://arxiv.org/abs/2411.17735" target="_blank" rel="noopener">3D-Mem</a> · <a href="https://arxiv.org/abs/2404.13696" target="_blank" rel="noopener">Clio</a> · <a href="https://arxiv.org/abs/2404.06609" target="_blank" rel="noopener">GOAT-Bench</a></p></div>'''
+    return f'''<div id="spatial-foundation" class="analysis-block spatial-foundation"><p class="section-tag">{label}</p><h3>{title}</h3><p>{intro}</p><div class="capability-grid">{items}</div><p>{closing}</p><p>{next_steps}</p><p class="inline-sources"><a href="https://arxiv.org/abs/2603.20530" target="_blank" rel="noopener">Memory Over Maps</a> · <a href="https://arxiv.org/abs/2411.17735" target="_blank" rel="noopener">3D-Mem</a> · <a href="https://arxiv.org/abs/2404.13696" target="_blank" rel="noopener">Clio</a> · <a href="https://arxiv.org/abs/2404.06609" target="_blank" rel="noopener">GOAT-Bench</a></p></div>'''
 
 
 def editorial_page(page, en):

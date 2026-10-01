@@ -244,8 +244,8 @@
     },
     {
       "path": "en.html",
-      "sha256": "89d1c1e77dd4334ffe9d7f958010dcb290814a2315a8cc4113c86277d6ae5532",
-      "bytes": 36251
+      "sha256": "efe5c15ed3c889f898703622f2b0e81c30cdc534d52ddbaf492ad3dc97068451",
+      "bytes": 37775
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -284,8 +284,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "89d1c1e77dd4334ffe9d7f958010dcb290814a2315a8cc4113c86277d6ae5532",
-      "bytes": 36251
+      "sha256": "efe5c15ed3c889f898703622f2b0e81c30cdc534d52ddbaf492ad3dc97068451",
+      "bytes": 37775
     },
     {
       "path": "models/M1/scene.blend",
@@ -379,8 +379,8 @@
     },
     {
       "path": "zh.html",
-      "sha256": "3e6242bcf193a60e2ad7a632482278b60f4b473c8de30b06aa6ec32dbd9d9942",
-      "bytes": 34277
+      "sha256": "67c12a008edb0c0a109818205ba27c2e9f2540825927da53476084b7ba7a8492",
+      "bytes": 35476
     }
   ]
 }
