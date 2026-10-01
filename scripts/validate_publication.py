@@ -172,6 +172,11 @@ class PublicationValidation(unittest.TestCase):
             self.assertEqual(re.findall(r'href="#([^"]+)"', toc), sections)
             chinese = name == "zh.html"
             results = document.text_for("results")
+            self.assertTrue(results.startswith("01 / OVERVIEW"))
+            self.assertNotIn("01 / RESULTS", markup)
+            self.assertIn('<a href="#results">' + ("概览" if chinese else "Overview") + '</a>', toc)
+            self.assertIn('<a href="#more-results">' + ("结果与分析" if chinese else "Results & analysis") + '</a>', toc)
+            self.assertTrue(document.text_for("more-results").startswith("04 / RESULTS AND ANALYSIS"))
             self.assertIn("大模型智能体" if chinese else "Large-model agents", results)
             self.assertIn("agentic", results.lower())
             self.assertIn("可复用的仿真就绪" if chinese else "reusable simulation-ready", results)

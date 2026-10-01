@@ -156,6 +156,8 @@ def outlook_section(en):
 
 
 def editorial_page(page, en):
+    page = page.replace('01 / RESULTS', '01 / OVERVIEW')
+    page = page.replace('04 / MORE RESULTS AND ANALYSIS', '04 / RESULTS AND ANALYSIS')
     style_version = sha256((Path(__file__).resolve().parents[1] / "editorial.css").read_bytes()).hexdigest()[:12]
     page = page.replace('<link rel="stylesheet" href="style.css">', f'<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="editorial.css?v={style_version}">')
     if en:

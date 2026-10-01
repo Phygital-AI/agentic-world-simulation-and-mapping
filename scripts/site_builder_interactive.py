@@ -128,10 +128,10 @@ def academic_page(en=False):
         title = SITE_TITLE
         desc = "From real spaces to worlds phygital agents can use."
         sections = [
-            ("results", "Results"),
+            ("results", "Overview"),
             ("motivation", "Motivation"),
             ("workflow", "Workflow"),
-            ("more-results", "More results & analysis"),
+            ("more-results", "Results & analysis"),
             ("related-work", "Related work"),
             ("limitations", "Limitations"),
             ("citation", "Citation"),
@@ -203,10 +203,10 @@ def academic_page(en=False):
         title = "AWSM：智能体世界仿真与建图"
         desc = "把真实空间，变成虚实融合智能体可以使用的世界。"
         sections = [
-            ("results", "结果"),
+            ("results", "概览"),
             ("motivation", "研究动机"),
             ("workflow", "工作流"),
-            ("more-results", "更多结果与分析"),
+            ("more-results", "结果与分析"),
             ("related-work", "相关工作"),
             ("limitations", "局限性"),
             ("citation", "引用"),
