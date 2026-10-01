@@ -224,8 +224,8 @@
     },
     {
       "path": "data/scene_comparison.json",
-      "sha256": "cc4849e3569e283b4ff66737126864420d9721dc4bc2b1f5ca0258661f438dcd",
-      "bytes": 11120
+      "sha256": "567d50e99a789db24b4e9c31bebd6d134502a748e78dc3d0ed96e757acf0a5e8",
+      "bytes": 11113
     },
     {
       "path": "data/source_contract.json",
@@ -239,13 +239,13 @@
     },
     {
       "path": "editorial.css",
-      "sha256": "23f248dba6b5145d8b98a1f7f61fe7ef3cf794ee2ec212a738cf3f4d29b1dbfe",
-      "bytes": 6637
+      "sha256": "81bb9fd0db1b4fa981d5f52656aae3fc78260479e2fdb4cfa9a7b392e0e46654",
+      "bytes": 6631
     },
     {
       "path": "en.html",
-      "sha256": "fb64778294eeab6f1738cc61950218bf1cb176b660426410ad9b4b40ba96e899",
-      "bytes": 37767
+      "sha256": "3f2243c621caf54d69b7da35d629ecbc28902b24d2fc323825013ac0b20b565a",
+      "bytes": 38390
     },
     {
       "path": "evidence/M1/manifest.json",
@@ -279,13 +279,13 @@
     },
     {
       "path": "evidence/provenance-note.md",
-      "sha256": "9f763f72ee089ece446df7dd40cf0b945721573b07077a87c3100f555d382ab4",
-      "bytes": 4442
+      "sha256": "a6091e2335d01e5201b03df418e51e3cca50992945af1856fc4630bcdcb7bfed",
+      "bytes": 5842
     },
     {
       "path": "index.html",
-      "sha256": "fb64778294eeab6f1738cc61950218bf1cb176b660426410ad9b4b40ba96e899",
-      "bytes": 37767
+      "sha256": "3f2243c621caf54d69b7da35d629ecbc28902b24d2fc323825013ac0b20b565a",
+      "bytes": 38390
     },
     {
       "path": "models/M1/scene.blend",
@@ -329,8 +329,8 @@
     },
     {
       "path": "office-models.js",
-      "sha256": "60e9754ae96be61f09d37a70511a9115411cb494ef131de4238c7e5fde034fde",
-      "bytes": 6142
+      "sha256": "9309b49097c393726e96242c7f38a4d2ae70856da7104c7b07b3118efd132c26",
+      "bytes": 8879
     },
     {
       "path": "office.css",
@@ -339,8 +339,8 @@
     },
     {
       "path": "scene-compare.js",
-      "sha256": "ee2afc099c2c845570c9a78bea90aeebcd930415b79b9e64f46c564573afe341",
-      "bytes": 7191
+      "sha256": "bd749465e05d4d19a746945f6914ff55bb06da743e5f5cd25e5630dd0cc0e732",
+      "bytes": 7483
     },
     {
       "path": "style.css",
@@ -379,8 +379,8 @@
     },
     {
       "path": "zh.html",
-      "sha256": "17fccdeecf264a9e6afeaf416aca6beae47de08c5f86a56e1d1ea989480626a4",
-      "bytes": 35466
+      "sha256": "34018c36bc06893a13eff91a099efac53a4d04b7169c5f2dbadeec32a8452380",
+      "bytes": 36073
     }
   ]
 }

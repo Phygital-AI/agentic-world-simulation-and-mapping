@@ -331,6 +331,21 @@ class PublicationValidation(unittest.TestCase):
             self.assertIn('@misc{awsm_2026,', markup)
             self.assertIn('title        = {{AWSM}: Agentic World Simulation and Mapping}', markup)
             self.assertNotIn('@misc{agentic_world_2026,', markup)
+            self.assertIn('<time datetime="2026-10-01">', header)
+            self.assertIn('2026年10月1日' if chinese else 'October 1, 2026', header)
+
+    def test_viewer_sources_and_concurrent_work(self) -> None:
+        from site_builder_interactive import SCENE_JS
+        self.assertEqual((ROOT / "scene-compare.js").read_text().strip(), SCENE_JS.strip())
+        manifest = json.loads((ROOT / "data/scene_comparison.json").read_text())
+        self.assertGreater(manifest["camera"]["position"][1], 20)
+        self.assertNotIn("mirror", manifest["display_cutaway"]["keep_name_pattern"])
+        for name in PAGES:
+            markup = (ROOT / name).read_text(encoding="utf-8")
+            for asset in ("scene-compare.js", "office-models.js"):
+                self.assertIn(f'src="{asset}?v={sha256(ROOT / asset)[:12]}"', markup)
+            self.assertIn('同期工作 AHa-3D' if name == 'zh.html' else 'Concurrent work AHa-3D', markup)
+            self.assertIn('剖切视图' if name == 'zh.html' else 'Toggle Cutaway', markup)
 
     def test_editorial_stylesheet_cache_version(self) -> None:
         expected = f'editorial.css?v={sha256(ROOT / "editorial.css")[:12]}'

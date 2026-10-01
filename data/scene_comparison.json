@@ -143,9 +143,9 @@
       -21
     ],
     "position": [
-      18,
-      10,
-      -3
+      24,
+      23,
+      -5
     ],
     "fov": 42,
     "near": 0.05,
@@ -467,7 +467,7 @@
   "display_cutaway": {
     "scope": "runtime display only; frozen GLB/Blend bytes remain unchanged",
     "hide_name_pattern": "ceiling|roof|wall|facade",
-    "keep_name_pattern": "mirror|emblem|art|grass|metal",
+    "keep_name_pattern": "emblem|art|grass|metal",
     "applies_to": [
       "M1",
       "M2",

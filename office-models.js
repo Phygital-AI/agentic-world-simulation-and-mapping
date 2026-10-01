@@ -59,6 +59,38 @@ function mount(stage) {
     radius: 1,
     ready: false,
   };
+  const zh = document.documentElement.lang.startsWith("zh");
+  const toolbar = document.createElement("div");
+  toolbar.style.cssText = "position:absolute;top:10px;left:10px;display:flex;gap:8px;z-index:1";
+  const reset = document.createElement("button");
+  reset.type = "button";
+  reset.textContent = zh ? "重置视角" : "Reset view";
+  const cutaway = document.createElement("button");
+  cutaway.type = "button";
+  cutaway.textContent = zh ? "剖切视图" : "Cutaway";
+  cutaway.setAttribute("aria-pressed", "true");
+  for (const button of [reset, cutaway]) {
+    button.style.cssText = "padding:6px 10px;border:1px solid #bdcbbf;border-radius:4px;background:#fffffff0;color:#196451;font:12px sans-serif;cursor:pointer";
+    toolbar.append(button);
+  }
+  stage.append(toolbar);
+  let sectionPlane;
+  let initialDistance = 1;
+  let previousAspect = 1;
+  const direction = new THREE.Vector3(0.45, 1, 0.65).normalize();
+  const resetView = () => {
+    if (!viewer.ready) return;
+    controls.target.copy(viewer.center);
+    camera.position.copy(viewer.center).addScaledVector(direction, initialDistance);
+    controls.update();
+    syncView(viewer);
+  };
+  reset.addEventListener("click", resetView);
+  cutaway.addEventListener("click", () => {
+    const enabled = cutaway.getAttribute("aria-pressed") !== "true";
+    cutaway.setAttribute("aria-pressed", String(enabled));
+    renderer.clippingPlanes = enabled && sectionPlane ? [sectionPlane] : [];
+  });
   viewers.push(viewer);
   controls.addEventListener("change", () => syncView(viewer));
 
@@ -66,6 +98,12 @@ function mount(stage) {
     const { width, height } = stage.getBoundingClientRect();
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
+    if (viewer.ready) {
+      const factor = Math.max(1, 1 / camera.aspect) / Math.max(1, 1 / previousAspect);
+      initialDistance *= factor;
+      camera.position.sub(controls.target).multiplyScalar(factor).add(controls.target);
+    }
+    previousAspect = camera.aspect;
     camera.updateProjectionMatrix();
   };
 
@@ -73,21 +111,41 @@ function mount(stage) {
     stage.dataset.src,
     ({ scene: model }) => {
       scene.add(model);
-      const box = new THREE.Box3().setFromObject(model);
+      const fullBox = new THREE.Box3().setFromObject(model);
+      const sectionHeight = fullBox.min.y + (fullBox.max.y - fullBox.min.y) * 0.64;
+      const box = new THREE.Box3();
+      model.traverse((node) => {
+        if (!node.isMesh) return;
+        const meshBox = new THREE.Box3().setFromObject(node);
+        if (meshBox.min.y > sectionHeight) return;
+        meshBox.max.y = Math.min(meshBox.max.y, sectionHeight);
+        box.union(meshBox);
+      });
       const center = box.getCenter(new THREE.Vector3());
       const size = box.getSize(new THREE.Vector3());
-      const radius = Math.max(size.x, size.y, size.z) * 0.62;
+      const radius = box.getBoundingSphere(new THREE.Sphere()).radius;
+      center.y = box.min.y + size.y * 0.25;
       viewer.center.copy(center);
       viewer.radius = radius;
+      sectionPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), sectionHeight);
+      renderer.clippingPlanes = cutaway.getAttribute("aria-pressed") === "true" ? [sectionPlane] : [];
+      initialDistance = radius / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.max(1, 1 / camera.aspect);
       viewer.ready = true;
-      controls.target.copy(center);
-      camera.position.copy(center).add(new THREE.Vector3(radius, radius * 0.72, radius));
       camera.near = Math.max(radius / 1000, 0.01);
       camera.far = radius * 20;
       camera.updateProjectionMatrix();
-      controls.update();
       const readySource = viewers.find((candidate) => candidate !== viewer && candidate.ready);
       if (readySource) syncView(readySource);
+      else resetView();
+      stage.dataset.ready = "true";
+      stage.sceneDiagnostics = () => ({
+        ready: viewer.ready,
+        camera: camera.position.toArray(),
+        target: controls.target.toArray(),
+        cutaway: renderer.clippingPlanes.length > 0,
+        sectionHeight: sectionPlane.constant,
+        bounds: { min: box.min.toArray(), max: box.max.toArray() },
+      });
     },
     undefined,
     () => {

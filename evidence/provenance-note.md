@@ -12,6 +12,14 @@ The first 18 seconds present Scene, Reconstruction, and Planned route; the remai
 
 The new source run reports completed flight and formation. Unlike the superseded `144825` run, its independent audit passes map and inter-robot clearance, waypoint traversal, and closure checks. The total verdict remains FAILED because measured terminal health/formation hold is 7.994999821297824 seconds against an unchanged 8.0-second requirement. Media export checks do not establish physical or film acceptance. The old run's clearance, waypoint, and flight-closure failures are not attributed to this new run. Current conditions and audit details are recorded in `data/embodied_demo.json` and `evidence/embodied-demo-audit.json`; source-receipt hashes are in `evidence/embodied-demo-delivery.json`. Full production records and raw frames remain in the local delivery, rather than uploading the 2.61 GB package to the blog.
 
+## Display and positioning update — 1 October 2026
+
+The masthead carries the publication date 1 October 2026. This is the article's publication date, not a claim about the earliest public disclosure of the method.
+
+Figure 3 now opens at a higher shared camera angle, with aspect-aware framing. Mirror-wall shells are no longer exempted from its existing runtime wall cutaway. Office Café opens in an elevated section view; its Cutaway button restores or disables the display-only horizontal clipping plane, and Reset view restores the overview. Linked Office controls are a viewing aid, not a geometric registration. Model bytes, evaluation values, registration transforms, and demo media are unchanged.
+
+AHa-3D is described as concurrent work rather than an antecedent to AWSM. Its primary project sections `sections/workflow.html` and `sections/reference.html` at `https://kevinxu02.github.io/real2sim-indoor-site/` (checked 1 October 2026) describe video input, camera/depth estimation with Pi3X, segmentation with SAM3, and a TSDF reference. Thus, “video-driven” does not mean “without estimated geometry.” AWSM's emphasized distinction is additional physical evidence, especially IMU-informed visual-inertial constraints. No dated Twitter source has been attached here, so this update makes no public-priority claim. The frozen four-route experiment is not an isolated IMU ablation.
+
 ## Upstream naming discrepancy
 
 The frozen M4 Blend SHA-256 is `cc6cb605246a255d94e36b9dc3f8b91d5a292b047470bc0ff75b8a5c404b0cfe`.

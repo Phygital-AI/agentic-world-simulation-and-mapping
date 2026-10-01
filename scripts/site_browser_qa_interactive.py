@@ -34,7 +34,7 @@ with sync_playwright() as pw:
             def record_failure(request):
                 if request.url.startswith(office_origin):
                     return
-                if request.url.endswith("/assets/walkthrough.mp4") and request.failure=="net::ERR_ABORTED":
+                if request.url.endswith(".mp4") and request.failure=="net::ERR_ABORTED":
                     return
                 if "/assets/fixed_views/" in request.url and request.failure=="net::ERR_ABORTED":
                     return
@@ -52,6 +52,8 @@ with sync_playwright() as pw:
                 caption=page.locator("#figure-1 > figcaption")
                 assert caption.evaluate("element => element.getBoundingClientRect().height <= parseFloat(getComputedStyle(element).lineHeight) + 1")
             assert page.locator("header h1").evaluate("element => getComputedStyle(element).display")=="grid"
+            assert page.locator("header time").get_attribute("datetime")=="2026-10-01"
+            assert page.locator(".tagline-emphasis").evaluate("element => getComputedStyle(element).textDecorationLine")=="none"
             assert "editorial.css?v=" in page.locator('link[rel="stylesheet"][href^="editorial.css"]').get_attribute("href")
             assert page.locator("header .pronunciation").text_content()==('AWSM 读作“awesome”；Phygital = physical（物理）+ digital（数字），即虚实融合。' if lang=="zh" else 'AWSM is pronounced “awesome”; phygital means physical + digital.')
             assert page.locator(".citation-download").get_attribute("href")=="data/awsm.bib"
@@ -121,6 +123,10 @@ with sync_playwright() as pw:
             for method in ("M1","M2","M3","M4","GT"):
                 page.select_option("#model-select",method)
                 page.wait_for_function("(m)=>{const p=document.querySelector('#figure-3');const d=p.sceneDiagnostics?.();return p.dataset.state==='ready'&&p.dataset.loadedModel===m&&d?.loaded===m&&d.gtLoaded&&d.singleCamera&&d.singleViewport&&(m==='GT'||d.hiddenCutaway>0)}",arg=method,timeout=120_000)
+                figure3.screenshot(path=str(out/f"{viewport}-{lang}-{method}.png"))
+                page.select_option("#scene-mode","single")
+                figure3.screenshot(path=str(out/f"{viewport}-{lang}-{method}-single.png"))
+                page.select_option("#scene-mode","compare")
                 if method=="M4":
                     bounds=page.evaluate("document.querySelector('#figure-3').sceneDiagnostics().bounds")
                     assert bounds["min"][0]<18<bounds["max"][0]
@@ -140,12 +146,25 @@ with sync_playwright() as pw:
                     page.select_option("#compare-frame",frame)
                     page.wait_for_function("([m,f])=>{const x=document.querySelector('#figure-4'),a=document.querySelector('#compare-pred'),b=document.querySelector('#compare-gt'),id=String(f).padStart(3,'0');return x.dataset.method===m&&x.dataset.frame===f&&a.currentSrc.endsWith(`/assets/fixed_views/${m}/${id}.png`)&&b.currentSrc.endsWith(`/assets/fixed_views/GT/${id}.png`)&&a.complete&&a.naturalWidth>0&&b.complete&&b.naturalWidth>0}",arg=[method,frame],timeout=30_000)
                     loaded_images.append(f"{method}/{int(frame):03d}")
-            iframe=page.locator("#office-cafe iframe")
-            assert iframe.get_attribute("src")==office_origin+"/"
+            office=page.locator(".office-model-grid")
+            office.scroll_into_view_if_needed()
+            page.wait_for_function("[...document.querySelectorAll('.office-model-stage')].every(stage => stage.dataset.ready === 'true')",timeout=120_000)
+            office.screenshot(path=str(out/f"{viewport}-{lang}-office.png"))
+            page.wait_for_function("[...document.querySelectorAll('#office-cafe video')].every(video => video.readyState >= 1 && !video.error)",timeout=60_000)
+            for stage in page.locator(".office-model-stage").all():
+                initial=stage.evaluate("stage => stage.sceneDiagnostics()")
+                assert initial["ready"] and initial["cutaway"]
+                assert initial["camera"][1]>initial["bounds"]["max"][1]
+                toggle=stage.locator('button[aria-pressed]')
+                toggle.click()
+                assert not stage.evaluate("stage => stage.sceneDiagnostics().cutaway")
+                toggle.click()
+                stage.locator('button').first.click()
+                assert stage.evaluate("stage => stage.sceneDiagnostics().cutaway")
             overflow=page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
             assert not overflow,f"horizontal overflow: {viewport}/{lang}"
             assert not errors,errors; assert not failed,failed
-            page.screenshot(path=str(out/f"{viewport}-{lang}.png"),full_page=True)
+            page.locator("header").screenshot(path=str(out/f"{viewport}-{lang}.png"))
             run_status="PASS" if video_state["status"]=="PASS" else "PARTIAL"
             results.append({"viewport":viewport,"language":lang,"status":run_status,"scene_models":["M1","M2","M3","M4","GT"],"fixed_views":len(loaded_images),"tables":7,"divider_changed":True,"video_metadata":video_state,"external_not_tested":True,"overflow":overflow})
             page.close()

@@ -42,7 +42,7 @@ def narrative_copy(copy, en):
             "method_title": "One agentic workflow, four reconstruction routes",
             "interactive_title": "Inspect the reconstructed scenes, not just aggregate scores",
             "discussion_title": "What geometric grounding changes—and what it does not",
-            "positioning": "AWSM connects two roles: an agent that constructs an editable scene, and downstream agents that use it as a spatial reference. SLAM and visual-inertial estimation supply pose and metric constraints; ViPE and Depth Anything 3 contribute geometric observations; agentic Real2Sim work such as AHa-3D connects observations to tool-based scene construction. Our focus is how geometric evidence carries through that construction process into the final scene. The present comparison studies reconstruction fidelity, while the demo shows one map-based application; neither replaces SLAM or establishes a complete autonomous embodied system.",
+            "positioning": "AWSM connects two roles: an agent that constructs an editable scene, and downstream agents that use it as a spatial reference. SLAM and visual-inertial estimation supply pose and metric constraints; ViPE and Depth Anything 3 contribute geometric observations. Concurrent work AHa-3D explores video-driven, tool-based Real2Sim, including camera and 3D-reference estimation from video. We discuss it as a parallel effort, not a precursor to AWSM. Our emphasis is geometric grounding: bringing additional physical measurements, especially IMU-informed visual-inertial pose and metric constraints, into agentic scene construction rather than relying on video-derived evidence alone. The four-route comparison tests reconstruction systems, not the isolated effect of IMU; the demo illustrates a map-based application, not a complete autonomous embodied system.",
         })
         copy["method_intro"] = "The reconstruction agent follows a shared observe–build–verify loop: inspect the available evidence, write Blender Python to construct objects, render review views, and revise the scene before freezing it for evaluation. This tool-using modeling process is what ‘agentic’ describes here; the downstream robot controllers have a separate role."
         copy["limits"].extend([
@@ -66,7 +66,7 @@ def narrative_copy(copy, en):
             "method_title": "一个 agentic 工作流，四条重建路线",
             "interactive_title": "不只看汇总指标，也检查重建场景",
             "discussion_title": "几何锚定改变了什么，又没有解决什么",
-            "positioning": "AWSM 连接两类角色：负责构建可编辑场景的智能体，以及将它作为空间参照使用的下游智能体。SLAM 与视觉惯性估计提供位姿和米制约束，ViPE 与 Depth Anything 3 提供几何观测，AHa-3D 等 agentic Real2Sim 工作将观测连接到工具驱动的场景构建。本文关注几何证据如何穿过这一构建过程，影响最终场景：当前对比研究重建忠实度，demo 展示一种地图应用；它们不是替代 SLAM，也不意味着已构建完整的自主具身系统。",
+            "positioning": "AWSM 连接两类角色：负责构建可编辑场景的智能体，以及将它作为空间参照使用的下游智能体。SLAM 与视觉惯性估计提供位姿和米制约束，ViPE 与 Depth Anything 3 提供几何观测。同期工作 AHa-3D 探索视频驱动、工具辅助的 Real2Sim，包括从视频估计相机与三维参照；我们将其作为并行探索讨论，而非 AWSM 的前置工作。我们的重点是几何锚定：将额外的物理测量，尤其是融合 IMU 的视觉惯性位姿与米制约束，引入智能体场景构建，而不只依赖视频推断的证据。四路线对比评估的是重建系统，并非 IMU 独立作用的消融实验；demo 展示的是地图应用，而不是完整的自主具身系统。",
         })
         copy["method_intro"] = "负责重建的智能体遵循共同的“观察—构建—验证”循环：检查可用证据，编写 Blender Python 构建对象，渲染检查视图，并在冻结评测前迭代修改。这里的 agentic 指这种工具驱动的建模过程；下游机器人控制器承担另一种角色。"
         copy["limits"].extend([
@@ -160,6 +160,9 @@ def editorial_page(page, en):
     page = page.replace('04 / MORE RESULTS AND ANALYSIS', '04 / RESULTS AND ANALYSIS')
     style_version = sha256((Path(__file__).resolve().parents[1] / "editorial.css").read_bytes()).hexdigest()[:12]
     page = page.replace('<link rel="stylesheet" href="style.css">', f'<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="editorial.css?v={style_version}">')
+    for asset in ("scene-compare.js", "office-models.js"):
+        version = sha256((Path(__file__).resolve().parents[1] / asset).read_bytes()).hexdigest()[:12]
+        page = page.replace(f'src="{asset}"', f'src="{asset}?v={version}"')
     if en:
         page = page.replace(f'<link rel="canonical" href="{BASE_URL}index.html">', f'<link rel="canonical" href="{BASE_URL}">')
     page = page.replace(f'hreflang="zh-CN" href="{BASE_URL}index.html"', f'hreflang="zh-CN" href="{BASE_URL}zh.html"')
@@ -175,7 +178,9 @@ def editorial_page(page, en):
     title_name = "Agentic World Simulation and Mapping" if en else "智能体世界仿真与建图"
     separator = ":" if en else "："
     heading = f'<h1><span class="title-mark">AWSM<span class="title-separator">{separator}</span></span> <span class="title-name">{title_name}</span></h1>'
-    page = before_header + header_start + heading + f'<p class="lead">{subtitle}</p><p class="pronunciation"><small>{brand_note}</small></p>' + header_end + after_header
+    publication = 'Published <time datetime="2026-10-01">October 1, 2026</time>' if en else '发布于 <time datetime="2026-10-01">2026年10月1日</time>'
+    page = before_header + header_start + heading + f'<p class="lead">{subtitle}</p><p class="pronunciation"><small>{brand_note}</small></p><p class="publication-date">{publication}</p>' + header_end + after_header
+    page = page.replace('</head>', '<meta property="article:published_time" content="2026-10-01"></head>')
     download_label = "Download BibTeX" if en else "下载 BibTeX 引用"
     page = page.replace('</code></pre></section>', f'</code></pre><a class="citation-download" href="data/awsm.bib" download="awsm.bib">{download_label} <span aria-hidden="true">↓</span></a></section>', 1)
     page = page.replace('<section id="more-results">', demo_section(en) + '\n<section id="more-results">', 1)
